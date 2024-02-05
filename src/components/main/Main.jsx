@@ -4,6 +4,7 @@ import Vacancies from "../../pages/vacancies/vacancies";
 import PrivacyPolicyPage from "../../pages/privacypolicy/privacypolicy";
 import PageResponse from "../../pages/response/response";
 import Branch from "../../pages/branch/branch";
+import PageDetailVacancies from "../../pages/detailvacancies";
 
 const Main = () => {
   return (
@@ -14,6 +15,7 @@ const Main = () => {
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="/response" element={<PageResponse />} />
         <Route path="/branch" element={<Branch />} />
+        <Route path="/card-detail-vacancies" element={<PageDetailVacancies />} />
       </Routes>
     </main>
   );
