@@ -1,11 +1,16 @@
 import "./App.css";
+import Footer from "./components/footer/footer";
+import Header from "./components/header/header";
+import Main from "./components/main/main";
 
-function App() {
+const App = () => {
   return (
     <>
-      <h1>Iwex-vacancies</h1>
+      <Header />
+      <Main />
+      <Footer />
     </>
-  );
+  )
 }
 
 export default App;
