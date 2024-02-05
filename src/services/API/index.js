@@ -26,7 +26,7 @@ const instance = axios.create({
 //   }
 // });
 
-export const allAPIs = {
+const allAPIs = {
 
 
     // authorizantion || registration 
@@ -139,3 +139,7 @@ export const allAPIs = {
         return instance.get(`/accounts/profiles-list-filter/${id}/`);
     }
 }
+
+
+
+export default allAPIs;

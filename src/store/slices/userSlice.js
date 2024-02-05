@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import allAPIs from "../../services/API";
+import allAPIs from "../../services/API/";
 // =========SignUp========
 
 export const sendSignUp = createAsyncThunk(
@@ -122,7 +122,6 @@ const userSlice = createSlice({
             .addCase(sendSignUp.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.email = action.payload.user;
-                console.log('signup addcase ,', action.payload.user);
             })
             .addCase(sendSignUp.rejected, (state, action) => {
                 state.isLoading = false;
