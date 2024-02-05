@@ -1,0 +1,30 @@
+.header
+  padding: 20px
+  background: #00013d
+  color: #fff
+  &_container
+    max-width: 1280px
+    margin: 0 auto
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+    .logo
+      width: 40px
+
+    .nav
+      display: flex
+      gap: 24px
+      font-size: 16px
+      align-items: center
+      
+      &_link
+        transition: .3s all
+        &:hover
+          color: #ffffff97
+      .active
+        color: #ffcc00
+    .profile
+      .user_icon
+        font-size: 18px
+        color: #fff
