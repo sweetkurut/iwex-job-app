@@ -2,7 +2,8 @@ import { Link, NavLink } from "react-router-dom";
 import styles from "./header.module.sass";
 import { Button, Fade, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaUserCircle } from "react-icons/fa";
+import { CgLogOut } from "react-icons/cg";
 import cn from "clsx";
 
 const Header = () => {
@@ -48,6 +49,7 @@ const Header = () => {
             <FaUser className={styles.user_icon} />
           </Button>
           <Menu
+            className={styles.menu}
             id="fade-menu"
             MenuListProps={{
               "aria-labelledby": "fade-button",
@@ -56,8 +58,14 @@ const Header = () => {
             open={open}
             onClose={handleClose}
             TransitionComponent={Fade}>
-            <MenuItem onClick={handleClose}>Профиль</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose} className={styles.profile_menu}>
+              <FaUserCircle />
+              Профиль
+            </MenuItem>
+            <MenuItem onClick={handleClose} className={styles.logOut}>
+              <CgLogOut />
+              Выйти
+            </MenuItem>
           </Menu>
         </div>
       </div>

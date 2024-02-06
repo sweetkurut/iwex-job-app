@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./cards.module.sass";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { Link } from "react-router-dom";

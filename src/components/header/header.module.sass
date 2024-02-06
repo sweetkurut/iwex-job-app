@@ -20,11 +20,28 @@
       
       &_link
         transition: .3s all
-        &:hover
-          color: #ffffff97
       .active
         color: #ffcc00
+        position: relative
+        &::before
+          content: ''
+          position: absolute
+          bottom:  -10px
+          left: 0
+          width: 50px
+          height: 4px
+          background: #ffcc00
+          transition: .4s all
+          border-radius: 10px
+        // &:hover::before
+        //   width: 100%
     .profile
       .user_icon
         font-size: 18px
         color: #fff
+
+.profile_menu, .logOut
+  display: flex
+  gap: 7px
+  align-items: center
+

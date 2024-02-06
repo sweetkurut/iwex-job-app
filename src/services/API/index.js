@@ -1,32 +1,26 @@
 
 
-
-
 import axios from "axios";
+import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
     // baseURL: "http://146.190.135.114:8005",
     baseURL: "https://crm.iwex.kg",
     headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
     },
 });
 
-// интерцептор для токена
-// instance.interceptors.request.use(async (config) => {
-//   try {
-//     const token = await getData('accessToken');
-//     if (token) {
-//       config.headers['Authorization'] = `Bearer ${token}`;
-//     }
-//     return config;
-//   } catch (error) {
-//     console.error('Ошибка при получении токена:', error);
-//     return config;
-//   }
-// });
+// Добавляем interceptor для запросов
+instance.interceptors.request.use((config) => {
+    const token = getCookie('accessToken');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
-export const allAPIs = {
+const allAPIs = {
 
 
     // authorizantion || registration 
@@ -66,7 +60,6 @@ export const allAPIs = {
         return instance.patch(`/core/employercompany-update/`, data);
     },
 
-
     // branch
     getMyBranch() {
         return instance.get(`/core/branch-list/`);
@@ -79,7 +72,7 @@ export const allAPIs = {
         return instance.patch(`/core/branch-update/${id}/`, data);
     },
     sendAddBranch(data) {
-        return instance.post(`/core/branch/`, data)
+        return instance.post(`/core/branch/`, data);
     },
 
     getCity(value) {
@@ -101,8 +94,6 @@ export const allAPIs = {
         return instance.get(`/core/vacancy-employer/`);
     },
 
-
-
     // DataEmployee || MyData
     sendDataEmployee(data) {
         return instance.post("/accounts/profiles/", data);
@@ -117,7 +108,6 @@ export const allAPIs = {
     editVacancy(id, data) {
         return instance.patch(`/core/vacancy-update/${id}/`, data);
     },
-
 
     // Student
     getAllEmployee() {
@@ -139,3 +129,7 @@ export const allAPIs = {
         return instance.get(`/accounts/profiles-list-filter/${id}/`);
     }
 }
+
+
+
+export default allAPIs;
