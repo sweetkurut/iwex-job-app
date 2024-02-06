@@ -13,6 +13,7 @@ import { useForm, Controller } from 'react-hook-form';
 import s from './EnterPassword.module.sass';
 import { sendEnterPassword } from '../../store/slices/userSlice';
 import { useDispatch } from 'react-redux';
+import { saveCookie } from '../../utils/js_cookie';
 
 const EnterPassword = ({ setComponent, email }) => {
     const { handleSubmit, control, watch, formState: { errors } } = useForm();
@@ -27,11 +28,10 @@ const EnterPassword = ({ setComponent, email }) => {
         };
         try {
             const response = await dispatch(sendEnterPassword(data));
-            if (response.payload.status === 200) {
-                setComponent('SignIn');
-                console.log('вы зарегались');
-            }
+            // setComponent('SignIn');
+            console.log('вы зарегались');
             console.log(response);
+            saveCookie('accessToken', response.payload.access)
         } catch (error) {
             console.log(error);
         }

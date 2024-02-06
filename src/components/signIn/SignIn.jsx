@@ -8,37 +8,40 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link } from '@mui/material';
-import s from './SignIn.module.sass'
-
-const Copyright = (props) => {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Авторские права © '}
-            <Link color="inherit" href="https://mui.com/">
-                Iwex
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-
+import Link from '@mui/material/Link';
+import s from './SignIn.module.sass';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { sendSignIn } from '../../store/slices/userSlice';
+import { saveCookie } from '../../utils/js_cookie';
+import { useNavigate } from 'react-router-dom';
 const SignIn = ({ setComponent }) => {
+    const navigate = useNavigate();
+    const [verificationError, setVerificationError] = useState('');
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const dispatch = useDispatch();
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+    const onSubmit = async (formData) => {
+        const data = {
+            email: formData.email,
+            password: formData.password,
+        };
+
+        try {
+            const response = await dispatch(sendSignIn(data)).unwrap();
+            saveCookie('accessToken', response.access)
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            setVerificationError(error?.error || 'An unknown error occurred');
+        }
     };
 
     const handleSignUp = () => {
         setComponent('SignUp');
-    }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -57,27 +60,43 @@ const SignIn = ({ setComponent }) => {
                 <Typography component="h1" variant="h5">
                     Вход
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Адрес электронной почты"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Пароль"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
+                <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="email"
+                                label="Адрес электронной почты"
+                                name="email"
+                                autoComplete="email"
+                                {...register('email', {
+                                    required: 'Введите адрес электронной почты',
+                                    pattern: {
+                                        value: emailRegex,
+                                        message: 'Неверный адрес электронной почты',
+                                    },
+                                })}
+                                error={Boolean(errors.password) || Boolean(verificationError)}
+
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="password"
+                                label="Пароль"
+                                name="password"
+                                autoComplete="password"
+                                type="password" // Specify the type as "password"
+                                error={Boolean(errors.password) || Boolean(verificationError)}
+                                helperText={errors.password?.message || verificationError}
+                                {...register('password', { required: 'Введите пароль' })}
+                            />
+                        </Grid>
+                    </Grid>
+
                     <Button
                         type="submit"
                         fullWidth
@@ -93,19 +112,15 @@ const SignIn = ({ setComponent }) => {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link onClick={handleSignUp} variant="body2" className={s.link}  >
+                            <Link onClick={handleSignUp} variant="body2" className={s.link}>
                                 Нет учетной записи? Зарегистрируйтесь
                             </Link>
                         </Grid>
                     </Grid>
                 </Box>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
     );
-}
+};
 
-
-
-
-export default SignIn
+export default SignIn;

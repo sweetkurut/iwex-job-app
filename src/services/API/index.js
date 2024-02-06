@@ -1,8 +1,7 @@
 
 
-
-
 import axios from "axios";
+import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
     // baseURL: "http://146.190.135.114:8005",
@@ -12,19 +11,14 @@ const instance = axios.create({
     },
 });
 
-// интерцептор для токена
-// instance.interceptors.request.use(async (config) => {
-//   try {
-//     const token = await getData('accessToken');
-//     if (token) {
-//       config.headers['Authorization'] = `Bearer ${token}`;
-//     }
-//     return config;
-//   } catch (error) {
-//     console.error('Ошибка при получении токена:', error);
-//     return config;
-//   }
-// });
+// Добавляем interceptor для запросов
+instance.interceptors.request.use((config) => {
+    const token = getCookie('accessToken');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
 const allAPIs = {
 

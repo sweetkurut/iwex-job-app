@@ -34,6 +34,7 @@ const SignUp = ({ setComponent, setEmail }) => {
 
     const dispatch = useDispatch()
     const [isChecked, setChecked] = useState();
+    const [verificationError, setVerificationError] = useState('');
 
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -47,13 +48,12 @@ const SignUp = ({ setComponent, setEmail }) => {
         };
 
         try {
-            const response = await dispatch(sendSignUp(data));
+            const response = await dispatch(sendSignUp(data)).unwrap();
             setComponent('confirmEmail');
             setEmail(formData.email)
-            console.log(response);
 
         } catch (error) {
-            console.log(error);
+            setVerificationError(error?.email || 'An unknown error occurred');
         }
     };
 
@@ -98,12 +98,9 @@ const SignUp = ({ setComponent, setEmail }) => {
                                         message: 'Неверный адрес электронной почты',
                                     },
                                 })}
+                                error={Boolean(errors.verification_code) || Boolean(verificationError)}
+                                helperText={errors.verification_code?.message || verificationError}
                             />
-                            {errors.email && (
-                                <Typography variant="body2" color="error" className={s.errorText}>
-                                    {errors.email.message}
-                                </Typography>
-                            )}
                         </Grid>
                         <Grid item>
                             <FormControlLabel

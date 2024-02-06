@@ -19,23 +19,20 @@ const ConfirmEmail = ({ setComponent, email }) => {
     const [verificationError, setVerificationError] = useState('');
     const dispatch = useDispatch();
     const onSubmit = async (formData) => {
-        console.log(formData);
         const data = {
             email: email,
             verification_code: formData.verification_code,
         };
         try {
-            const response = await dispatch(sendVerifyEmail(data));
-            if (response.payload.status === 200) {
-                setComponent('enterPassword');
-            }
+            const response = await dispatch(sendVerifyEmail(data)).unwrap();
+            setComponent('enterPassword');
             console.log(response);
         } catch (error) {
-            setVerificationError(payload);
             console.log(error);
+            setVerificationError(error?.error || 'An unknown error occurred');
         }
-
     };
+
 
     const handleCancel = () => {
         setComponent('SignUp');

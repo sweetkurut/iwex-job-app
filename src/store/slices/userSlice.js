@@ -9,7 +9,8 @@ export const sendSignUp = createAsyncThunk(
             const response = await allAPIs.signUp(userData);
             return response.data
         } catch (error) {
-            return rejectWithValue(error.response.data.error);
+            console.log('error', error);
+            return rejectWithValue(error.response.data);
         }
     }
 );
@@ -19,9 +20,12 @@ export const sendVerifyEmail = createAsyncThunk(
     async (userData, { rejectWithValue }) => {
         try {
             const response = await allAPIs.verify_email(userData);
-            return response.data
+            if (response.status === 200 || response.status === 201) {
+                return response.data
+            }
         } catch (error) {
-            return rejectWithValue(error.response.data.error);
+            return rejectWithValue(error.response.data);
+
         }
     }
 );
@@ -49,10 +53,11 @@ export const sendSignIn = createAsyncThunk(
     async (userData, { rejectWithValue }) => {
         try {
             const response = await allAPIs.signIn(userData);
+            console.log('response', response);
             return response.data
         } catch (error) {
-            // console.log(error);
-            return rejectWithValue(error.response.data.error);
+            console.log(error);
+            return rejectWithValue(error.response.data);
         }
     }
 );
