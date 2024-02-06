@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SignIn from "../../components/signIn/SignIn";
 import SignUp from "../../components/signUp/SignUp";
 import ConfirmEmail from "../../components/confirmEmail/ConfirmEmail";
 import EnterPassword from "../../components/enterPassword/enterPassword";
 import s from "./Login.module.sass";
-import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSelector } from "react-redux";
 

@@ -1,21 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./detail.module.sass";
 import { Avatar, Breadcrumbs, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getVacancyDetail } from "../../../../../store/slices/vacancySlice";
+import Loaders from "../../../../../UI/loaders";
+import { GoHome } from "react-icons/go";
+import { CiEdit } from "react-icons/ci";
+import EditVacancy from "../edit/edit";
 
 function handleClick(event) {
   event.preventDefault();
-  console.info("You clicked a breadcrumb.");
 }
 
 const CardDetail = () => {
   const { id } = useParams();
-
   const dispatch = useDispatch();
-  const { detailVacancy } = useSelector((state) => state.vacancy);
-  console.log(detailVacancy);
+  const { detailVacancy, isLoading } = useSelector((state) => state.vacancy);
+  const [isShow, setIsShow] = useState();
+
+  const showEditForm = () => {
+    setIsShow(!isShow);
+  };
 
   useEffect(() => {
     dispatch(getVacancyDetail(id));
@@ -26,8 +32,8 @@ const CardDetail = () => {
       <div className={styles.container}>
         <div role="presentation" onClick={handleClick}>
           <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
-            <Link color="inherit" to="/">
-              Главная
+            <Link color="inherit" to="/" className={styles.link_to_home}>
+              <GoHome />
             </Link>
             <Link to="/vacancies">Мои вакансии</Link>
             <Typography color="text.primary" className={styles.typography}>
@@ -37,6 +43,7 @@ const CardDetail = () => {
               {detailVacancy?.employer_company_name}
             </Typography>
           </Breadcrumbs>
+          {isLoading && <Loaders />}
           <Avatar
             alt="Remy Sharp"
             src={detailVacancy?.employer_company_icon}
@@ -88,8 +95,15 @@ const CardDetail = () => {
               </p>
             </span>
           </div>
+          <div className={styles.btn_wrap}>
+            <Link to={"#"} className={styles.btn} onClick={() => showEditForm()}>
+              <CiEdit className={styles.edit_icon} />
+              Редактировать данные
+            </Link>
+          </div>
         </div>
       </div>
+      {isShow ? <EditVacancy onclose={() => setIsShow(false)} /> : null}
     </div>
   );
 };
