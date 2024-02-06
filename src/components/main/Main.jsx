@@ -4,12 +4,13 @@ import PageResponse from "../../pages/response/response";
 import Branch from "../../pages/branch/branch";
 import PageDetailVacancies from "../../pages/detailvacancies";
 import PagePrivacy from "../../pages/privacypolicy/privacy";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "../../pages/login/Login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCookie } from "../../utils/js_cookie";
 import { useNavigate } from "react-router-dom";
+import EditVacancyPage from "../../pages/editVacancies/edit";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Main = () => {
         <Route path="/response" element={<PageResponse />} />
         <Route path="/branch" element={<Branch />} />
         <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
+        <Route path="/edit-detail-vacancy" element={<EditVacancyPage />} />
         {/* Add a catch-all route to redirect to home or handle not found pages */}
         <Route path="/*" element={<Home />} />
       </Routes>
