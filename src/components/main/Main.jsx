@@ -8,38 +8,36 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "../../pages/login/Login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getCookie } from '../../utils/js_cookie';
-import { useNavigate } from 'react-router-dom';
+import { getCookie } from "../../utils/js_cookie";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const token = getCookie('accessToken');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = getCookie("accessToken");
 
-    useEffect(() => {
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/vacancies");
+    }
+  }, [token]);
 
-        if (!token) {
-            navigate('/login');
-        } else {
-            navigate('/vacancies');
-        }
-
-    }, [token]);
-
-    return (
-        <main>
-            <Routes>
-                <Route path='/login' element={<Login />} />
-                <Route path="/vacancies" element={<Vacancies />} />
-                <Route path="/privacy" element={<PagePrivacy />} />
-                <Route path="/response" element={<PageResponse />} />
-                <Route path="/branch" element={<Branch />} />
-                <Route path="/card-detail-vacancies" element={<PageDetailVacancies />} />
-                {/* Add a catch-all route to redirect to home or handle not found pages */}
-                <Route path="/*" element={<Home />} />
-            </Routes>
-        </main>
-    );
+  return (
+    <main>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/vacancies" element={<Vacancies />} />
+        <Route path="/privacy" element={<PagePrivacy />} />
+        <Route path="/response" element={<PageResponse />} />
+        <Route path="/branch" element={<Branch />} />
+        <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
+        {/* Add a catch-all route to redirect to home or handle not found pages */}
+        <Route path="/*" element={<Home />} />
+      </Routes>
+    </main>
+  );
 };
 
 export default Main;
