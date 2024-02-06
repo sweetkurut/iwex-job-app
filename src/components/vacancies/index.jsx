@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./vacancies.module.sass";
 import Cards from "./components/Cards";
 
