@@ -1,16 +1,17 @@
+import { useLocation } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer/footer";
 import Header from "./components/header/Header";
-import Main from "./components/main/main";
-
+import Main from "./components/main/Main";
 
 const App = () => {
+  const navigate = useLocation();
 
   return (
     <>
-      <Header />
+      {navigate.pathname !== "/login" && <Header />}
       <Main />
-      <Footer />
+      {navigate.pathname !== "/login" && <Footer />}
     </>
   );
 };

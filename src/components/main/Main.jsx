@@ -4,8 +4,8 @@ import PageResponse from "../../pages/response/response";
 import Branch from "../../pages/branch/branch";
 import PageDetailVacancies from "../../pages/detailvacancies";
 import PagePrivacy from "../../pages/privacypolicy/privacy";
-import { Navigate, Route, Routes } from 'react-router-dom';
-import Login from '../../pages/login/Login';
+import { Navigate, Route, Routes } from "react-router-dom";
+import Login from "../../pages/login/Login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCookie } from '../../utils/js_cookie';
@@ -13,19 +13,18 @@ import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Import useNavigate hook
+    const navigate = useNavigate();
+    const token = getCookie('accessToken');
 
     useEffect(() => {
-        const token = getCookie('accessToken');
 
         if (!token) {
-            // Redirect to the login page if there is no token
             navigate('/login');
         } else {
             navigate('/vacancies');
         }
 
-    }, [navigate]);
+    }, [token]);
 
     return (
         <main>

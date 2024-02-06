@@ -1,19 +1,26 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./header.module.sass";
 import { Button, Fade, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { FaUser, FaUserCircle } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
 import cn from "clsx";
+import { deleteCookie } from "../../utils/js_cookie";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogOutCookie = () => {
+    deleteCookie("accessToken");
+    navigate("/login");
   };
 
   return (
@@ -62,7 +69,7 @@ const Header = () => {
               <FaUserCircle />
               Профиль
             </MenuItem>
-            <MenuItem onClick={handleClose} className={styles.logOut}>
+            <MenuItem onClick={handleLogOutCookie} className={styles.logOut}>
               <CgLogOut />
               Выйти
             </MenuItem>
