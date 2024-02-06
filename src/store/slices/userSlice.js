@@ -30,22 +30,18 @@ export const sendVerifyEmail = createAsyncThunk(
     }
 );
 
-
 export const sendEnterPassword = createAsyncThunk(
     "user/sendEnterPassword",
     async (userData, { rejectWithValue }) => {
         try {
             const response = await allAPIs.enter_password(userData);
-            console.log('enter password', response);
-            return response.data
+            console.log("enter password", response);
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.error);
-
         }
     }
 );
-
-
 
 // ==========SignIn============
 export const sendSignIn = createAsyncThunk(
@@ -62,7 +58,6 @@ export const sendSignIn = createAsyncThunk(
     }
 );
 
-
 // =======ResetPassword===
 export const sendResetPassword = createAsyncThunk(
     "user/sendResetPassword",
@@ -70,7 +65,7 @@ export const sendResetPassword = createAsyncThunk(
         try {
             const response = await allAPIs.reset_password(userData);
             console.log(response);
-            return response.data
+            return response.data;
         } catch (error) {
             console.log(error);
             return rejectWithValue(error.response.data.error);
@@ -78,19 +73,15 @@ export const sendResetPassword = createAsyncThunk(
     }
 );
 
-export const sendToken = createAsyncThunk(
-    "user/sendToken",
-    async (token, { rejectWithValue }) => {
-        try {
-            const response = await allAPIs.sendToken(token);
-            return response.data
-        } catch (error) {
-            console.log('error token', error);
-            return rejectWithValue(error.response.data.error);
-        }
+export const sendToken = createAsyncThunk("user/sendToken", async (token, { rejectWithValue }) => {
+    try {
+        const response = await allAPIs.sendToken(token);
+        return response.data;
+    } catch (error) {
+        console.log("error token", error);
+        return rejectWithValue(error.response.data.error);
     }
-);
-
+});
 
 const initialState = {
     isLoading: false,
@@ -107,14 +98,12 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-
         setRefreshToken(state, action) {
-            state.refreshToken = action.payload
+            state.refreshToken = action.payload;
         },
         setAccessToken(state, action) {
-            state.accessToken = action.payload
+            state.accessToken = action.payload;
         },
-
     },
     extraReducers: (builder) => {
         builder
@@ -146,8 +135,6 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
 
-
-
             .addCase(sendEnterPassword.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -157,7 +144,6 @@ const userSlice = createSlice({
                 state.email = action.payload.user;
                 state.id = action.payload.id;
                 state.role = action.payload.role;
-
             })
             .addCase(sendEnterPassword.rejected, (state) => {
                 state.isLoading = false;
@@ -174,13 +160,10 @@ const userSlice = createSlice({
                 state.email = action.payload.user;
                 state.id = action.payload.id;
                 state.role = action.payload.role;
-
-
             })
             .addCase(sendSignIn.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-
             })
 
             // =====ResetPassword====
@@ -198,7 +181,6 @@ const userSlice = createSlice({
                 state.error = null;
             })
 
-
             .addCase(sendToken.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -208,12 +190,11 @@ const userSlice = createSlice({
                 state.id = action.payload.id;
                 state.email = action.payload.email;
                 state.role = action.payload.role;
-
             })
             .addCase(sendToken.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = null;
-            })
+            });
     },
 });
 

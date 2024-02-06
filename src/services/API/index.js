@@ -7,7 +7,7 @@ const instance = axios.create({
     // baseURL: "http://146.190.135.114:8005",
     baseURL: "https://crm.iwex.kg",
     headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
     },
 });
 
@@ -60,7 +60,6 @@ const allAPIs = {
         return instance.patch(`/core/employercompany-update/`, data);
     },
 
-
     // branch
     getMyBranch() {
         return instance.get(`/core/branch-list/`);
@@ -73,7 +72,7 @@ const allAPIs = {
         return instance.patch(`/core/branch-update/${id}/`, data);
     },
     sendAddBranch(data) {
-        return instance.post(`/core/branch/`, data)
+        return instance.post(`/core/branch/`, data);
     },
 
     getCity(value) {
@@ -95,8 +94,6 @@ const allAPIs = {
         return instance.get(`/core/vacancy-employer/`);
     },
 
-
-
     // DataEmployee || MyData
     sendDataEmployee(data) {
         return instance.post("/accounts/profiles/", data);
@@ -111,7 +108,6 @@ const allAPIs = {
     editVacancy(id, data) {
         return instance.patch(`/core/vacancy-update/${id}/`, data);
     },
-
 
     // Student
     getAllEmployee() {

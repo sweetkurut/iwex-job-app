@@ -1,6 +1,11 @@
-import React from 'react'
+
+import Home from "../../pages/home/Home";
+import Vacancies from "../../pages/vacancies/vacancies";
+import PageResponse from "../../pages/response/response";
+import Branch from "../../pages/branch/branch";
+import PageDetailVacancies from "../../pages/detailvacancies";
+import PagePrivacy from "../../pages/privacypolicy/privacy";
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Home from '../../pages/home/Home';
 import Login from '../../pages/login/Login';
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -19,11 +24,18 @@ const Main = () => {
     return (
         <main>
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route path='login' element={<Login />} />
+                <Route path="/vacancies" element={<Vacancies />} />
+                <Route path="/privacy" element={<PagePrivacy />} />
+                <Route path="/response" element={<PageResponse />} />
+                <Route path="/branch" element={<Branch />} />
+                <Route path="/card-detail-vacancies" element={<PageDetailVacancies />} />
             </Routes>
-        </main >
-    )
-}
+        </main>
+    );
+};
 
-export default Main
+
+export default Main;
+

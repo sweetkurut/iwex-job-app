@@ -1,6 +1,6 @@
 import "./App.css";
 import Footer from "./components/footer/footer";
-import Header from "./components/header/header";
+import Header from "./components/header/Header";
 import Main from "./components/main/main";
 
 
@@ -12,7 +12,7 @@ const App = () => {
       <Main />
       <Footer />
     </>
-  )
-}
+  );
+};
 
 export default App;
