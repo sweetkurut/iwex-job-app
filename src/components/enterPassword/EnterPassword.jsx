@@ -14,11 +14,13 @@ import s from './EnterPassword.module.sass';
 import { sendEnterPassword } from '../../store/slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { saveCookie } from '../../utils/js_cookie';
+import { useNavigate } from 'react-router-dom';
 
 const EnterPassword = ({ setComponent, email }) => {
     const { handleSubmit, control, watch, formState: { errors } } = useForm();
     const password = watch('password', '');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async (formData) => {
         const data = {
@@ -28,9 +30,7 @@ const EnterPassword = ({ setComponent, email }) => {
         };
         try {
             const response = await dispatch(sendEnterPassword(data));
-            // setComponent('SignIn');
-            console.log('вы зарегались');
-            console.log(response);
+            navigate('/vacancies');
             saveCookie('accessToken', response.payload.access)
         } catch (error) {
             console.log(error);

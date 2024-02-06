@@ -32,7 +32,7 @@ const SignIn = ({ setComponent }) => {
         try {
             const response = await dispatch(sendSignIn(data)).unwrap();
             saveCookie('accessToken', response.access)
-            navigate('/');
+            navigate('/vacancies');
         } catch (error) {
             console.log(error);
             setVerificationError(error?.error || 'An unknown error occurred');
