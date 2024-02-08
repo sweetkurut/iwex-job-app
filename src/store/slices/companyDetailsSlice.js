@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { allAPIs } from "../../services/API";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import allAPIs from "../../services/API";
 
 
 export const sendCompanyData = createAsyncThunk(
@@ -89,8 +89,10 @@ export const sendAddBranch = createAsyncThunk(
             if (response.status !== 201) {
                 throw new Error("Server Error, unable to sign in");
             }
+            console.log(response);
             return response.data
         } catch (error) {
+            console.log(error);
             return rejectWithValue(error);
         }
     }
@@ -102,9 +104,7 @@ export const patchBranchData = createAsyncThunk(
         console.log(id, data);
         try {
             const response = await allAPIs.patchBranchData(id, data);
-            if (response.status !== 200) {
-                throw new Error("Server Error, unable to sign in");
-            }
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.error);
         }
@@ -119,8 +119,10 @@ export const getCity = createAsyncThunk(
             if (response.status !== 200) {
                 throw new Error("Server Error, unable to sign in");
             }
+            console.log(response);
             return response.data
         } catch (error) {
+            console.log(error);
             return rejectWithValue(error.response.data.error);
         }
     }
@@ -251,7 +253,24 @@ const companyDetailsSlice = createSlice({
                 state.isLoading = false;
                 state.error = null
             })
-
+            .addCase(patchBranchData.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(patchBranchData.fulfilled, (state, action) => {
+                state.isLoading = false;
+            })
+            .addCase(patchBranchData.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(sendAddBranch.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(sendAddBranch.fulfilled, (state, action) => {
+                state.isLoading = false;
+            })
+            .addCase(sendAddBranch.rejected, (state) => {
+                state.isLoading = false;
+            })
 
             .addCase(getMyBranchDetail.pending, (state) => {
                 state.isLoading = true;

@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCookie } from '../../utils/js_cookie';
 import { useNavigate } from 'react-router-dom';
+import Profile from "../../pages/profile/Profile";
+import { getDataProfile } from "../../store/slices/companyDetailsSlice";
 
 const Main = () => {
     const dispatch = useDispatch();
@@ -21,7 +23,8 @@ const Main = () => {
         if (!token) {
             navigate('/login');
         } else {
-            navigate('/vacancies');
+            // navigate('/vacancies');
+            dispatch(getDataProfile())
         }
 
     }, [token]);
@@ -30,6 +33,7 @@ const Main = () => {
         <main>
             <Routes>
                 <Route path='/login' element={<Login />} />
+                <Route path='/profile' element={<Profile />} />
                 <Route path="/vacancies" element={<Vacancies />} />
                 <Route path="/privacy" element={<PagePrivacy />} />
                 <Route path="/response" element={<PageResponse />} />

@@ -71,8 +71,8 @@ const allAPIs = {
     return instance.post(`/core/branch/`, data);
   },
 
-  getCity(value) {
-    return instance.get(`/core/city/?search=${value}`);
+  getCity() {
+    return instance.get(`/core/city/`);
   },
   sendPositionEmployee(data) {
     return instance.post(`/core/positionemployee/`, data);
