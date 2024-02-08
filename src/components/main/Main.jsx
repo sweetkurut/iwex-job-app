@@ -7,13 +7,12 @@ import PagePrivacy from "../../pages/privacypolicy/privacy";
 import { Route, Routes } from "react-router-dom";
 import Login from "../../pages/login/Login";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getCookie } from "../../utils/js_cookie";
 import { useNavigate } from "react-router-dom";
 import EditVacancyPage from "../../pages/editVacancies/edit";
+import Page404 from "../../pages/404/404";
 
 const Main = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
 
@@ -23,6 +22,7 @@ const Main = () => {
     } else {
       navigate("/vacancies");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (
@@ -34,7 +34,8 @@ const Main = () => {
         <Route path="/response" element={<PageResponse />} />
         <Route path="/branch" element={<Branch />} />
         <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
-        <Route path="/edit-detail-vacancy" element={<EditVacancyPage />} />
+        <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
+        <Route path="*" element={<Page404 />} />
         {/* Add a catch-all route to redirect to home or handle not found pages */}
         <Route path="/*" element={<Home />} />
       </Routes>

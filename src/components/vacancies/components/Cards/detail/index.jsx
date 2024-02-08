@@ -19,9 +19,9 @@ const CardDetail = () => {
   const { detailVacancy, isLoading } = useSelector((state) => state.vacancy);
   const [isShow, setIsShow] = useState();
 
-  const showEditForm = () => {
-    setIsShow(!isShow);
-  };
+  // const showEditForm = () => {
+  //   setIsShow(!isShow);
+  // };
 
   useEffect(() => {
     dispatch(getVacancyDetail(id));
@@ -55,28 +55,49 @@ const CardDetail = () => {
         </div>
         <div className={styles.card}>
           <div className={styles.card_data_titles}>
-            <h3 className={styles.card_data}>Зарплата: {detailVacancy?.salary}</h3>
-
-            <h3 className={styles.card_data}>Город: {detailVacancy?.branch_city}</h3>
-            <h3 className={styles.card_data}>Филиал: {detailVacancy?.branch_address}</h3>
-            <h3 className={styles.card_data}>Дресс-Код: {detailVacancy?.clothingform}</h3>
-            <h3 className={styles.card_data}>Начало времени работы: {detailVacancy?.time_start}</h3>
-            <h3 className={styles.card_data}>Конец времени работы: {detailVacancy?.time_end}</h3>
+            <h3 className={styles.card_data}>
+              <li>
+                Зарплата: <span>{detailVacancy?.salary}</span>
+              </li>
+            </h3>
+            <h3 className={styles.card_data}>
+              <li>Город: {detailVacancy?.branch_city}</li>
+            </h3>
+            <h3 className={styles.card_data}>
+              <li>Филиал: {detailVacancy?.branch_address}</li>
+            </h3>
+            <h3 className={styles.card_data}>
+              <li>Дресс-Код: {detailVacancy?.clothingform}</li>
+            </h3>
+            <h3 className={styles.card_data}>
+              <li>Начало времени работы: {detailVacancy?.time_start}</li>
+            </h3>
+            <h3 className={styles.card_data}>
+              <li>Конец времени работы: {detailVacancy?.time_end}</li>
+            </h3>
           </div>
           <div className={styles.card_data_desc}>
             <h3 className={styles.trebovanya}>
               Требования работадателя:
               <h3 className={styles.card_data}>
-                Стаж работы: <span>{detailVacancy?.experience}</span>
+                <li>
+                  Стаж работы: <span>{detailVacancy?.experience}</span>
+                </li>
               </h3>
               <h3>
-                Знание немецкого: <span>{detailVacancy?.language_german}</span>
+                <li>
+                  Знание немецкого: <span>{detailVacancy?.language_german}</span>
+                </li>
               </h3>
               <h3>
-                Знание английского: <span>{detailVacancy?.language_english}</span>
+                <li>
+                  Знание английского: <span>{detailVacancy?.language_english}</span>
+                </li>
               </h3>
               <h3>
-                Количество мест на вакансию: <span>{detailVacancy?.employee_count}</span>
+                <li>
+                  Количество мест на вакансию: <span>{detailVacancy?.employee_count}</span>
+                </li>
               </h3>
             </h3>
           </div>
@@ -96,7 +117,7 @@ const CardDetail = () => {
             </span>
           </div>
           <div className={styles.btn_wrap}>
-            <Link to={"#"} className={styles.btn} onClick={() => showEditForm()}>
+            <Link to={`/edit-detail-vacancy/${id}`} className={styles.btn}>
               <CiEdit className={styles.edit_icon} />
               Редактировать данные
             </Link>

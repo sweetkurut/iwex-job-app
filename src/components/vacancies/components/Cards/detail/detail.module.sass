@@ -7,6 +7,16 @@
       padding-top: 45px
       margin-bottom: 30px
       font-family: "Gilroy"
+      position: relative
+      &::after
+        content: ''
+        position: absolute
+        bottom: -10px
+        background: #000
+        opacity: 0.8
+        height: 1px
+        width: 100%
+        border-radius: 10px
       .link_to_home
         display: flex
         align-items: center
@@ -37,6 +47,7 @@
         .card_data 
           font-size: 17px
           margin-bottom: 12px
+      
       .card_data_desc
         margin-bottom: 12px
         .trebovanya
