@@ -12,7 +12,11 @@ import { getCookie } from '../../utils/js_cookie';
 import { useNavigate } from 'react-router-dom';
 import Profile from "../../pages/profile/Profile";
 import { getDataProfile } from "../../store/slices/companyDetailsSlice";
-const Main = () => {
+import Page404 from "../../pages/404/404";
+import EditVacancyPage from "../../pages/editVacancies/edit";
+const Main = () =>
+{
+  const dispatch =useDispatch()
   const navigate = useNavigate();
   const token = getCookie("accessToken");
 
@@ -35,7 +39,7 @@ const Main = () => {
           <Route path="/response" element={<PageResponse />} />
           <Route path="/branch" element={<Branch />} />
           <Route path="/card-detail-vacancies" element={<PageDetailVacancies />} />
-          <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
+          <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage/>} />
           <Route path="*" element={<Page404 />} />
           {/* Add a catch-all route to redirect to home or handle not found pages */}
           <Route path="/*" element={<Home />} />
