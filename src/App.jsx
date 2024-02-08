@@ -9,7 +9,7 @@ const App = () => {
 
   return (
     <>
-      {navigate.pathname !== "/login" && <Header />}
+      {navigate.pathname !== "/login" && navigate.pathname !== "*" && <Header />}
       <Main />
       {navigate.pathname !== "/login" && <Footer />}
     </>

@@ -8,8 +8,8 @@ import cn from "clsx";
 import { deleteCookie } from "../../utils/js_cookie";
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -17,7 +17,10 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handlerNavigation = (path) => {
+    navigate(path);
+    handleClose();
+  }
   const handleLogOutCookie = () => {
     deleteCookie("accessToken");
     navigate("/login");
@@ -65,7 +68,7 @@ const Header = () => {
             open={open}
             onClose={handleClose}
             TransitionComponent={Fade}>
-            <MenuItem onClick={handleClose} className={styles.profile_menu}>
+            <MenuItem onClick={() => handlerNavigation('/profile')} className={styles.profile_menu}>
               <FaUserCircle />
               Профиль
             </MenuItem>

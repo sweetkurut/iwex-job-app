@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import allAPIs from "../../services/API";
 
+
+
 export const getAllVacancy = createAsyncThunk(
   "vacancy/getAllVacancy",
   async (value = "", { rejectWithValue }) => {

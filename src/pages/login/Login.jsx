@@ -11,6 +11,7 @@ const Login = () => {
   const [component, setComponent] = useState("SignIn");
   const [email, setEmail] = useState("");
   const { isLoading } = useSelector((state) => state.user);
+
   const renderSignComponent = () => {
     switch (component) {
       case "SignIn":

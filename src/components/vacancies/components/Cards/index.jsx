@@ -42,7 +42,9 @@ const Cards = () => {
             <h5 className={styles.views_desc}>{elem?.views_vacancy}</h5>
           </div>
           <div className={styles.card_button}>
-            <Link to={"/card-detail-vacancies/" + elem?.id}>Подробнее</Link>
+            <Link to={"/card-detail-vacancies/" + elem?.id} className={styles.btn_link}>
+              Подробнее
+            </Link>
           </div>
         </div>
       ))}
