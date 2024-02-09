@@ -14,14 +14,14 @@ import { IoArrowBack } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyBranch } from "../../../../../store/slices/companyDetailsSlice";
-import { getVacancyDetail } from "../../../../../store/slices/vacancySlice";
+import { editVacancy, getVacancyDetail } from "../../../../../store/slices/vacancySlice";
 
 // eslint-disable-next-line react/prop-types
 const EditVacancy = ({ onclose }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { branch } = useSelector((state) => state.companyDetails);
-  const { detailVacancy, EditVacancy } = useSelector((state) => state.vacancy);
+  const { detailVacancy } = useSelector((state) => state.vacancy);
   const [age, setAge] = useState("");
   const [valueInput, setValueinput] = useState({});
   console.log(valueInput);
@@ -32,7 +32,7 @@ const EditVacancy = ({ onclose }) => {
   useEffect(() => {
     const newData = {};
     for (const key in detailVacancy) {
-      if (detailVacancy[key] !== undefined && detailVacancy[key] !== null) {
+      if (detailVacancy[key] !== "" && detailVacancy[key] !== null) {
         newData[key] = detailVacancy[key];
       }
     }
@@ -44,8 +44,12 @@ const EditVacancy = ({ onclose }) => {
     dispatch(getVacancyDetail(id));
   }, [id]);
 
-  const onsubmit = (e) => {
+  const onsubmitEdit = (e) =>
+  {
+    console.log(valueInput);
+    e.preventDefault();
     e.stopPropagation();
+    dispatch(editVacancy());
   };
 
   const handleChange = (event) => {
@@ -73,14 +77,14 @@ const EditVacancy = ({ onclose }) => {
             Редактирования вакансий
           </Typography>
         </Breadcrumbs>
-        <form className={styles.form} onClick={onsubmit}>
+        <form className={styles.form} onSubmit={onsubmitEdit}>
           <div className={styles.branch_position}>
             <FormControl sx={{ width: "50%" }}>
               <InputLabel id="demo-simple-select-filled-label">Филиал</InputLabel>
               <Select
                 label="Филиал"
                 className={styles.TextField}
-                value={detailVacancy.branch}
+                value={valueInput?.branch}
                 onChange={(e) => setValueinput("branch", e.target.value)}>
                 {Array.isArray(branch)
                   ? branch.map((item) => (

@@ -8,10 +8,7 @@ import Loaders from "../../../../../UI/loaders";
 import { GoHome } from "react-icons/go";
 import { CiEdit } from "react-icons/ci";
 import EditVacancy from "../edit/edit";
-
-function handleClick(event) {
-  event.preventDefault();
-}
+import { RiSearchLine } from "react-icons/ri";
 
 const CardDetail = () => {
   const { id } = useParams();
@@ -25,12 +22,12 @@ const CardDetail = () => {
 
   useEffect(() => {
     dispatch(getVacancyDetail(id));
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <div role="presentation" onClick={handleClick}>
+        <div role="presentation">
           <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
             <Link color="inherit" to="/" className={styles.link_to_home}>
               <GoHome />
@@ -49,6 +46,7 @@ const CardDetail = () => {
             src={detailVacancy?.employer_company_icon}
             sx={{ width: 250, height: 250 }}
             className={styles.profile_img}
+            loading={"lazy"}
           />
           <h2 className={styles.name_vacancies}>{detailVacancy?.position}</h2>
           <h4>{detailVacancy?.branch}</h4>
@@ -123,6 +121,10 @@ const CardDetail = () => {
             </Link>
           </div>
         </div>
+        <Link to={"/students"} state={{ id_vacancy: id }} className={styles.link_search_btn}>
+          <RiSearchLine />
+          Найти студента
+        </Link>
       </div>
       {isShow ? <EditVacancy onclose={() => setIsShow(false)} /> : null}
     </div>

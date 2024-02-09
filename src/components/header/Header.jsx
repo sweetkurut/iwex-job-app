@@ -20,7 +20,7 @@ const Header = () => {
   const handlerNavigation = (path) => {
     navigate(path);
     handleClose();
-  }
+  };
   const handleLogOutCookie = () => {
     deleteCookie("accessToken");
     navigate("/login");
@@ -34,14 +34,9 @@ const Header = () => {
             <img alt="logo" src="/original-logo.svg" className={styles.logo} />
           </Link>
           <NavLink
-            to={"/vacancies"}
+            to={"/"}
             className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
             Мои вакансии
-          </NavLink>
-          <NavLink
-            to={"/branch"}
-            className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-            Мои филиалы
           </NavLink>
           <NavLink
             to={"/response"}
@@ -68,7 +63,7 @@ const Header = () => {
             open={open}
             onClose={handleClose}
             TransitionComponent={Fade}>
-            <MenuItem onClick={() => handlerNavigation('/profile')} className={styles.profile_menu}>
+            <MenuItem onClick={() => handlerNavigation("/profile")} className={styles.profile_menu}>
               <FaUserCircle />
               Профиль
             </MenuItem>
