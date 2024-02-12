@@ -1,13 +1,15 @@
+import Home from "../../pages/home/Home";
 import Vacancies from "../../pages/vacancies/vacancies";
 import PageResponse from "../../pages/response/response";
+import Branch from "../../pages/branch/branch";
 import PageDetailVacancies from "../../pages/detailvacancies";
 import PagePrivacy from "../../pages/privacypolicy/privacy";
 import { Route, Routes } from "react-router-dom";
 import Login from "../../pages/login/Login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getCookie } from "../../utils/js_cookie";
-import { useNavigate } from "react-router-dom";
+import { getCookie } from '../../utils/js_cookie';
+import { useNavigate } from 'react-router-dom';
 import Profile from "../../pages/profile/Profile";
 import { getDataProfile } from "../../store/slices/companyDetailsSlice";
 import Page404 from "../../pages/404/404";
