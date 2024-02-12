@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap");
 
 * {
   padding: 0;
@@ -6,7 +6,6 @@
   border: 0;
   color: inherit;
 }
-
 
 *,
 *:before,
@@ -37,6 +36,7 @@ html,
 body {
   height: 100%;
   min-width: 320px;
+  font-family: "Rubik", sans-serif;
 }
 
 body {
@@ -46,13 +46,13 @@ body {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  font-family: 'Poppins', sans-serif
+  font-family: "Rubik", sans-serif;
 }
 
 input,
 button,
 textarea {
-  font-family: 'Poppins', sans-serif
+  font-family: "Poppins", sans-serif;
 }
 
 input::-ms-clear {

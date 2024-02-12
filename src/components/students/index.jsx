@@ -34,8 +34,8 @@ const Students = () => {
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Item One" value={true} />
-                <Tab label="Item Two" value={false} />
+                <Tab label="Фильтрация" value={true} />
+                <Tab label="Все студенты" value={false} />
               </TabList>
             </Box>
           </TabContext>
@@ -79,7 +79,27 @@ const Students = () => {
               </div>
             ))
           ) : (
-            <h2>Ошибка: нет данных о сотрудниках</h2>
+            <div className={styles.student_search}>
+              <div className={styles.student_img}>
+                <img
+                  alt="img-student"
+                  src="/img/student.svg"
+                  style={{
+                    width: "500px",
+                  }}
+                />
+              </div>
+              <p className={styles.student_search_title}>
+                Кажется на вашу вакансию не нашлось студентов
+              </p>
+              <button
+                className={styles.btn_allStudents}
+                onClick={(e) => {
+                  handleChange(e, false);
+                }}>
+                Все студенты
+              </button>
+            </div>
           )}
         </div>
       </div>

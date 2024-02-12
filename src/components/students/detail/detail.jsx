@@ -28,7 +28,7 @@ const StudentDetail = () => {
 
   useEffect(() => {
     dispatch(getEmployeeDetail(id));
-  }, []);
+  }, [id]);
 
   return (
     <div className={styles.wrapper}>
