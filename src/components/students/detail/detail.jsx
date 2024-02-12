@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getEmployeeDetail } from "../../../store/slices/employeeDetailsSlice";
 import Loaders from "../../../UI/loaders";
 import { GoHome } from "react-icons/go";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Avatar, Breadcrumbs, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -15,6 +15,8 @@ import TabPanel from "@mui/lab/TabPanel";
 const StudentDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  let { state } = useLocation();
+  console.log(state);
   const { detailEmployee, isLoading } = useSelector((state) => state.employeeDetails);
   const [value, setValue] = useState("1");
 
@@ -36,7 +38,9 @@ const StudentDetail = () => {
           <Link color="inherit" to="/" className={styles.link_to_home}>
             <GoHome />
           </Link>
-          <Link to="/students">Все студенты</Link>
+          <Link to="/students" state={{ id_vacancy: state.id_vacancy }}>
+            Все студенты
+          </Link>
           <Typography color="text.primary" className={styles.typography}>
             Подробная информация
           </Typography>
@@ -116,52 +120,50 @@ const StudentDetail = () => {
                 <p>Русский:{detailEmployee?.russian}</p>
               </TabPanel>
               <TabPanel value="3">
-                <h4>
-                  {detailEmployee?.universities?.map((elem) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <>
-                      <div className={styles.name_universe}>
-                        <h3 className={styles.sub_title}>Наименование</h3>
-                        <p className={styles.name}> Название университета:{elem.address_ru}</p>
-                        <p className={styles.name}> University name:{elem.address_en}</p>
-                        <p className={styles.name}> Name der Universität:{elem.address_de}</p>
-                      </div>
-                      <div className={styles.type_universe_degree}>
-                        <h3 className={styles.sub_title}>Степень</h3>
-                        <p className={styles.name}> Тип степени:{elem.degree_type_ru}</p>
-                        <p className={styles.name}> Degree type:{elem.degree_type_en}</p>
-                        <p className={styles.name}> Abschlussart:{elem.degree_type_de}</p>
-                      </div>
-                      <div className={styles.facultet}>
-                        <h3 className={styles.sub_title}>Факультет</h3>
-                        <p className={styles.name}> Факультет:{elem.faculty_ru}</p>
-                        <p className={styles.name}> Faculty:{elem.faculty_en}</p>
-                        <p className={styles.name}> Fachbereich:{elem.faculty_de}</p>
-                      </div>
-                      <div className={styles.address}>
-                        <h3 className={styles.sub_title}>Адресс</h3>
-                        <p className={styles.name}> Адресс:{elem.address_ru}</p>
-                        <p className={styles.name}> Address:{elem.address_en}</p>
-                        <p className={styles.name}> Adresse:{elem.address_de}</p>
-                      </div>
-                      <div className={styles.universe_phone}>
-                        <h3 className={styles.sub_title}>Контакты</h3>
-                        <p className={styles.name}> Контакты:{elem.phone_number_university_ru}</p>
-                        <p className={styles.name}> E-mail:{elem.email_university}</p>
-                        <p className={styles.name}> Web-site:{elem.website_university}</p>
-                      </div>
-                      <div className={styles.data_holiday}>
-                        <h3 className={styles.sub_title}>Данные об учебе </h3>
-                        <p className={styles.name}> Начало учёбы:{elem.start_date}</p>
-                        <p className={styles.name}> Конец учёбы:{elem.end_date}</p>
-                        <p className={styles.name}> Длительность обучений:{elem.total_years}года</p>
-                        <p className={styles.name}> Курс:{elem.kurs_year}</p>
-                        <p className={styles.name}> Начало каникул:{elem.start_holiday}</p>
-                        <p className={styles.name}> Конец каникул:{elem.end_holiday}</p>
-                      </div>
-                    </>
-                  ))}
-                </h4>
+                {detailEmployee?.universities?.map((elem) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <div key={elem?.id}>
+                    <div className={styles.name_universe}>
+                      <h3 className={styles.sub_title}>Наименование</h3>
+                      <p className={styles.name}> Название университета:{elem.address_ru}</p>
+                      <p className={styles.name}> University name:{elem.address_en}</p>
+                      <p className={styles.name}> Name der Universität:{elem.address_de}</p>
+                    </div>
+                    <div className={styles.type_universe_degree}>
+                      <h3 className={styles.sub_title}>Степень</h3>
+                      <p className={styles.name}> Тип степени:{elem.degree_type_ru}</p>
+                      <p className={styles.name}> Degree type:{elem.degree_type_en}</p>
+                      <p className={styles.name}> Abschlussart:{elem.degree_type_de}</p>
+                    </div>
+                    <div className={styles.facultet}>
+                      <h3 className={styles.sub_title}>Факультет</h3>
+                      <p className={styles.name}> Факультет:{elem.faculty_ru}</p>
+                      <p className={styles.name}> Faculty:{elem.faculty_en}</p>
+                      <p className={styles.name}> Fachbereich:{elem.faculty_de}</p>
+                    </div>
+                    <div className={styles.address}>
+                      <h3 className={styles.sub_title}>Адресс</h3>
+                      <p className={styles.name}> Адресс:{elem.address_ru}</p>
+                      <p className={styles.name}> Address:{elem.address_en}</p>
+                      <p className={styles.name}> Adresse:{elem.address_de}</p>
+                    </div>
+                    <div className={styles.universe_phone}>
+                      <h3 className={styles.sub_title}>Контакты</h3>
+                      <p className={styles.name}> Контакты:{elem.phone_number_university_ru}</p>
+                      <p className={styles.name}> E-mail:{elem.email_university}</p>
+                      <p className={styles.name}> Web-site:{elem.website_university}</p>
+                    </div>
+                    <div className={styles.data_holiday}>
+                      <h3 className={styles.sub_title}>Данные об учебе </h3>
+                      <p className={styles.name}> Начало учёбы:{elem.start_date}</p>
+                      <p className={styles.name}> Конец учёбы:{elem.end_date}</p>
+                      <p className={styles.name}> Длительность обучений:{elem.total_years}года</p>
+                      <p className={styles.name}> Курс:{elem.kurs_year}</p>
+                      <p className={styles.name}> Начало каникул:{elem.start_holiday}</p>
+                      <p className={styles.name}> Конец каникул:{elem.end_holiday}</p>
+                    </div>
+                  </div>
+                ))}
               </TabPanel>
               <TabPanel value="4">
                 <div className={styles.user_img}>
