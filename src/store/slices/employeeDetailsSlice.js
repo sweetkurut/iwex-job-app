@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import allAPIs from "../../services/API";
 
-
 export const sendDataEmployee = createAsyncThunk(
   "employeeDetails/sendDataEmployee",
   async (data, { rejectWithValue }) => {
@@ -33,10 +32,13 @@ export const getAllEmployee = createAsyncThunk(
 export const getEmployeeDetail = createAsyncThunk(
   "employeeDetails/getEmployeeDetail",
   async (id, { rejectWithValue }) => {
+    console.log(id);
     try {
       const response = await allAPIs.getEmployeeDetail(id);
+      console.log(response);
       return response.data[0];
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }
@@ -75,8 +77,10 @@ export const getEmployeeFilter = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await allAPIs.getEmployeeFilter(id);
+      console.log(response);
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }

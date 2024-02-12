@@ -332,7 +332,7 @@ const AddVacancy = ({ handlerComponent }) => {
                 </div>
                 <div className={s.box_button}>
                     <button className={s.btn}>Сохранить</button>
-                    <Link className={s.btn} to='/vacancies'>Отмена</Link>
+                    <Link className={s.btn} to='/'>Отмена</Link>
                 </div>
             </form>
         </>

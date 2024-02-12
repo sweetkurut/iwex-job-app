@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import allAPIs from "../../services/API";
 
-
-
 export const getAllVacancy = createAsyncThunk(
   "vacancy/getAllVacancy",
   async (value = "", { rejectWithValue }) => {
@@ -74,8 +72,11 @@ export const editVacancy = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error("Server Error, unable to sign in");
       }
+      console.log(response);
       return response.data;
-    } catch (error) {
+    } catch (error)
+    {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }

@@ -1,7 +1,5 @@
-import Home from "../../pages/home/Home";
 import Vacancies from "../../pages/vacancies/vacancies";
 import PageResponse from "../../pages/response/response";
-import Branch from "../../pages/branch/branch";
 import PageDetailVacancies from "../../pages/detailvacancies";
 import PagePrivacy from "../../pages/privacypolicy/privacy";
 import { Route, Routes } from "react-router-dom";
@@ -15,6 +13,8 @@ import { getDataProfile } from "../../store/slices/companyDetailsSlice";
 import Page404 from "../../pages/404/404";
 import EditVacancyPage from "../../pages/editVacancies/edit";
 import AddVacancy from "../vacancies/components/addVacancy/AddVacancy";
+import Branch from "../../pages/profile/components/branch/Branch";
+import Home from "../home";
 
 const Main = () => {
     const dispatch = useDispatch();
@@ -35,11 +35,10 @@ const Main = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/vacancies" element={<Vacancies />} />
+                <Route path="/" element={<Vacancies />} />
                 <Route path="/add-vacancy" element={<AddVacancy />} />
                 <Route path="/privacy" element={<PagePrivacy />} />
                 <Route path="/response" element={<PageResponse />} />
-                <Route path="/branch" element={<Branch />} />
                 <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
                 <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
                 <Route path="*" element={<Page404 />} />

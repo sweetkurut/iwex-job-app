@@ -4,12 +4,13 @@ import { MdOutlineWorkOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getVacancyEmployer } from "../../../../store/slices/vacancySlice";
+import Loaders from "../../../../UI/loaders";
 
 const Cards = () => {
   const dispatch = useDispatch();
-  const { vacancyEmployer } = useSelector((state) => state.vacancy);
+  const { vacancyEmployer, isLoading } = useSelector((state) => state.vacancy);
 
-  console.log(vacancyEmployer);
+  // console.log(vacancyEmployer);
 
   useEffect(() => {
     dispatch(getVacancyEmployer());
@@ -18,6 +19,7 @@ const Cards = () => {
 
   return (
     <div className={styles.cards}>
+      {isLoading && <Loaders />}
       {vacancyEmployer?.map((elem) => (
         // eslint-disable-next-line react/jsx-key
         <div className={styles.card} key={elem?.id}>
