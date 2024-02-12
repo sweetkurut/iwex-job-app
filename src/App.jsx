@@ -11,7 +11,7 @@ const App = () => {
     <>
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && <Header />}
       <Main />
-      {navigate.pathname !== "/login" && <Footer />}
+      {/* {navigate.pathname !== "/login" && <Footer />} */}
     </>
   );
 };

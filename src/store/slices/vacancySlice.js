@@ -24,8 +24,10 @@ export const send_create_vacancy = createAsyncThunk(
       if (response.status !== 201) {
         throw new Error("Server Error, unable to sign in");
       }
+      console.log(response);
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }
@@ -156,5 +158,5 @@ const vacancySlice = createSlice({
   },
 });
 
-export const {} = vacancySlice.actions;
+export const { } = vacancySlice.actions;
 export default vacancySlice.reducer;
