@@ -3,14 +3,13 @@ import styles from "./students.module.sass";
 import { useEffect, useState } from "react";
 import { getAllEmployee, getEmployeeFilter } from "../../store/slices/employeeDetailsSlice";
 import Loaders from "../../UI/loaders";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Avatar, Box, Tab } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabList } from "@mui/lab";
 import { useLocation } from "react-router-dom";
 const Students = () => {
   const dispatch = useDispatch();
-  ;
-let { state } = useLocation();
+  let { state } = useLocation();
   const { employee, isLoading, employeeFilter } = useSelector((state) => state.employeeDetails);
   const [value, setValue] = useState(true);
   console.log(state);
