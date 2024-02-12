@@ -84,10 +84,10 @@ const EditVacancy = ({ onclose }) => {
                 onChange={(e) => setValueinput("branch", e.target.value)}>
                 {Array.isArray(branch)
                   ? branch.map((item) => (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item?.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem key={item.id} value={item.id}>
+                      {item?.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Select>
             </FormControl>

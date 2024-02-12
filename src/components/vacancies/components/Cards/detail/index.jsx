@@ -55,51 +55,51 @@ const CardDetail = () => {
         </div>
         <div className={styles.card}>
           <div className={styles.card_data_titles}>
-            <h3 className={styles.card_data}>
+            <p className={styles.card_data}>
               <li>
                 Зарплата: <span>{detailVacancy?.salary}</span>
               </li>
-            </h3>
-            <h3 className={styles.card_data}>
+            </p>
+            <p className={styles.card_data}>
               <li>Город: {detailVacancy?.branch_city}</li>
-            </h3>
-            <h3 className={styles.card_data}>
+            </p>
+            <p className={styles.card_data}>
               <li>Филиал: {detailVacancy?.branch_address}</li>
-            </h3>
-            <h3 className={styles.card_data}>
+            </p>
+            <p className={styles.card_data}>
               <li>Дресс-Код: {detailVacancy?.clothingform}</li>
-            </h3>
+            </p>
             <h3 className={styles.card_data}>
               <li>Начало времени работы: {detailVacancy?.time_start}</li>
             </h3>
-            <h3 className={styles.card_data}>
+            <p className={styles.card_data}>
               <li>Конец времени работы: {detailVacancy?.time_end}</li>
-            </h3>
+            </p>
           </div>
           <div className={styles.card_data_desc}>
-            <h3 className={styles.trebovanya}>
+            <div className={styles.trebovanya}>
               Требования работадателя:
-              <h3 className={styles.card_data}>
+              <p className={styles.card_data}>
                 <li>
                   Стаж работы: <span>{detailVacancy?.experience}</span>
                 </li>
-              </h3>
-              <h3>
+              </p>
+              <p>
                 <li>
                   Знание немецкого: <span>{detailVacancy?.language_german}</span>
                 </li>
-              </h3>
-              <h3>
+              </p>
+              <p>
                 <li>
                   Знание английского: <span>{detailVacancy?.language_english}</span>
                 </li>
-              </h3>
-              <h3>
+              </p>
+              <p>
                 <li>
                   Количество мест на вакансию: <span>{detailVacancy?.employee_count}</span>
                 </li>
-              </h3>
-            </h3>
+              </p>
+            </div>
           </div>
           <div className={styles.responsibilities}>
             <h3 className={styles.responsibilities_title}>
