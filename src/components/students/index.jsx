@@ -3,10 +3,13 @@ import styles from "./students.module.sass";
 import { useEffect, useRef, useState } from "react";
 import { getAllEmployee, getEmployeeFilter } from "../../store/slices/employeeDetailsSlice";
 import Loaders from "../../UI/loaders";
+import { CgCalendarToday } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { Avatar, Box, Tab } from "@mui/material";
+import { MdOutlinePhone } from "react-icons/md";
 import { TabContext, TabList } from "@mui/lab";
 import { useLocation } from "react-router-dom";
+import { FaGenderless } from "react-icons/fa";
 
 const Students = () => {
   const dispatch = useDispatch();
@@ -62,11 +65,18 @@ const Students = () => {
                 </div>
                 <div className={styles.card_descriptions}>
                   <h3 className={styles.user_data}>Личные данные:</h3>
-                  <p className={styles.number}>
-                    <span>Номер телефона: {elem?.phone}</span>
+                  <div className={styles.number}>
+                    <MdOutlinePhone className={styles.icon_phone} />
+                    <span className={styles.phone_num}>Номер телефона: {elem?.phone}</span>
+                  </div>
+                  <p className={styles.birth_day}>
+                    <CgCalendarToday />
+                    День рождение:{elem?.date_of_birth}
                   </p>
-                  <p className={styles.birth_day}>День рождение:{elem?.date_of_birth}</p>
-                  <p className={styles.graphic_day}>Пол:{elem?.gender_en}</p>
+                  <p className={styles.graphic_day}>
+                    <FaGenderless />
+                    Пол:{elem?.gender_en}
+                  </p>
                 </div>
                 <div className={styles.card_button}>
                   <Link
