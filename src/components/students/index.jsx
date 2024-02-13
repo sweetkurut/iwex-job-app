@@ -15,7 +15,7 @@ const Students = () => {
   const dispatch = useDispatch();
   let { state } = useLocation();
   const { employee, isLoading } = useSelector((state) => state.employeeDetails);
-  const [value, setValue] = useState(true);
+  const [value, setValue] = useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -27,7 +27,7 @@ const Students = () => {
     } else {
       dispatch(getAllEmployee());
     }
-  }, [value, state]);
+  }, [value, state, dispatch]);
 
   return (
     <div className={styles.wrapper}>
