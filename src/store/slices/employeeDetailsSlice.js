@@ -49,7 +49,7 @@ export const sendInvitation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await allAPIs.sendInvitation(data);
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
@@ -164,5 +164,5 @@ const employeeDetailsSlice = createSlice({
   },
 });
 
-export const {} = employeeDetailsSlice.actions;
+export const { } = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;

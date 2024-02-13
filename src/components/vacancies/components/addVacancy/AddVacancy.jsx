@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import s from './AddVacancy.module.sass';
 import { Breadcrumbs, Checkbox, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { CSSTransition } from 'react-transition-group';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
