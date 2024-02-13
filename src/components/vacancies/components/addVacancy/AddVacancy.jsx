@@ -19,8 +19,8 @@ import { Box } from '@mui/system';
 
 const AddVacancy = () => {
     const navigate = useNavigate();
-    const { branch, position, isLoading } = useSelector(state => state.companyDetails);
-    const { isLoading: vacancyLoading } = useSelector(state => state.vacancy);
+    const { branch, position, isLoading } = useSelector((state) => state.companyDetails);
+    const { isLoading: vacancyLoading } = useSelector((state) => state.vacancy);
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({
         increase_choices: false,
@@ -33,66 +33,64 @@ const AddVacancy = () => {
 
     const handleInputChange = (e) => {
         const { name, value, checked } = e.target;
-        setData(prevData => ({
+        setData((prevData) => ({
             ...prevData,
-            [name]: name === 'increase_choices' ? checked : value,
+            [name]: name === "increase_choices" ? checked : value,
         }));
     };
 
     const getTime = (e, name) => {
         if (e === null) {
-            const defaultTime = name === 'time_start' ? '09:00' : '18:00';
-            setData(prevData => ({
+            const defaultTime = name === "time_start" ? "09:00" : "18:00";
+            setData((prevData) => ({
                 ...prevData,
                 [name]: defaultTime,
             }));
         } else {
-            const hours = e.hour().toString().padStart(2, '0');
-            const minutes = e.minute().toString().padStart(2, '0');
+            const hours = e.hour().toString().padStart(2, "0");
+            const minutes = e.minute().toString().padStart(2, "0");
             const timeString = `${hours}:${minutes}`;
-            setData(prevData => ({
+            setData((prevData) => ({
                 ...prevData,
                 [name]: timeString,
             }));
         }
     };
 
-    const [modalMessage, setModalMessage] = useState({ title: '', text: '' });
+    const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
 
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await dispatch(send_create_vacancy(data));
-            console.log('response', response);
+            console.log("response", response);
             if (response) {
-                setModalMessage({ title: 'Успех', text: 'Вакансия успешно добавлена', vacancy: true });
+                setModalMessage({ title: "Успех", text: "Вакансия успешно добавлена", vacancy: true });
                 setOpen(true);
             }
         } catch (error) {
-            console.error('error', error);
-            setModalMessage({ title: 'Ошибка', text: 'При добавлении вакансии произошла ошибка' });
+            console.error("error", error);
+            setModalMessage({ title: "Ошибка", text: "При добавлении вакансии произошла ошибка" });
             setOpen(true);
         }
     };
 
     const handleClose = () => {
-        modalMessage.vacancy && navigate('/vacancies');
+        modalMessage.vacancy && navigate("/vacancies");
         setOpen(false);
     };
-    const level_language = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-
-
+    const level_language = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
     // position
-    const [value_position, setValue_position] = useState('');
+    const [value_position, setValue_position] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const handlerAddPosition = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
             const response = await dispatch(sendPositionEmployee({ name: value_position }));
             if (response) {
                 dispatch(getPositionEmployee());
-                setModalMessage({ title: 'Успех', text: 'Позиция успешно добавлена' });
+                setModalMessage({ title: "Успех", text: "Позиция успешно добавлена" });
                 setOpen(true);
                 setIsOpen(!isOpen);
             }
@@ -101,10 +99,9 @@ const AddVacancy = () => {
         }
     };
     const toggleDiv = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setIsOpen(!isOpen);
     };
-
 
     const modalConfirm = () => {
         return (
@@ -113,15 +110,10 @@ const AddVacancy = () => {
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {modalMessage.title}
-                    </DialogTitle>
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title">{modalMessage.title}</DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            {modalMessage.text}
-                        </DialogContentText>
+                        <DialogContentText id="alert-dialog-description">{modalMessage.text}</DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} autoFocus>
@@ -130,15 +122,16 @@ const AddVacancy = () => {
                     </DialogActions>
                 </Dialog>
             </React.Fragment>
-        )
+        );
     };
     return (
         <>
-            {isLoading || vacancyLoading && (
-                <Box className={s.loading} sx={{ display: "flex" }}>
-                    <CircularProgress />
-                </Box>
-            )}
+            {isLoading ||
+                (vacancyLoading && (
+                    <Box className={s.loading} sx={{ display: "flex" }}>
+                        <CircularProgress />
+                    </Box>
+                ))}
             {open && modalConfirm()}
             <div className={s.container}>
                 <div style={{ marginBottom: 50 }}>
@@ -152,24 +145,28 @@ const AddVacancy = () => {
                         </Typography>
                     </Breadcrumbs>
                 </div>
-                <form style={{ opacity: isLoading || vacancyLoading ? 0.5 : 1 }} onSubmit={(e) => onSubmit(e)} >
-
+                <form
+                    style={{ opacity: isLoading || vacancyLoading ? 0.5 : 1 }}
+                    onSubmit={(e) => onSubmit(e)}>
                     <div className={s.wrapper}>
                         <div className={s.box}>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Филиал</InputLabel>
                                 <Select
-                                    name='branch'
+                                    name="branch"
                                     required
                                     className={s.input}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     label="Филиал"
-                                    value={data.branch || ''}
-                                    onChange={handleInputChange}
-                                >
+                                    value={data.branch || ""}
+                                    onChange={handleInputChange}>
                                     {branch?.map((item, index) => (
-                                        <MenuItem className={s.item} style={{ alignItems: 'flex-start' }} key={index} value={item?.id}>
+                                        <MenuItem
+                                            className={s.item}
+                                            style={{ alignItems: "flex-start" }}
+                                            key={index}
+                                            value={item?.id}>
                                             <div className={s.box_span}>
                                                 <span>филиал: </span>
                                                 <span>{item?.name}</span>
@@ -177,46 +174,47 @@ const AddVacancy = () => {
                                             <div className={s.box_span}>
                                                 <span>город: </span>
                                                 <span>{item?.city}</span>
-
                                             </div>
-
                                         </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
                             <div>
-                                <button className={s.add} onClick={toggleDiv}>Добавить позицию</button>
+                                <button className={s.add} onClick={toggleDiv}>
+                                    Добавить позицию
+                                </button>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Позиции</InputLabel>
                                     <Select
-                                        name='position'
+                                        name="position"
                                         required
                                         className={s.input}
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         label="Позиции"
-                                        value={data.position || ''}
-                                        onChange={handleInputChange}
-                                    >
+                                        value={data.position || ""}
+                                        onChange={handleInputChange}>
                                         {position?.map((item, index) => (
-                                            <MenuItem className={s.item} style={{ alignItems: 'flex-start' }} key={index} value={item?.id}>
+                                            <MenuItem
+                                                className={s.item}
+                                                style={{ alignItems: "flex-start" }}
+                                                key={index}
+                                                value={item?.id}>
                                                 <div className={s.box_span}>
                                                     <span>позиция: </span>
                                                     <span>{item?.name}</span>
                                                 </div>
-
                                             </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
                             </div>
-                            <div className={`${s.content} ${isOpen ? s.open : ''}`}>
+                            <div className={`${s.content} ${isOpen ? s.open : ""}`}>
                                 <FormControl fullWidth>
-
                                     <TextField
                                         id="outlined-basic"
-                                        name='employee_count'
-                                        value={value_position || ''}
+                                        name="employee_count"
+                                        value={value_position || ""}
                                         label="Введите название позиции"
                                         variant="outlined"
                                         onChange={(text) => setValue_position(text.target.value)}
@@ -230,13 +228,14 @@ const AddVacancy = () => {
                             <TextField
                                 className={s.input}
                                 id="outlined-basic"
-                                name='employee_count'
+                                name="employee_count"
                                 required
                                 type="number"
-                                value={data.employee_count || ''}
+                                value={data.employee_count || ""}
                                 label="Количество работников"
                                 variant="outlined"
-                                onChange={handleInputChange} />
+                                onChange={handleInputChange}
+                            />
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
                                     slotProps={{
@@ -244,11 +243,12 @@ const AddVacancy = () => {
                                             required: true,
                                         },
                                     }}
-                                    name='time_start'
+                                    name="time_start"
                                     className={s.input}
                                     label="Начало рабочего дня:"
                                     ampm={false}
-                                    onChange={(time) => getTime(time, 'time_start')} />
+                                    onChange={(time) => getTime(time, "time_start")}
+                                />
                             </LocalizationProvider>
 
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -258,78 +258,77 @@ const AddVacancy = () => {
                                             required: true,
                                         },
                                     }}
-                                    name='time_end'
+                                    name="time_end"
                                     className={s.input}
                                     label="Конец рабочего дня:"
                                     required
                                     ampm={false}
-                                    onChange={(time) => getTime(time, 'time_end')} />
+                                    onChange={(time) => getTime(time, "time_end")}
+                                />
                             </LocalizationProvider>
 
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Опыт работы</InputLabel>
                                 <Select
                                     required
-                                    name='experience'
+                                    name="experience"
                                     className={s.input}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     label="Опыт работы"
-                                    value={data.experience || ''}
-                                    onChange={handleInputChange}
-                                >
-                                    {['Без опыта работы', 'От 1 года', 'От 2х лет', 'От 3х лет']?.map((item, index) => (
-                                        <MenuItem key={index} value={item}>
-                                            <div className={s.box_span}>
-                                                {item}
-                                            </div>
-
-                                        </MenuItem>
-                                    ))}
+                                    value={data.experience || ""}
+                                    onChange={handleInputChange}>
+                                    {["Без опыта работы", "От 1 года", "От 2х лет", "От 3х лет"]?.map(
+                                        (item, index) => (
+                                            <MenuItem key={index} value={item}>
+                                                <div className={s.box_span}>{item}</div>
+                                            </MenuItem>
+                                        )
+                                    )}
                                 </Select>
                             </FormControl>
                             <TextField
-                                value={data.salary || ''}
+                                value={data.salary || ""}
                                 className={s.input}
                                 required
                                 id="outlined-basic"
-                                name='salary'
+                                name="salary"
                                 type="number"
                                 label="Зарплата"
                                 variant="outlined"
-                                onChange={handleInputChange} />
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center'
-                            }}>
+                                onChange={handleInputChange}
+                            />
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}>
                                 <Checkbox
-                                    name='increase_choices'
+                                    name="increase_choices"
                                     checked={data?.increase_choices}
                                     onChange={handleInputChange}
-                                    inputProps={{ 'aria-label': 'controlled' }}
+                                    inputProps={{ "aria-label": "controlled" }}
                                 />
-                                <p className={s.text}>Вы готовы увеличить зарплату, если сотрудник предложит свою собственную?</p>
+                                <p className={s.text}>
+                                    Вы готовы увеличить зарплату, если сотрудник предложит свою собственную?
+                                </p>
                             </div>
 
                             <p className={s.text}>Соискатель должен знать:</p>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Английский</InputLabel>
                                 <Select
-                                    name='language_english'
+                                    name="language_english"
                                     required
                                     className={s.input}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     label="Английский"
-                                    value={data.language_english || ''}
-                                    onChange={handleInputChange}
-                                >
+                                    value={data.language_english || ""}
+                                    onChange={handleInputChange}>
                                     {level_language?.map((item, index) => (
                                         <MenuItem key={index} value={item}>
-                                            <div className={s.box_span}>
-                                                {item}
-                                            </div>
-
+                                            <div className={s.box_span}>{item}</div>
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -337,31 +336,26 @@ const AddVacancy = () => {
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Немецкий</InputLabel>
                                 <Select
-                                    name='language_german'
+                                    name="language_german"
                                     required
                                     className={s.input}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     label="Английский"
-                                    value={data.language_german || ''}
-                                    onChange={handleInputChange}
-                                >
+                                    value={data.language_german || ""}
+                                    onChange={handleInputChange}>
                                     {level_language?.map((item, index) => (
                                         <MenuItem key={index} value={item}>
-                                            <div className={s.box_span}>
-                                                {item}
-                                            </div>
-
+                                            <div className={s.box_span}>{item}</div>
                                         </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
-
                         </div>
                         <div className={s.box_right_input}>
                             <TextField
-                                value={data?.description || ''}
-                                name='description'
+                                value={data?.description || ""}
+                                name="description"
                                 className={s.textarea}
                                 id="outlined-multiline-static"
                                 label="Описание"
@@ -372,8 +366,8 @@ const AddVacancy = () => {
                                 onChange={handleInputChange}
                             />
                             <TextField
-                                value={data?.duty || ''}
-                                name='duty'
+                                value={data?.duty || ""}
+                                name="duty"
                                 className={s.textarea}
                                 id="outlined-multiline-static"
                                 label="Требование"
@@ -384,8 +378,8 @@ const AddVacancy = () => {
                                 onChange={handleInputChange}
                             />
                             <TextField
-                                value={data?.clothingform || ''}
-                                name='clothingform'
+                                value={data?.clothingform || ""}
+                                name="clothingform"
                                 className={s.textarea}
                                 id="outlined-multiline-static"
                                 label="Форма одежды"
@@ -398,13 +392,14 @@ const AddVacancy = () => {
                     </div>
                     <div className={s.box_button}>
                         <button className={s.btn}>Сохранить</button>
-                        <Link className={s.btn} to='/'>Отмена</Link>
+                        <Link className={s.btn} to="/">
+                            Отмена
+                        </Link>
                     </div>
                 </form>
-            </div >
-
+            </div>
         </>
-    )
-}
+    );
+};
 
 export default AddVacancy;
