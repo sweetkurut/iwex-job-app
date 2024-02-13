@@ -78,50 +78,50 @@ export const getMyBranchDetail = createAsyncThunk(
 );
 
 export const sendAddBranch = createAsyncThunk(
-    "companyDetails/sendAddBranch",
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await allAPIs.sendAddBranch(data);
-            if (response.status !== 201) {
-                throw new Error("Server Error, unable to sign in");
-            }
-            console.log(response);
-            return response.data
-        } catch (error) {
-            console.log(error);
-            return rejectWithValue(error);
-        }
+  "companyDetails/sendAddBranch",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.sendAddBranch(data);
+      if (response.status !== 201) {
+        throw new Error("Server Error, unable to sign in");
+      }
+      console.log(response);
+      return response.data
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
     }
+  }
 );
 
 export const patchBranchData = createAsyncThunk(
-    "companyDetails/patchBranchData",
-    async ([id, data], { rejectWithValue }) => {
-        console.log(id, data);
-        try {
-            const response = await allAPIs.patchBranchData(id, data);
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.response.data.error);
-        }
+  "companyDetails/patchBranchData",
+  async ([id, data], { rejectWithValue }) => {
+    console.log(id, data);
+    try {
+      const response = await allAPIs.patchBranchData(id, data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
     }
+  }
 );
 
 export const getCity = createAsyncThunk(
-    "companyDetails/getCity",
-    async (value, { rejectWithValue }) => {
-        try {
-            const response = await allAPIs.getCity(value);
-            if (response.status !== 200) {
-                throw new Error("Server Error, unable to sign in");
-            }
-            console.log(response);
-            return response.data
-        } catch (error) {
-            console.log(error);
-            return rejectWithValue(error.response.data.error);
-        }
+  "companyDetails/getCity",
+  async (value, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getCity(value);
+      if (response.status !== 200) {
+        throw new Error("Server Error, unable to sign in");
+      }
+      console.log(response);
+      return response.data
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
     }
+  }
 );
 
 export const getDataProfile = createAsyncThunk(
@@ -147,6 +147,7 @@ export const sendPositionEmployee = createAsyncThunk(
       if (response.status !== 201) {
         throw new Error("Server Error, unable to sign in");
       }
+      return response.data
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
@@ -230,36 +231,36 @@ const companyDetailsSlice = createSlice({
         state.error = null;
       })
 
-            .addCase(getMyBranch.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(getMyBranch.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.branch = action.payload;
-            })
-            .addCase(getMyBranch.rejected, (state) => {
-                state.isLoading = false;
-                state.error = null
-            })
-            .addCase(patchBranchData.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(patchBranchData.fulfilled, (state, action) => {
-                state.isLoading = false;
-            })
-            .addCase(patchBranchData.rejected, (state) => {
-                state.isLoading = false;
-            })
-            .addCase(sendAddBranch.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(sendAddBranch.fulfilled, (state, action) => {
-                state.isLoading = false;
-            })
-            .addCase(sendAddBranch.rejected, (state) => {
-                state.isLoading = false;
-            })
+      .addCase(getMyBranch.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getMyBranch.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.branch = action.payload;
+      })
+      .addCase(getMyBranch.rejected, (state) => {
+        state.isLoading = false;
+        state.error = null
+      })
+      .addCase(patchBranchData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(patchBranchData.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(patchBranchData.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(sendAddBranch.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendAddBranch.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(sendAddBranch.rejected, (state) => {
+        state.isLoading = false;
+      })
 
       .addCase(getMyBranchDetail.pending, (state) => {
         state.isLoading = true;
@@ -336,5 +337,5 @@ const companyDetailsSlice = createSlice({
   },
 });
 
-export const {} = companyDetailsSlice.actions;
+export const { } = companyDetailsSlice.actions;
 export default companyDetailsSlice.reducer;

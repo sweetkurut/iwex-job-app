@@ -115,7 +115,7 @@ const CardDetail = () => {
             </span>
           </div>
           <div className={styles.btn_wrap}>
-            <Link to={`/edit-detail-vacancy/${id}`} className={styles.btn}>
+            <Link to={"/vacancy"} state={{ id_vacancy: id }} className={styles.btn}>
               <CiEdit className={styles.edit_icon} />
               Редактировать данные
             </Link>
@@ -126,8 +126,7 @@ const CardDetail = () => {
           Найти студента
         </Link>
       </div>
-      {isShow ? <EditVacancy onclose={() => setIsShow(false)} /> : null}
-    </div>
+    </div >
   );
 };
 

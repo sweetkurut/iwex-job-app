@@ -35,7 +35,7 @@
     margin-top: 20px
     .btn
         padding: 10px 20px
-        background: #135597
+        background: #139720
         color: #fff
         border: none
         border-radius: 5px
@@ -43,7 +43,7 @@
         transition: background 0.3s
 
         &:hover
-            background: #0d3f6d
+            background: #14a722
 
         &:nth-child(2)
             background: #f00
@@ -74,3 +74,74 @@
 .text
     padding-left: 15px
     color: #7f7f7f
+
+.add
+    color: #006aff
+    cursor: pointer
+    display: flex
+    padding: 20
+    text-decoration: underline
+    margin-left: auto
+
+.content
+    border-radius: 5px
+    background: #d9d9d990
+    opacity: 0
+    transition: all 0.3s
+    max-height: 0
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 10px
+    input
+        background: #FFF
+        border-radius: 5px
+    &.open
+        opacity: 1
+        max-height: 120px
+        padding: 10px
+    button
+        padding: 5px 10px
+        background: #139720
+        color: #fff
+        border: none
+        border-radius: 5px
+        cursor: pointer
+        transition: background 0.3s
+        margin-right: 10px
+
+        &:hover
+            background: #14a722
+        &:nth-child(2)
+            background: #f00
+
+            &:hover
+                background: #d00
+
+.breadcrumbs
+    padding-top: 45px
+    font-family: "Gilroy"
+    position: relative
+    &::after
+        content: ''
+        position: absolute
+        bottom: -10px
+        background: #000
+        opacity: 0.8
+        height: 1px
+        width: 100%
+        border-radius: 10px
+    .link_to_home
+        display: flex
+        align-items: center
+        font-size: 18px
+    .typography
+        font-family: "Gilroy"
+
+.loading
+    position: absolute
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center

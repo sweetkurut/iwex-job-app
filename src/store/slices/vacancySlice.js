@@ -41,8 +41,10 @@ export const getVacancyEmployer = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error("Server Error, unable to sign in");
       }
+
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }
@@ -74,8 +76,7 @@ export const editVacancy = createAsyncThunk(
       }
       console.log(response);
       return response.data;
-    } catch (error)
-    {
+    } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data.error);
     }

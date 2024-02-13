@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import Company from "./components/company/Company";
 import Branch from "./components/branch/Branch";
 import { useState } from "react";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Tab } from "@mui/material";
 import { Box } from "@mui/system";
+import { TabContext, TabList } from "@mui/lab";
+import Position from "./components/position/Position";
 
 const Profile = () => {
   const { isLoading } = useSelector((state) => state.companyDetails);
@@ -19,29 +21,30 @@ const Profile = () => {
         return <Branch setComponent={setComponent} />;
       case "editCompany":
         return <EditCompany setComponent={setComponent} />;
+      case "position":
+        return <Position />
       default:
         return null;
     }
   };
-  const activeComponent = (component) => {
+  const activeComponent = (e, component) => {
     setComponent(component);
   };
   return (
     <div className={s.container}>
       <p className={s.title}>Профиль</p>
-      <ul className={s.ul}>
-        <li
-          onClick={() => activeComponent("company")}
-          className={component === "company" ? s.active : ""}>
-          Данные о компании
-        </li>
-        <li
-          onClick={() => activeComponent("branch")}
-          className={component === "branch" ? s.active : ""}>
-          Филиалы
-        </li>
-      </ul>
 
+      <Box sx={{ width: "100%", marginBottom: 5 }}>
+        <TabContext value={component}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList onChange={activeComponent} aria-label="lab API tabs example">
+              <Tab label="Данные о компании" value='company' />
+              <Tab label="Филиалы" value='branch' />
+              <Tab label="Позиции" value='position' />
+            </TabList>
+          </Box>
+        </TabContext>
+      </Box>
       {isLoading && (
         <Box className={s.loading} sx={{ display: "flex" }}>
           <CircularProgress />
