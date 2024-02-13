@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from "react";
-import s from "./AddVacancy.module.sass";
-import {
-  Breadcrumbs,
-  Checkbox,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { CSSTransition } from "react-transition-group";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import {
-  getMyBranch,
-  getPositionEmployee,
-  sendPositionEmployee,
-} from "../../../../store/slices/companyDetailsSlice";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers";
-import { send_create_vacancy } from "../../../../store/slices/vacancySlice";
-import { Link, useNavigate } from "react-router-dom";
-import { GoHome } from "react-icons/go";
-import { Box } from "@mui/system";
+import React, { useEffect, useState } from 'react';
+import s from './AddVacancy.module.sass';
+import { Breadcrumbs, Checkbox, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { getMyBranch, getPositionEmployee, sendPositionEmployee } from '../../../../store/slices/companyDetailsSlice';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers';
+import { send_create_vacancy } from '../../../../store/slices/vacancySlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { GoHome } from 'react-icons/go';
+import { Box } from '@mui/system';
 
 const AddVacancy = () => {
   const navigate = useNavigate();

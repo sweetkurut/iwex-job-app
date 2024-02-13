@@ -43,12 +43,13 @@ const Position = () => {
                         name='employee_count'
                         label="Введите название позиции"
                         variant="outlined"
+                        value={value}
                         onChange={(e) => setValue(e.target.value)}
                     />
 
                 </FormControl>
                 <button onClick={onSubmit}>Добавить</button>
-                <button>Стереть</button></div>
+                <button onClick={() => setValue('')}>Стереть</button></div>
             <ul className={s.ul}>
                 <li>
                     <span>номер</span>
