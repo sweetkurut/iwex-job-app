@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./detail.module.sass";
 import { Avatar, Breadcrumbs, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
@@ -7,14 +7,12 @@ import { getVacancyDetail } from "../../../../../store/slices/vacancySlice";
 import Loaders from "../../../../../UI/loaders";
 import { GoHome } from "react-icons/go";
 import { CiEdit } from "react-icons/ci";
-import EditVacancy from "../edit/edit";
 import { RiSearchLine } from "react-icons/ri";
 
 const CardDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { detailVacancy, isLoading } = useSelector((state) => state.vacancy);
-  const [isShow, setIsShow] = useState();
 
   // const showEditForm = () => {
   //   setIsShow(!isShow);
@@ -126,7 +124,7 @@ const CardDetail = () => {
           Найти студента
         </Link>
       </div>
-    </div >
+    </div>
   );
 };
 
