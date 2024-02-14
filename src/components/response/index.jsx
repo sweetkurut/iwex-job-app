@@ -4,19 +4,22 @@ import { useEffect } from "react";
 import { getInvitation } from "../../store/slices/employeeDetailsSlice";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
+import Loaders from "../../UI/loaders";
 
 const Response = () => {
   const dispatch = useDispatch();
   const { invitation } = useSelector((state) => state.employeeDetails);
+  const { isLoading } = useSelector((state) => state.vacancy);
   console.log(invitation);
 
   useEffect(() => {
     dispatch(getInvitation());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
+        {isLoading && <Loaders />}
         <h2 className={styles.title}>Отклики</h2>
         <div className={styles.cards}>
           {invitation && invitation.length > 0 ? (
