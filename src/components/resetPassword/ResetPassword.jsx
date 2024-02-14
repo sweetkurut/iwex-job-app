@@ -3,47 +3,66 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import s from './SignIn.module.sass';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { sendSignIn } from '../../store/slices/userSlice';
-import { saveCookie } from '../../utils/js_cookie';
-import { useNavigate } from 'react-router-dom';
-const SignIn = ({ setComponent }) => {
-    const navigate = useNavigate();
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import s from './ResetPassword.module.sass'
+import { sendResetPassword, sendSignUp } from '../../store/slices/userSlice';
+const Copyright = (props) => {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Авторские права © '}
+            <Link color="inherit" href="https://mui.com/">
+                Iwex
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
+
+const ResetPassword = ({ setComponent, setEmail }) => {
+
+    const dispatch = useDispatch()
+    const [isChecked, setChecked] = useState();
     const [verificationError, setVerificationError] = useState('');
+
+
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const dispatch = useDispatch();
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
 
     const onSubmit = async (formData) => {
         const data = {
             email: formData.email,
-            password: formData.password,
         };
-
         try {
-            const response = await dispatch(sendSignIn(data)).unwrap();
-            saveCookie('accessToken', response.access)
-            navigate('/vacancies');
+            const response = await dispatch(sendResetPassword(data)).unwrap();
+            setComponent('confirmEmail');
+            setEmail(formData.email)
+
         } catch (error) {
-            console.log(error);
-            setVerificationError(error?.error || 'An unknown error occurred');
+            setVerificationError(error?.email || 'An unknown error occurred');
         }
     };
 
-    const handleSignUp = (name) => {
-        setComponent(name);
-    };
+
+
+    const handleSignIn = () => {
+        setComponent('SignIn');
+    }
 
     return (
+
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -58,7 +77,7 @@ const SignIn = ({ setComponent }) => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Вход
+                    Сброс пароля
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
@@ -77,50 +96,53 @@ const SignIn = ({ setComponent }) => {
                                         message: 'Неверный адрес электронной почты',
                                     },
                                 })}
-                                error={Boolean(errors.password) || Boolean(verificationError)}
+                                error={Boolean(errors.verification_code) || Boolean(verificationError)}
+                                helperText={errors.verification_code?.message || verificationError}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        color="primary"
+                                        checked={isChecked}
+                                        onChange={(e) => setChecked(e.target.checked)}
+                                        {...register('checked', {
+                                            required: 'Это поле обязательно для выбора',
+                                        })}
+                                    />
+                                }
+                                label="Политика конфиденциальности"
+                            />
+                            {errors.checked && (
+                                <Typography variant="body2" color="error" className={s.errorText}>
+                                    {errors.checked.message}
+                                </Typography>
+                            )}
+                        </Grid>
 
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="password"
-                                label="Пароль"
-                                name="password"
-                                autoComplete="password"
-                                type="password"
-                                error={Boolean(errors.password) || Boolean(verificationError)}
-                                helperText={errors.password?.message || verificationError}
-                                {...register('password', { required: 'Введите пароль' })}
-                            />
-                        </Grid>
                     </Grid>
-
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Войти
+                        Восстановить
                     </Button>
-                    <Grid container style={{ flexDirection: 'column' }}>
-                        <Grid item xs>
-                            <Link onClick={() => handleSignUp('resetPassword')} variant="body2" className={s.link}>
-                                Забыли пароль?
-                            </Link>
-                        </Grid>
+                    <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link onClick={() => handleSignUp('SignUp')} variant="body2" className={s.link}>
-                                Нет учетной записи? Зарегистрируйтесь
+                            <Link onClick={handleSignIn} variant="body2" className={s.link} >
+                                Назад
                             </Link>
                         </Grid>
                     </Grid>
                 </Box>
             </Box>
+            <Copyright sx={{ mt: 5 }} />
         </Container>
-    );
-};
 
-export default SignIn;
+    );
+}
+
+export default ResetPassword
