@@ -39,7 +39,50 @@ const CardDetail = () => {
             </Typography>
           </Breadcrumbs>
           {isLoading && <Loaders />}
-          <Avatar
+          <div className={styles.user_img}>
+            <Avatar
+              src={detailVacancy.employer_company_icon}
+              alt="user-photo"
+              loading="lazy"
+              sx={{
+                width: "250px",
+                objectFit: "cover",
+                height: "250px",
+                borderRadius: "20px",
+                background: '#cacaca',
+                zIndex: -1
+              }}
+            />
+            <div className={styles.userName_surname}>
+              <div className={styles.box_name}>
+                <h4>{detailVacancy?.name_vacancies} {detailVacancy?.position} </h4>
+                <p><span>Филиал: </span>{detailVacancy?.branch}</p>
+                <p><span>Город:</span> {detailVacancy?.city}</p>
+              </div>
+              <div className={styles.wrapper_btn}>
+                <p className={styles.phone}>{detailVacancy?.salary} Euro</p>
+                <Link to={"/students"} state={{ id_vacancy: id }} className={styles.btn}>Найти студента</Link>
+              </div>
+            </div>
+          </div>
+          <div className={styles.ul}>
+            <h4>Основная информация(ru)</h4>
+            <p><span>Начало времени работы:</span> <span>{detailVacancy?.time_start}</span></p>
+            <p><span>Конец времени работы:</span> <span>{detailVacancy?.time_end}</span></p>
+            <p><span>Область/Регион:</span> <span>{detailVacancy?.birth_region_ru}</span></p>
+          </div>
+
+          <div className={styles.ul}>
+            <h4>Требования(ru)</h4>
+            <p><span>Стаж работы:</span> <span>{detailVacancy?.experience}</span></p>
+            <p><span>Конец времени работы:</span> <span>{detailVacancy?.time_end}</span></p>
+            <p><span>Область/Регион:</span> <span>{detailVacancy?.birth_region_ru}</span></p>
+          </div>
+
+
+
+
+          {/* <Avatar
             alt="Remy Sharp"
             src={detailVacancy?.employer_company_icon}
             sx={{ width: 250, height: 250 }}
@@ -111,18 +154,9 @@ const CardDetail = () => {
                 Дата публикации {detailVacancy?.created_date}
               </p>
             </span>
-          </div>
-          <div className={styles.btn_wrap}>
-            <Link to={"/vacancy"} state={{ id_vacancy: id }} className={styles.btn}>
-              <CiEdit className={styles.edit_icon} />
-              Редактировать данные
-            </Link>
-          </div>
+          </div> */}
+
         </div>
-        <Link to={"/students"} state={{ id_vacancy: id }} className={styles.link_search_btn}>
-          <RiSearchLine />
-          Найти студента
-        </Link>
       </div>
     </div>
   );
