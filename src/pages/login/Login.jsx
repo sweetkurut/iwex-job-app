@@ -6,6 +6,7 @@ import EnterPassword from "../../components/enterPassword/enterPassword";
 import s from "./Login.module.sass";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSelector } from "react-redux";
+import ResetPassword from "../../components/resetPassword/ResetPassword";
 
 const Login = () => {
   const [component, setComponent] = useState("SignIn");
@@ -22,6 +23,8 @@ const Login = () => {
         return <ConfirmEmail setComponent={setComponent} email={email} />;
       case "enterPassword":
         return <EnterPassword setComponent={setComponent} email={email} />;
+      case "resetPassword":
+        return <ResetPassword setComponent={setComponent} email={email} />;
       default:
         return null;
     }
