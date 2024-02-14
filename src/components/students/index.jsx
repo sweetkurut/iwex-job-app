@@ -10,6 +10,7 @@ import { MdOutlinePhone } from "react-icons/md";
 import { TabContext, TabList } from "@mui/lab";
 import { useLocation } from "react-router-dom";
 import { FaGenderless } from "react-icons/fa";
+import { SceletonCardStudents } from "../SceletonLoading/SceletonLoading";
 
 const Students = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Students = () => {
         </Box>
         <div className={styles.cards}>
           {isLoading ? (
-            <Loaders />
+            <SceletonCardStudents />
           ) : employee && employee.length > 0 ? (
             employee.map((elem) => (
               <div className={styles.card} key={elem?.id}>

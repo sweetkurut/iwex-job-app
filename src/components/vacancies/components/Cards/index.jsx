@@ -9,24 +9,22 @@ import { WiTime9 } from "react-icons/wi";
 import { TbEyeSearch } from "react-icons/tb";
 import { getVacancyEmployer } from "../../../../store/slices/vacancySlice";
 import Loaders from "../../../../UI/loaders";
+import { SceletonCardVacancy } from "../../../SceletonLoading/SceletonLoading";
 
 const Cards = () => {
   const dispatch = useDispatch();
   const { vacancyEmployer, isLoading } = useSelector((state) => state.vacancy);
 
-  // console.log(vacancyEmployer);
-
   useEffect(() => {
     dispatch(getVacancyEmployer());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className={styles.cards}>
-      {isLoading && <Loaders />}
-      {vacancyEmployer && vacancyEmployer.length > 0 ? (
+      {isLoading ? (
+        <SceletonCardVacancy />
+      ) : vacancyEmployer && vacancyEmployer.length > 0 ? (
         vacancyEmployer.map((elem) => (
-          // eslint-disable-next-line react/jsx-key
           <div className={styles.card} key={elem?.id}>
             <div className={styles.vacancies_name}>
               <MdOutlineWorkOutline className={styles.vacancies_icon} />
