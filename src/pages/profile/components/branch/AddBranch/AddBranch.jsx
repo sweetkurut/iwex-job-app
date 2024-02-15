@@ -17,7 +17,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 const AddBranch = ({ handlerComponent, id_branch }) => {
-  const { city, detailBranch } = useSelector((state) => state.companyDetails);
+  const { city, detailBranch, detailCompany } = useSelector((state) => state.companyDetails);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({
     address: "",
