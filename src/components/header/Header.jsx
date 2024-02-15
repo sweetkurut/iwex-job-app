@@ -41,7 +41,12 @@ const Header = () => {
           <NavLink
             to={"/response"}
             className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-            Отклики
+            Список приглашенных
+          </NavLink>
+          <NavLink
+            to={"/list-interviews"}
+            className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
+            Список собеседований
           </NavLink>
         </nav>
         <div className={styles.profile}>

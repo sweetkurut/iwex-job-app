@@ -21,6 +21,8 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import ModalCalendar from "../../calendar/Calendar";
 
 const StudentDetail = () => {
   const dispatch = useDispatch();
@@ -29,11 +31,13 @@ const StudentDetail = () => {
   const { detailEmployee, isLoading } = useSelector((state) => state.employeeDetails);
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
+  const [openCalendar, setOpenCalendar] = useState(false);
 
+  const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [favorites, setFavorites] = useState(false);
 
   useEffect(() => {
     dispatch(getEmployeeDetail(id));
@@ -80,6 +84,7 @@ const StudentDetail = () => {
   };
   return (
     <>
+      <ModalCalendar open={openCalendar} setOpen={setOpenCalendar} />
       {open && modalConfirm()}
       <div className={styles.wrapper}>
         <div className={styles.container}>
@@ -137,9 +142,18 @@ const StudentDetail = () => {
                         </p>
                       </div>
                       <div className={styles.wrapper_btn}>
-                        <p className={styles.phone}>{detailEmployee?.phone}</p>
+                        <button className={styles.btn} onClick={() => setOpenCalendar(true)}>
+                          Назначить собеседования
+                        </button>
                         <button onClick={HandlerInvitation} className={styles.btn}>
-                          Пригласить студента
+                          Пригласить без собеседования
+                        </button>
+                        <button onClick={() => setFavorites(!favorites)} className={styles.btn}>
+                          {favorites ?
+                            <FaHeart size={20} />
+                            :
+                            <FaRegHeart size={20} />
+                          }
                         </button>
                       </div>
                     </div>
