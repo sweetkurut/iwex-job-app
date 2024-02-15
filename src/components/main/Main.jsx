@@ -15,38 +15,40 @@ import EditVacancyPage from "../../pages/editVacancies/edit";
 import StudentPage from "../../pages/students/students";
 import Detail from "../../pages/detail-students/detail";
 import AddVacancy from "../vacancies/components/addVacancy/AddVacancy";
+import FavoritesPage from "../../pages/favorites/Favorites";
 const Main = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const token = getCookie("accessToken");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = getCookie("accessToken");
 
-    useEffect(() => {
-        if (!token) {
-            navigate("/login");
-        } else {
-            // navigate('/vacancies');
-            dispatch(getDataProfile());
-        }
-    }, [token]);
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      // navigate('/vacancies');
+      dispatch(getDataProfile());
+    }
+  }, [token]);
 
-    return (
-        <main>
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/*" element={<Vacancies />} />
-                <Route path="/privacy" element={<PagePrivacy />} />
-                <Route path="/vacancy" element={<AddVacancy />} />
-                <Route path="/response" element={<PageResponse />} />
-                <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
-                <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
-                <Route path="/students" element={<StudentPage />} />
-                <Route path="/student-detail/:id" element={<Detail />} />
-                <Route path="/students" element={<StudentPage />} />
-                <Route path="*" element={<Page404 />} />
-            </Routes>
-        </main>
-    );
+  return (
+    <main>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/*" element={<Vacancies />} />
+        <Route path="/privacy" element={<PagePrivacy />} />
+        <Route path="/vacancy" element={<AddVacancy />} />
+        <Route path="/response" element={<PageResponse />} />
+        <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
+        <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
+        <Route path="/students" element={<StudentPage />} />
+        <Route path="/student-detail/:id" element={<Detail />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/students" element={<StudentPage />} />
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+    </main>
+  );
 };
 
 export default Main;

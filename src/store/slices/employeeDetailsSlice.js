@@ -71,6 +71,21 @@ export const getInvitation = createAsyncThunk(
   }
 );
 
+export const getFavorite = createAsyncThunk(
+  "employeeDetails/getFavorite",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getFavariteStudent();
+      if (response.status !== 200) {
+        throw new Error("Server Error, unable to sign in");
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 // getEmployeeFilter
 export const getEmployeeFilter = createAsyncThunk(
   "employeeDetails/getEmployeeFilter",
@@ -92,6 +107,7 @@ const initialState = {
   employeeFilter: [],
   detailEmployee: {},
   invitation: [],
+  favorite: [],
 };
 
 const employeeDetailsSlice = createSlice({
@@ -122,6 +138,19 @@ const employeeDetailsSlice = createSlice({
         state.employee = action.payload;
       })
       .addCase(getEmployeeFilter.rejected, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+
+      .addCase(getFavorite.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getFavorite.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.favorite = action.payload;
+      })
+      .addCase(getFavorite.rejected, (state) => {
         state.isLoading = false;
         state.error = null;
       })
@@ -164,5 +193,5 @@ const employeeDetailsSlice = createSlice({
   },
 });
 
-export const { } = employeeDetailsSlice.actions;
+export const {} = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;
