@@ -129,6 +129,9 @@ const allAPIs = {
   getFavariteStudent() {
     return instance.get("/core/favorite-list/");
   },
+  sendFavorite(id) {
+    return instance.post(`/core/favorite-create/`, id);
+  },
 };
 
 export default allAPIs;

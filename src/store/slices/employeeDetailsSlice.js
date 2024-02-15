@@ -86,6 +86,20 @@ export const getFavorite = createAsyncThunk(
   }
 );
 
+export const SendFavorite = createAsyncThunk(
+  "employeeDetails/SendFavorite",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.sendFavorite(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 // getEmployeeFilter
 export const getEmployeeFilter = createAsyncThunk(
   "employeeDetails/getEmployeeFilter",

@@ -16,6 +16,7 @@ import StudentPage from "../../pages/students/students";
 import Detail from "../../pages/detail-students/detail";
 import AddVacancy from "../vacancies/components/addVacancy/AddVacancy";
 import FavoritesPage from "../../pages/favorites/Favorites";
+import PageInterviews from "../../pages/interviews/interviews";
 const Main = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const Main = () => {
         <Route path="/student-detail/:id" element={<Detail />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/students" element={<StudentPage />} />
+        <Route path="/list-interviews" element={<PageInterviews />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </main>
