@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./students.module.sass";
 import { useEffect, useRef, useState } from "react";
 import { getAllEmployee, getEmployeeFilter } from "../../store/slices/employeeDetailsSlice";
-import Loaders from "../../UI/loaders";
+import { GrLanguage } from "react-icons/gr";
 import { CgCalendarToday } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { Avatar, Box, Tab } from "@mui/material";
@@ -73,6 +73,14 @@ const Students = () => {
                   <p className={styles.birth_day}>
                     <CgCalendarToday />
                     День рождение:{elem?.date_of_birth}
+                  </p>
+                  <p className={styles.birth_day}>
+                    <GrLanguage />
+                    Знание немецкого языка:{elem?.german}
+                  </p>
+                  <p className={styles.birth_day}>
+                    <GrLanguage />
+                    Знание английского языка:{elem?.english}
                   </p>
                   <p className={styles.graphic_day}>
                     <FaGenderless />

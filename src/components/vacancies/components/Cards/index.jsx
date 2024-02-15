@@ -8,7 +8,6 @@ import { LuCalendarClock } from "react-icons/lu";
 import { WiTime9 } from "react-icons/wi";
 import { TbEyeSearch } from "react-icons/tb";
 import { getVacancyEmployer } from "../../../../store/slices/vacancySlice";
-import Loaders from "../../../../UI/loaders";
 import { SceletonCardVacancy } from "../../../SceletonLoading/SceletonLoading";
 
 const Cards = () => {
