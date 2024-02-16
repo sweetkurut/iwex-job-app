@@ -14,7 +14,7 @@ const Response = () => {
 
   useEffect(() => {
     dispatch(getInvitation());
-  }, [dispatch]);
+  }, [dispatch]); 
 
   return (
     <div className={styles.wrapper}>
@@ -37,11 +37,11 @@ const Response = () => {
                 </div>
                 <div className={styles.card_info_desc}>
                   <p className={styles.card_info_desc_subTitle}>
-                    <span>Студент: {elem?.user_profile.first_name}</span>{" "}
+                    <span>Студент: {elem?.user_profile.first_name}</span>
                   </p>
 
                   <p className={styles.card_info_desc_subTitle}>
-                    <span>Гражданство: {elem?.user_profile.nationality_en}</span>{" "}
+                    <span>Гражданство: {elem?.user_profile.nationality_en}</span>
                   </p>
                   <p className={styles.card_info_desc_subTitle}>
                     <span>Пол: {elem?.user_profile.gender_en}</span>{" "}

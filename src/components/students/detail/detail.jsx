@@ -5,6 +5,7 @@ import { getEmployeeDetail, sendInvitation } from "../../../store/slices/employe
 import Loaders from "../../../UI/loaders";
 import { GoHome } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
+
 import {
   Avatar,
   Breadcrumbs,
@@ -84,7 +85,7 @@ const StudentDetail = () => {
   };
   return (
     <>
-      <ModalCalendar open={openCalendar} setOpen={setOpenCalendar} />
+      <ModalCalendar user={id} vacancy={state.id_vacancy} open={openCalendar} setOpen={setOpenCalendar} />
       {open && modalConfirm()}
       <div className={styles.wrapper}>
         <div className={styles.container}>
@@ -184,91 +185,110 @@ const StudentDetail = () => {
                   </div>
                 </TabPanel>
                 <TabPanel style={{ padding: "50px 0" }} value="3">
-                  {detailEmployee?.universities?.map((elem) => (
-                    <div key={elem?.id}>
-                      <div className={styles.ul}>
-                        <h4>Наименование Университета(Ru,En,De)</h4>
-                        <p>
-                          <span>Ru:</span> <span>{elem.address_ru}</span>
-                        </p>
-                        <p>
-                          <span>En:</span> <span>{elem?.address_en}</span>
-                        </p>
-                        <p>
-                          <span>De:</span> <span>{elem?.address_de}</span>
-                        </p>
+                  {detailEmployee &&
+                    detailEmployee.universities &&
+                    detailEmployee.universities.length > 0 ? (
+                    detailEmployee.universities.map((elem) => (
+                      <div key={elem?.id}>
+                        <div className={styles.ul}>
+                          <h4>Наименование Университета(Ru,En,De)</h4>
+                          <p>
+                            <span>Ru:</span> <span>{elem?.address_ru}</span>
+                          </p>
+                          <p>
+                            <span>En:</span> <span>{elem?.address_en}</span>
+                          </p>
+                          <p>
+                            <span>De:</span> <span>{elem?.address_de}</span>
+                          </p>
+                        </div>
+                        <div className={styles.ul}>
+                          <h4>Степень(Ru,En,De)</h4>
+                          <p>
+                            <span>Тип степени:</span> <span>{elem?.degree_type_ru}</span>
+                          </p>
+                          <p>
+                            <span>Degree type:</span> <span>{elem?.degree_type_en}</span>
+                          </p>
+                          <p>
+                            <span>Abschlussart:</span> <span>{elem?.degree_type_ву}</span>
+                          </p>
+                        </div>
+                        <div className={styles.ul}>
+                          <h4>Факультет(Ru,En,De)</h4>
+                          <p>
+                            <span>Факультет:</span> <span>{elem?.faculty_ru}</span>
+                          </p>
+                          <p>
+                            <span>Faculty:</span> <span>{elem?.faculty_en}</span>
+                          </p>
+                          <p>
+                            <span>Fachbereich:</span> <span>{elem?.faculty_de}</span>
+                          </p>
+                        </div>
+                        <div className={styles.ul}>
+                          <h4>Адресс(Ru,En,De)</h4>
+                          <p>
+                            <span>Адрес:</span> <span>{elem?.address_ru}</span>
+                          </p>
+                          <p>
+                            <span>Address:</span> <span>{elem?.address_en}</span>
+                          </p>
+                          <p>
+                            <span>Adresse:</span> <span>{elem?.address_de}</span>
+                          </p>
+                        </div>
+                        <div className={styles.ul}>
+                          <h4>Контакты(Ru,En,De)</h4>
+                          <p>
+                            <span>Phone:</span> <span>{elem?.phone_number_university_ru}</span>
+                          </p>
+                          <p>
+                            <span>E-mail:</span> <span>{elem?.email_university}</span>
+                          </p>
+                          <p>
+                            <span>Web-site:</span> <span>{elem?.website_university}</span>
+                          </p>
+                        </div>
+                        <div className={styles.ul}>
+                          <h4>Данные об учебе</h4>
+                          <p>
+                            <span>Начало учёбы:</span> <span>{elem?.start_date}</span>
+                          </p>
+                          <p>
+                            <span>Конец учёбы:</span> <span>{elem?.end_date}</span>
+                          </p>
+                          <p>
+                            <span>Длительность обучений:</span> <span>{elem?.total_years}</span>
+                          </p>
+                          <p>
+                            <span>Курс:</span> <span>{elem?.kurs_year}</span>
+                          </p>
+                          <p>
+                            <span>Начало каникул:</span> <span>{elem?.start_holiday}</span>
+                          </p>
+                          <p>
+                            <span>Конец каникул:</span> <span>{elem?.end_holiday}</span>
+                          </p>
+                        </div>
                       </div>
-                      <div className={styles.ul}>
-                        <h4>Степень(Ru,En,De)</h4>
-                        <p>
-                          <span>Тип степени:</span> <span>{elem.degree_type_ru}</span>
-                        </p>
-                        <p>
-                          <span>Degree type:</span> <span>{elem?.degree_type_en}</span>
-                        </p>
-                        <p>
-                          <span>Abschlussart:</span> <span>{elem?.degree_type_ву}</span>
-                        </p>
+                    ))
+                  ) : (
+                    <div className={styles.student_search}>
+                      <div className={styles.student_img}>
+                        <img
+                          alt="img-student"
+                          src="/obrazovanie.svg"
+                          style={{
+                            width: "350px",
+                          }}
+                        />
                       </div>
-                      <div className={styles.ul}>
-                        <h4>Факультет(Ru,En,De)</h4>
-                        <p>
-                          <span>Факультет:</span> <span>{elem.faculty_ru}</span>
-                        </p>
-                        <p>
-                          <span>Faculty:</span> <span>{elem?.faculty_en}</span>
-                        </p>
-                        <p>
-                          <span>Fachbereich:</span> <span>{elem?.faculty_de}</span>
-                        </p>
-                      </div>
-                      <div className={styles.ul}>
-                        <h4>Адресс(Ru,En,De)</h4>
-                        <p>
-                          <span>Адрес:</span> <span>{elem.address_ru}</span>
-                        </p>
-                        <p>
-                          <span>Address:</span> <span>{elem?.address_en}</span>
-                        </p>
-                        <p>
-                          <span>Adresse:</span> <span>{elem?.address_de}</span>
-                        </p>
-                      </div>
-                      <div className={styles.ul}>
-                        <h4>Контакты(Ru,En,De)</h4>
-                        <p>
-                          <span>Phone:</span> <span>{elem.phone_number_university_ru}</span>
-                        </p>
-                        <p>
-                          <span>E-mail:</span> <span>{elem?.email_university}</span>
-                        </p>
-                        <p>
-                          <span>Web-site:</span> <span>{elem?.website_university}</span>
-                        </p>
-                      </div>
-                      <div className={styles.ul}>
-                        <h4>Данные об учебе</h4>
-                        <p>
-                          <span>Начало учёбы:</span> <span>{elem.start_date}</span>
-                        </p>
-                        <p>
-                          <span>Конец учёбы:</span> <span>{elem?.end_date}</span>
-                        </p>
-                        <p>
-                          <span>Длительность обучений:</span> <span>{elem?.total_years}</span>
-                        </p>
-                        <p>
-                          <span>Курс:</span> <span>{elem?.kurs_year}</span>
-                        </p>
-                        <p>
-                          <span>Начало каникул:</span> <span>{elem?.start_holiday}</span>
-                        </p>
-                        <p>
-                          <span>Конец каникул:</span> <span>{elem?.end_holiday}</span>
-                        </p>
-                      </div>
+                      <p className={styles.student_search_title}>
+                        Информация об образовании не найдены
+                      </p>
                     </div>
-                  ))}
+                  )}
                 </TabPanel>
               </TabContext>
             </Box>
