@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import allAPIs from "../../services/API";
 
-
 export const sendCompanyData = createAsyncThunk(
   "companyDetails/sendCompanyData",
   async (data, { rejectWithValue }) => {
@@ -86,7 +85,7 @@ export const sendAddBranch = createAsyncThunk(
         throw new Error("Server Error, unable to sign in");
       }
       console.log(response);
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error);
@@ -116,7 +115,7 @@ export const getCity = createAsyncThunk(
         throw new Error("Server Error, unable to sign in");
       }
       console.log(response);
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data.error);
@@ -147,7 +146,7 @@ export const sendPositionEmployee = createAsyncThunk(
       if (response.status !== 201) {
         throw new Error("Server Error, unable to sign in");
       }
-      return response.data
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
@@ -241,7 +240,7 @@ const companyDetailsSlice = createSlice({
       })
       .addCase(getMyBranch.rejected, (state) => {
         state.isLoading = false;
-        state.error = null
+        state.error = null;
       })
       .addCase(patchBranchData.pending, (state) => {
         state.isLoading = true;
@@ -337,5 +336,5 @@ const companyDetailsSlice = createSlice({
   },
 });
 
-export const { } = companyDetailsSlice.actions;
+export const {} = companyDetailsSlice.actions;
 export default companyDetailsSlice.reducer;
