@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./Profile.module.sass";
 import { useSelector } from "react-redux";
 import Company from "./components/company/Company";
@@ -20,11 +19,12 @@ const Profile = () => {
       case "branch":
         return <Branch setComponent={setComponent} />;
       case "editCompany":
+        // eslint-disable-next-line react/jsx-no-undef
         return <EditCompany setComponent={setComponent} />;
       case "position":
-        return <Position />
+        return <Position />;
       default:
-        return null;
+        return null; 
     }
   };
   const activeComponent = (e, component) => {
@@ -38,9 +38,10 @@ const Profile = () => {
         <TabContext value={component}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={activeComponent} aria-label="lab API tabs example">
-              <Tab label="Данные о компании" value='company' />
-              <Tab label="Филиалы" value='branch' />
-              <Tab label="Позиции" value='position' />
+              <Tab label="Данные о компании" value="company" />
+              <Tab label="Филиалы" value="branch" />
+              <Tab label="Позиции" value="position" />
+              <Tab label="Жильё" value="housing" />
             </TabList>
           </Box>
         </TabContext>
