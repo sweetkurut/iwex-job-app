@@ -48,6 +48,11 @@ const Header = () => {
             className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
             Список собеседований
           </NavLink>
+          <NavLink
+            to={"/favorites"}
+            className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
+            Избранные
+          </NavLink>
         </nav>
         <div className={styles.profile}>
           <Button

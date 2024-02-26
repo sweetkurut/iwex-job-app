@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
-  baseURL: "http://10.137.60.119:8001/",
+  baseURL: "http://10.137.60.119:8001",
   // baseURL: "https://crm.iwex.kg",
   headers: {
     "Content-Type": "multipart/form-data",
@@ -72,17 +72,9 @@ const allAPIs = {
   },
 
   getCity() {
-    return instance.get(`/core/city/`);
+    return instance.get(`/core/country/`);
   },
-  sendPositionEmployee(data) {
-    return instance.post(`/core/positionemployee/`, data);
-  },
-  deletePositionEmployee(id) {
-    return instance.delete(`/core/positionemployee-delete/${id}/`);
-  },
-  getPositionEmployee() {
-    return instance.get(`/core/positionemployee/`);
-  },
+
   send_create_vacancy(data) {
     return instance.post(`/core/vacancy-create/`, data);
   },
@@ -126,6 +118,14 @@ const allAPIs = {
 
   getEmployeeFilter(id) {
     return instance.get(`/accounts/profiles-list-filter/${id}/`);
+  },
+
+  // favarite students
+  getFavariteStudent() {
+    return instance.get("/core/favorite-list/");
+  },
+  sendFavorite(id) {
+    return instance.post(`/core/favorite-create/`, id);
   },
 
 };

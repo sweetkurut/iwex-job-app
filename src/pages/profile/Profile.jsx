@@ -7,7 +7,6 @@ import { useState } from "react";
 import { CircularProgress, Tab } from "@mui/material";
 import { Box } from "@mui/system";
 import { TabContext, TabList } from "@mui/lab";
-import Position from "./components/position/Position";
 
 const Profile = () => {
   const { isLoading } = useSelector((state) => state.companyDetails);
@@ -21,8 +20,6 @@ const Profile = () => {
         return <Branch setComponent={setComponent} />;
       case "editCompany":
         return <EditCompany setComponent={setComponent} />;
-      case "position":
-        return <Position />
       default:
         return null;
     }

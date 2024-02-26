@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { getMyBranch, getPositionEmployee, sendPositionEmployee } from '../../../../store/slices/companyDetailsSlice';
+import { getMyBranch } from '../../../../store/slices/companyDetailsSlice';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers';
@@ -19,7 +19,7 @@ import { Box } from '@mui/system';
 
 const AddVacancy = () => {
     const navigate = useNavigate();
-    const { branch, position, isLoading } = useSelector((state) => state.companyDetails);
+    const { branch, isLoading } = useSelector((state) => state.companyDetails);
     const { isLoading: vacancyLoading } = useSelector((state) => state.vacancy);
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({
@@ -28,7 +28,6 @@ const AddVacancy = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getMyBranch());
-        dispatch(getPositionEmployee());
     }, []);
 
     const handleInputChange = (e) => {
@@ -81,27 +80,8 @@ const AddVacancy = () => {
     };
     const level_language = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
-    // position
-    const [value_position, setValue_position] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
-    const handlerAddPosition = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await dispatch(sendPositionEmployee({ name: value_position }));
-            if (response) {
-                dispatch(getPositionEmployee());
-                setModalMessage({ title: "Успех", text: "Позиция успешно добавлена" });
-                setOpen(true);
-                setIsOpen(!isOpen);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    const toggleDiv = (e) => {
-        e.preventDefault();
-        setIsOpen(!isOpen);
-    };
+
+    console.log(data);
 
     const modalConfirm = () => {
         return (
@@ -145,6 +125,7 @@ const AddVacancy = () => {
                         </Typography>
                     </Breadcrumbs>
                 </div>
+                <button data-tooltip="HTML<br>подсказка">Ещё кнопка</button>
                 <form
                     style={{ opacity: isLoading || vacancyLoading ? 0.5 : 1 }}
                     onSubmit={(e) => onSubmit(e)}>
@@ -179,52 +160,16 @@ const AddVacancy = () => {
                                     ))}
                                 </Select>
                             </FormControl>
-                            <div>
-                                <button className={s.add} onClick={toggleDiv}>
-                                    Добавить позицию
-                                </button>
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Позиции</InputLabel>
-                                    <Select
-                                        name="position"
-                                        required
-                                        className={s.input}
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Позиции"
-                                        value={data.position || ""}
-                                        onChange={handleInputChange}>
-                                        {position?.map((item, index) => (
-                                            <MenuItem
-                                                className={s.item}
-                                                style={{ alignItems: "flex-start" }}
-                                                key={index}
-                                                value={item?.id}>
-                                                <div className={s.box_span}>
-                                                    <span>позиция: </span>
-                                                    <span>{item?.name}</span>
-                                                </div>
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <div className={`${s.content} ${isOpen ? s.open : ""}`}>
-                                <FormControl fullWidth>
-                                    <TextField
-                                        id="outlined-basic"
-                                        name="employee_count"
-                                        value={value_position || ""}
-                                        label="Введите название позиции"
-                                        variant="outlined"
-                                        onChange={(text) => setValue_position(text.target.value)}
-                                    />
-                                </FormControl>
-                                <div>
-                                    <button onClick={handlerAddPosition}>Добавить</button>
-                                    <button onClick={toggleDiv}>Отмена</button>
-                                </div>
-                            </div>
+                            <TextField
+                                className={s.input}
+                                id="outlined-basic"
+                                name="position"
+                                required
+                                value={data.position || ""}
+                                label="Позиции"
+                                variant="outlined"
+                                onChange={handleInputChange}
+                            />
                             <TextField
                                 className={s.input}
                                 id="outlined-basic"
@@ -268,15 +213,43 @@ const AddVacancy = () => {
                             </LocalizationProvider>
 
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Опыт работы</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Тип жилья</InputLabel>
                                 <Select
                                     required
                                     name="experience"
                                     className={s.input}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
+                                    label="Тип жилья"
+                                    value={data.experience || ''}
+                                    onChange={handleInputChange}
+                                >
+                                    {[{
+                                        name: 'Предоставляется',
+                                        value: 'true'
+                                    }, {
+                                        name: 'Не предоставляется',
+                                        value: 'false'
+                                    }]?.map(
+                                        (item, index) => (
+                                            <MenuItem key={index} value={item.value}>
+                                                <div className={s.box_span}>{item.name}</div>
+                                            </MenuItem>
+                                        )
+                                    )}
+                                </Select>
+
+                            </FormControl>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Опыт работы</InputLabel>
+                                <Select
+                                    required
+                                    name="type_of_housing"
+                                    className={s.input}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
                                     label="Опыт работы"
-                                    value={data.experience || ""}
+                                    value={data.type_of_housing || ""}
                                     onChange={handleInputChange}>
                                     {["Без опыта работы", "От 1 года", "От 2х лет", "От 3х лет"]?.map(
                                         (item, index) => (
@@ -287,6 +260,16 @@ const AddVacancy = () => {
                                     )}
                                 </Select>
                             </FormControl>
+                            <TextField
+                                className={s.input}
+                                id="outlined-basic"
+                                name="insurance"
+                                required
+                                value={data.insurance || ""}
+                                label="Страховка"
+                                variant="outlined"
+                                onChange={handleInputChange}
+                            />
                             <TextField
                                 value={data.salary || ""}
                                 className={s.input}

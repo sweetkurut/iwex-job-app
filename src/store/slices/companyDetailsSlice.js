@@ -139,56 +139,14 @@ export const getDataProfile = createAsyncThunk(
   }
 );
 
-export const sendPositionEmployee = createAsyncThunk(
-  "companyDetails/sendPositionEmployee",
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await allAPIs.sendPositionEmployee(data);
-      if (response.status !== 201) {
-        throw new Error("Server Error, unable to sign in");
-      }
-      return response.data
-    } catch (error) {
-      return rejectWithValue(error.response.data.error);
-    }
-  }
-);
-export const getPositionEmployee = createAsyncThunk(
-  "companyDetails/getPositionEmployee",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await allAPIs.getPositionEmployee();
-      if (response.status !== 200) {
-        throw new Error("Server Error, unable to sign in");
-      }
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data.error);
-    }
-  }
-);
 
-export const deletePositionEmployee = createAsyncThunk(
-  "companyDetails/deletePositionEmployee",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await allAPIs.deletePositionEmployee(id);
-      if (response.status !== 204) {
-        throw new Error("Server Error, unable to sign in");
-      }
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data.error);
-    }
-  }
-);
+
 
 const initialState = {
   isLoading: false,
   error: null,
   detailCompany: {},
   branch: [],
-  position: [],
   detailBranch: {},
   company_id: null,
   city: [],
@@ -199,9 +157,7 @@ const companyDetailsSlice = createSlice({
   name: "companyDetails",
   initialState,
   reducers: {
-    // setStatus(state, action) {
-    //     state.status = action.payload
-    // },
+
   },
   extraReducers: (builder) => {
     builder
@@ -312,28 +268,7 @@ const companyDetailsSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(getPositionEmployee.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getPositionEmployee.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.position = action.payload;
-      })
-      .addCase(getPositionEmployee.rejected, (state) => {
-        state.isLoading = false;
-        state.error = null;
-      })
 
-      .addCase(sendPositionEmployee.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(sendPositionEmployee.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      .addCase(sendPositionEmployee.rejected, (state) => {
-        state.isLoading = false;
-      });
   },
 });
 

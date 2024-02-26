@@ -33,7 +33,6 @@ const ModalCalendar = ({ user, vacancy, open, setOpen }) => {
         };
     }, []);
 
-
     const handleClose = () => {
         setOpen(false);
     };
