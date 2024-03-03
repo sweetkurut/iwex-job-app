@@ -185,8 +185,6 @@ const userSlice = createSlice({
       })
       .addCase(sendToken.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.id = action.payload.id;
-        state.email = action.payload.email;
         state.role = action.payload.role;
       })
       .addCase(sendToken.rejected, (state, action) => {

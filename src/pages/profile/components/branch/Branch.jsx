@@ -34,6 +34,7 @@ const Branch = () => {
           <li>
             <span>номер</span>
             <span>Название</span>
+            <span>Земля</span>
             <span>город</span>
           </li>
           {filledBranch.map((e, index) => (
@@ -42,6 +43,7 @@ const Branch = () => {
                 <>
                   <span>{index + 1}</span>
                   <span>{e?.name}</span>
+                  <span>{e?.country}</span>
                   <span>{e?.city}</span>
                   <button className={s.btn} onClick={() => handlerComponent(e?.id)}>
                     Подробнее
@@ -49,6 +51,7 @@ const Branch = () => {
                 </>
               ) : (
                 <>
+                  <span>&nbsp;</span>
                   <span>&nbsp;</span>
                   <span>&nbsp;</span>
                   <span>&nbsp;</span>

@@ -3,7 +3,7 @@ import s from "./AddBranch.module.sass";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getCity,
+  getCountry,
   getMyBranch,
   getMyBranchDetail,
   patchBranchData,
@@ -17,39 +17,41 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 const AddBranch = ({ handlerComponent, id_branch }) => {
-  const { city, detailBranch, detailCompany } = useSelector((state) => state.companyDetails);
+  const { country, detailBranch, detailCompany } = useSelector((state) => state.companyDetails);
+  const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
+
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({
     address: "",
-    city: "",
+    country: "",
     company: "",
     description: "",
     id: "",
     link_address: "",
     name: "",
+    city: "",
   });
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCity());
+    dispatch(getCountry());
     if (id_branch) {
       dispatch(getMyBranchDetail(id_branch));
     }
   }, []);
-
   useEffect(() => {
     if (detailBranch && id_branch) {
       setData({
         address: detailBranch.address,
-        city: detailBranch.city,
+        country: detailBranch.country,
         company: String(detailBranch.company),
         description: detailBranch.description,
         id: String(detailBranch.id),
         link_address: detailBranch.link_address,
         name: detailBranch.name,
+        city: detailBranch.city,
       });
     }
   }, [detailBranch, id_branch]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -61,17 +63,19 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
     e.preventDefault();
     try {
       const response = id_branch
-        ? await dispatch(patchBranchData([id_branch, data]))
-        : await dispatch(sendAddBranch(data));
+        ? await dispatch(patchBranchData([id_branch, data])).unwrap()
+        : await dispatch(sendAddBranch(data)).unwrap()
       if (response) {
         dispatch(getMyBranch());
+        setModalMessage({ title: "Успех", text: "Филиал успешно сохранен" });
         setOpen(true);
       }
     } catch (error) {
-      console.log(error);
+      setModalMessage({ title: "Ошибка", text: error });
+      setOpen(true);
+
     }
   };
-
   const handleClose = () => {
     setOpen(false);
     handlerComponent("branch");
@@ -85,11 +89,9 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">
-          <DialogTitle id="alert-dialog-title">{"Успех"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{modalMessage.title}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Филиал успешно сохранен
-            </DialogContentText>
+            <DialogContentText id="alert-dialog-description">{modalMessage.text}</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus>
@@ -117,23 +119,33 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
               onChange={handleInputChange}
             />
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Город</InputLabel>
+              <InputLabel id="demo-simple-select-label">Земля</InputLabel>
               <Select
-                name="city"
+                name="country"
                 required
                 className={s.input}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                label="Город"
-                value={data.city || ""}
+                label="Земля"
+                value={data.country || ""}
                 onChange={handleInputChange}>
-                {city?.map((item, index) => (
-                  <MenuItem key={index} value={item?.name}>
+                {country?.map((item, index) => (
+                  <MenuItem key={index} value={item?.id}>
                     {item?.name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
+            <TextField
+              value={data?.city || ""}
+              name="city"
+              required
+              className={s.input}
+              id="outlined-basic"
+              label="Город"
+              variant="outlined"
+              onChange={handleInputChange}
+            />
             <TextField
               value={data?.address || ""}
               name="address"

@@ -30,6 +30,10 @@ const Company = ({ setComponent }) => {
     description: "",
     icon: "",
     iin: "",
+    position: "",
+    contact_info: "",
+    contact_person: "",
+    payment_info: "",
   });
 
   const [data, setData] = useState(initialData);
@@ -96,7 +100,7 @@ const Company = ({ setComponent }) => {
     try {
       if (Object.keys(detailCompany).length === 0) {
         const response = await dispatch(sendCompanyData(formData)).unwrap();
-        response && console.log("response", response);
+        response && setEdit(false);
       } else {
         const response = await dispatch(patchCompanyData(formData)).unwrap();
         response && setEdit(false);
@@ -147,6 +151,42 @@ const Company = ({ setComponent }) => {
           <Input
             value={data?.name || ""}
             onChange={(e) => handleInputChange("name", e.target.value)}
+            edit={edit}
+            required
+          />
+        </li>
+        <li>
+          <span>Должность</span>
+          <Input
+            value={data?.position || ""}
+            onChange={(e) => handleInputChange("position", e.target.value)}
+            edit={edit}
+            required
+          />
+        </li>
+        <li>
+          <span>Контактные данные</span>
+          <Input
+            value={data?.contact_info || ""}
+            onChange={(e) => handleInputChange("contact_info", e.target.value)}
+            edit={edit}
+            required
+          />
+        </li>
+        <li>
+          <span>Контактное<br />лицо</span>
+          <Input
+            value={data?.contact_person || ""}
+            onChange={(e) => handleInputChange("contact_person", e.target.value)}
+            edit={edit}
+            required
+          />
+        </li>
+        <li>
+          <span>Реквезиты компании</span>
+          <Input
+            value={data?.payment_info || ""}
+            onChange={(e) => handleInputChange("payment_info", e.target.value)}
             edit={edit}
             required
           />

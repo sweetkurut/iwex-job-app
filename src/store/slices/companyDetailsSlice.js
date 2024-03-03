@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import allAPIs from "../../services/API";
 
-
 export const sendCompanyData = createAsyncThunk(
   "companyDetails/sendCompanyData",
   async (data, { rejectWithValue }) => {
@@ -12,6 +11,7 @@ export const sendCompanyData = createAsyncThunk(
       }
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }
@@ -27,6 +27,7 @@ export const patchCompanyData = createAsyncThunk(
       }
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error);
     }
   }
@@ -86,7 +87,7 @@ export const sendAddBranch = createAsyncThunk(
         throw new Error("Server Error, unable to sign in");
       }
       console.log(response);
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error);
@@ -97,26 +98,25 @@ export const sendAddBranch = createAsyncThunk(
 export const patchBranchData = createAsyncThunk(
   "companyDetails/patchBranchData",
   async ([id, data], { rejectWithValue }) => {
-    console.log(id, data);
     try {
       const response = await allAPIs.patchBranchData(id, data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.error);
+      console.log(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const getCity = createAsyncThunk(
-  "companyDetails/getCity",
+export const getCountry = createAsyncThunk(
+  "companyDetails/getCountry",
   async (value, { rejectWithValue }) => {
     try {
-      const response = await allAPIs.getCity(value);
+      const response = await allAPIs.getCountry(value);
       if (response.status !== 200) {
         throw new Error("Server Error, unable to sign in");
       }
-      console.log(response);
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data.error);
@@ -139,6 +139,76 @@ export const getDataProfile = createAsyncThunk(
   }
 );
 
+export const sendPositionEmployee = createAsyncThunk(
+  "companyDetails/sendPositionEmployee",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.sendPositionEmployee(data);
+      if (response.status !== 201) {
+        throw new Error("Server Error, unable to sign in");
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+export const getPositionEmployee = createAsyncThunk(
+  "companyDetails/getPositionEmployee",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getPositionEmployee();
+      if (response.status !== 200) {
+        throw new Error("Server Error, unable to sign in");
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const deletePositionEmployee = createAsyncThunk(
+  "companyDetails/deletePositionEmployee",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.deletePositionEmployee(id);
+      if (response.status !== 204) {
+        throw new Error("Server Error, unable to sign in");
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const sendHousinng = createAsyncThunk(
+  "companyDetails/sendHousinng",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.sendHousinng(data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
+
+
+export const getHousing = createAsyncThunk(
+  "companyDetails/getHousing",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getHousing();
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
 
 
 
@@ -149,8 +219,9 @@ const initialState = {
   branch: [],
   detailBranch: {},
   company_id: null,
-  city: [],
+  country: [],
   dataProfile: {},
+  housing: []
 };
 
 const companyDetailsSlice = createSlice({
@@ -197,7 +268,7 @@ const companyDetailsSlice = createSlice({
       })
       .addCase(getMyBranch.rejected, (state) => {
         state.isLoading = false;
-        state.error = null
+        state.error = null;
       })
       .addCase(patchBranchData.pending, (state) => {
         state.isLoading = true;
@@ -231,15 +302,15 @@ const companyDetailsSlice = createSlice({
         state.error = null;
       })
 
-      .addCase(getCity.pending, (state) => {
+      .addCase(getCountry.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(getCity.fulfilled, (state, action) => {
+      .addCase(getCountry.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.city = action.payload;
+        state.country = action.payload;
       })
-      .addCase(getCity.rejected, (state) => {
+      .addCase(getCountry.rejected, (state) => {
         state.isLoading = false;
         state.error = null;
       })
@@ -267,7 +338,18 @@ const companyDetailsSlice = createSlice({
       .addCase(patchCompanyData.rejected, (state) => {
         state.isLoading = false;
       })
-
+      .addCase(getHousing.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getHousing.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.housing = action.payload;
+      })
+      .addCase(getHousing.rejected, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
 
   },
 });

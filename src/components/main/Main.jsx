@@ -5,7 +5,7 @@ import PagePrivacy from "../../pages/privacypolicy/privacy";
 import { Route, Routes } from "react-router-dom";
 import Login from "../../pages/login/Login";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/js_cookie";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../pages/profile/Profile";
@@ -17,7 +17,9 @@ import Detail from "../../pages/detail-students/detail";
 import AddVacancy from "../vacancies/components/addVacancy/AddVacancy";
 import FavoritesPage from "../../pages/favorites/Favorites";
 import PageInterviews from "../../pages/interviews/interviews";
+import { sendToken } from "../../store/slices/userSlice";
 const Main = () => {
+  const { role } = useSelector(state => state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
@@ -26,7 +28,7 @@ const Main = () => {
     if (!token) {
       navigate("/login");
     } else {
-      // navigate('/vacancies');
+      dispatch(sendToken(token))
       dispatch(getDataProfile());
     }
   }, [token]);
@@ -37,6 +39,8 @@ const Main = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/*" element={<Vacancies />} />
+        <Route path="*" element={<Page404 />} />
+        {role === "is_employee"}
         <Route path="/privacy" element={<PagePrivacy />} />
         <Route path="/vacancy" element={<AddVacancy />} />
         <Route path="/response" element={<PageResponse />} />
@@ -47,7 +51,6 @@ const Main = () => {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/students" element={<StudentPage />} />
         <Route path="/list-interviews" element={<PageInterviews />} />
-        <Route path="*" element={<Page404 />} />
       </Routes>
     </main>
   );

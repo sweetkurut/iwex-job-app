@@ -1,4 +1,4 @@
-import Interviews from "../../interviews/interviews";
+import Interviews from "../../components/interviews/interviews";
 
 const PageInterviews = () => {
   return <Interviews />;

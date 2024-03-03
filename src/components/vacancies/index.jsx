@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styles from "./vacancies.module.sass";
 import Cards from "./components/Cards";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { sendHousinng } from "../../store/slices/companyDetailsSlice";
 
 const MyVacancies = () => {
-
+  const dispatch = useDispatch()
 
   return (
     <div className={styles.wrapper}>

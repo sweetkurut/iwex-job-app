@@ -2,7 +2,8 @@ import axios from "axios";
 import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
-  baseURL: "http://10.137.60.119:8001",
+  // baseURL: "http://10.137.60.119:8001",
+  baseURL: "http://192.168.0.90:8001",
   // baseURL: "https://crm.iwex.kg",
   headers: {
     "Content-Type": "multipart/form-data",
@@ -71,7 +72,7 @@ const allAPIs = {
     return instance.post(`/core/branch/`, data);
   },
 
-  getCity() {
+  getCountry() {
     return instance.get(`/core/country/`);
   },
 
@@ -128,6 +129,14 @@ const allAPIs = {
     return instance.post(`/core/favorite-create/`, id);
   },
 
+
+
+  sendHousinng(data) {
+    return instance.post('/core/housing/', data)
+  },
+  getHousing() {
+    return instance.get('/core/housing-list/')
+  }
 };
 
 export default allAPIs;
