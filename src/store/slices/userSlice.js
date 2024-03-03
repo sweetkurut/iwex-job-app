@@ -75,6 +75,7 @@ export const sendResetPassword = createAsyncThunk(
 export const sendToken = createAsyncThunk("user/sendToken", async (token, { rejectWithValue }) => {
   try {
     const response = await allAPIs.sendToken(token);
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log("error token", error);

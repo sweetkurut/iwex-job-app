@@ -14,7 +14,7 @@ const Response = () => {
 
   useEffect(() => {
     dispatch(getInvitation());
-  }, [dispatch]); 
+  }, [dispatch]);
 
   return (
     <div className={styles.wrapper}>
@@ -23,12 +23,12 @@ const Response = () => {
         <h2 className={styles.title}>Отклики</h2>
         <div className={styles.cards}>
           {invitation && invitation.length > 0 ? (
-            invitation.map((elem) => (
+            invitation?.map((elem) => (
               // eslint-disable-next-line react/jsx-key
               <div className={styles.card} key={elem?.id}>
                 <div className={styles.card_user_photo}>
                   <Avatar
-                    src={elem?.user_profile.profile_photo}
+                    src={elem?.user_profile?.profile_photo}
                     alt="user_photo"
                     sx={{
                       width: 120,
@@ -37,23 +37,23 @@ const Response = () => {
                 </div>
                 <div className={styles.card_info_desc}>
                   <p className={styles.card_info_desc_subTitle}>
-                    <span>Студент: {elem?.user_profile.first_name}</span>
+                    <span>Студент: {elem?.user_profile?.first_name}</span>
                   </p>
 
                   <p className={styles.card_info_desc_subTitle}>
-                    <span>Гражданство: {elem?.user_profile.nationality_en}</span>
+                    <span>Гражданство: {elem?.user_profile?.nationality_en}</span>
                   </p>
                   <p className={styles.card_info_desc_subTitle}>
-                    <span>Пол: {elem?.user_profile.gender_en}</span>{" "}
+                    <span>Пол: {elem?.user_profile?.gender_en}</span>{" "}
                   </p>
                 </div>
                 <div className={styles.position}>
                   <p className={styles.position_tite}>
-                    <span>Филиал: {elem?.branch.name}</span>
+                    <span>Филиал: {elem?.branch?.name}</span>
                   </p>
                   <p className={styles.position_tite}>
                     Позиция:
-                    <span>{elem?.position.name}</span>
+                    <span>{elem?.position?.name}</span>
                   </p>
                 </div>
                 <div className={styles.createXZ}>
@@ -63,8 +63,8 @@ const Response = () => {
                 </div>
                 <div className={styles.button_wrap}>
                   <Link
-                    to={"/student-detail/" + elem.user}
-                    state={{ id_vacancy: elem.vacancy }}
+                    to={"/student-detail/" + elem?.user}
+                    state={{ id_vacancy: elem?.vacancy }}
                     className={styles.btn_Link}>
                     Подробнее
                   </Link>

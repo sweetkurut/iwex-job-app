@@ -94,7 +94,6 @@ const CardDetail = () => {
             <p>
               <span>Конец времени работы:</span> <span>{detailVacancy?.time_end}</span>
             </p>
-
             <p>
               <span>Адресс Филиала:</span> <span>{detailVacancy?.branch_address}</span>
             </p>
