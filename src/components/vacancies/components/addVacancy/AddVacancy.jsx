@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import s from "./AddVacancy.module.sass";
+import s from "./AddVAcancy.module.sass";
 import {
   Breadcrumbs,
   Checkbox,

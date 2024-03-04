@@ -14,7 +14,7 @@ const Response = () => {
 
   useEffect(() => {
     dispatch(getInvitation());
-  }, [dispatch]); 
+  }, [dispatch]);
 
   return (
     <div className={styles.wrapper}>
@@ -53,7 +53,7 @@ const Response = () => {
                   </p>
                   <p className={styles.position_tite}>
                     Позиция:
-                    <span>{elem?.position.name}</span>
+                    <span>{elem?.position?.name}</span>
                   </p>
                 </div>
                 <div className={styles.createXZ}>

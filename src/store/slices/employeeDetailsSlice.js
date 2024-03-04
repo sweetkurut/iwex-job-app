@@ -114,6 +114,23 @@ export const getEmployeeFilter = createAsyncThunk(
     }
   }
 );
+
+// interview
+
+export const getInterviewList = createAsyncThunk(
+  "employeeDetails/getInterviewList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getInterView();
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 const initialState = {
   isLoading: false,
   error: null,
@@ -122,6 +139,7 @@ const initialState = {
   detailEmployee: {},
   invitation: [],
   favorite: [],
+  interview: [],
 };
 
 const employeeDetailsSlice = createSlice({
@@ -202,6 +220,17 @@ const employeeDetailsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(sendInvitation.rejected, (state) => {
+        state.isLoading = false;
+      })
+    
+     .addCase(getInterviewList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getInterviewList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.interview = action.payload;
+      })
+      .addCase(getInterviewList.rejected, (state) => {
         state.isLoading = false;
       });
   },
