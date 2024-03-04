@@ -104,6 +104,9 @@ const userSlice = createSlice({
     setAccessToken(state, action) {
       state.accessToken = action.payload;
     },
+    setRole(state, action) {
+      state.role = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -195,5 +198,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setRefreshToken, setAccessToken } = userSlice.actions;
+export const { setRefreshToken, setAccessToken, setRole } = userSlice.actions;
 export default userSlice.reducer;

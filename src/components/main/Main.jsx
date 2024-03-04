@@ -17,20 +17,24 @@ import Detail from "../../pages/detail-students/detail";
 import AddVacancy from "../vacancies/components/addVacancy/AddVacancy";
 import FavoritesPage from "../../pages/favorites/Favorites";
 import PageInterviews from "../../pages/interviews/interviews";
-import { sendToken } from "../../store/slices/userSlice";
+import { sendToken, setRole } from "../../store/slices/userSlice";
 import Orders from "../../pages/orders/Orders";
+
+
 const Main = () => {
   const { role } = useSelector(state => state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
-
+  const roleCookie = getCookie("role");
+  console.log(roleCookie);
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
       dispatch(sendToken(token))
-      dispatch(getDataProfile());
+      dispatch(setRole(roleCookie))
+      dispatch(getDataProfile())
     }
   }, [token]);
   console.log(role);

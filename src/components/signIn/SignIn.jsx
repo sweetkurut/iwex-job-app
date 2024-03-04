@@ -32,6 +32,7 @@ const SignIn = ({ setComponent }) => {
         try {
             const response = await dispatch(sendSignIn(data)).unwrap();
             saveCookie('accessToken', response.access)
+            saveCookie('role', response.role)
             navigate('/vacancies');
         } catch (error) {
             console.log(error);

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaUser, FaUserCircle } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
 import cn from "clsx";
-import { deleteCookie } from "../../utils/js_cookie";
+import { deleteCookies } from "../../utils/js_cookie";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Header = () => {
     handleClose();
   };
   const handleLogOutCookie = () => {
-    deleteCookie("accessToken");
+    deleteCookies(["accessToken", "role"]);
     navigate("/login");
   };
 

@@ -54,7 +54,7 @@ const Interview = () => {
       endDate: new Date(2024, 1, 23, 13, 0),
     },
   ];
-
+  console.log(appointments);
   const [data, setData] = useState(appointments);
   const currentDate = "2018-06-27";
 

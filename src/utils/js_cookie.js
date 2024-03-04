@@ -8,6 +8,8 @@ export const getCookie = (name) => {
     return Cookies.get(name);
 }
 
-export const deleteCookie = (name) => {
-    Cookies.remove(name);
-}
+export const deleteCookies = (names) => {
+    names.forEach(name => {
+        Cookies.remove(name);
+    });
+};
