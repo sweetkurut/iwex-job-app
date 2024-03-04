@@ -21,6 +21,7 @@ import { sendToken, setRole } from "../../store/slices/userSlice";
 import Orders from "../../pages/orders/Orders";
 import Header_Employee from "../header/Header_Employee";
 import Header from "../header/Header";
+import Loaders from "../../UI/loaders";
 
 
 const Main = () => {
@@ -28,18 +29,15 @@ const Main = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
-  const roleCookie = getCookie("role");
-  console.log(roleCookie);
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
       dispatch(sendToken(token))
-      dispatch(setRole(roleCookie))
-      dispatch(getDataProfile())
+      role === 'is_employer' && dispatch(getDataProfile())
     }
   }, [token]);
-  console.log(role);
   return (
     <>
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? < Header /> : role === 'is_employee' && <Header_Employee />}

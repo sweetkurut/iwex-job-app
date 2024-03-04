@@ -3,9 +3,9 @@ import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
   // baseURL: "http://10.137.60.119:8001",
-  // baseURL: "http://192.168.0.90:8001",
+  baseURL: "http://192.168.0.90:8000",
   // baseURL: "https://crm.iwex.kg",
-  baseURL: "http://146.190.135.114:8002",
+  // baseURL: "http://146.190.135.114:8002",
 
   headers: {
     "Content-Type": "multipart/form-data",
