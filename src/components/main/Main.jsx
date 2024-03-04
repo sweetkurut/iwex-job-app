@@ -21,10 +21,12 @@ import { sendToken, setRole } from "../../store/slices/userSlice";
 import Orders from "../../pages/orders/Orders";
 import Header_Employee from "../header/Header_Employee";
 import Header from "../header/Header";
-
+import Employer from "../../pages/employer/emloyee";
+import Students from "../students";
+import ListStudentsPage from "../../pages/ListStudents/listStudentsPage";
 
 const Main = () => {
-  const { role } = useSelector(state => state.user)
+  const { role } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
@@ -34,15 +36,19 @@ const Main = () => {
     if (!token) {
       navigate("/login");
     } else {
-      dispatch(sendToken(token))
-      dispatch(setRole(roleCookie))
-      dispatch(getDataProfile())
+      dispatch(sendToken(token));
+      dispatch(setRole(roleCookie));
+      dispatch(getDataProfile());
     }
   }, [token]);
   console.log(role);
   return (
     <>
-      {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? < Header /> : role === 'is_employee' && <Header_Employee />}
+      {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
+        <Header />
+      ) : (
+        role === "is_employee" && <Header_Employee />
+      )}
       <main>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -50,9 +56,11 @@ const Main = () => {
           {role === "is_employee" ? (
             <>
               <Route path="/*" element={<Orders />} />
+              <Route path="/list-employer" element={<Employer />} />
+              <Route path="/list-students" element={<ListStudentsPage />} />
               <Route path="*" element={<Page404 />} />
             </>
-          ) : role === 'is_employer' ? (
+          ) : role === "is_employer" ? (
             <>
               <Route path="/*" element={<Vacancies />} />
               <Route path="/privacy" element={<PagePrivacy />} />

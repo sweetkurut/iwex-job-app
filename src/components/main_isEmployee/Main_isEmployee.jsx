@@ -7,26 +7,26 @@ import { getDataProfile } from "../../store/slices/companyDetailsSlice";
 import Orders from "../../pages/orders/Orders";
 
 const Main_isEmployee = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const token = getCookie("accessToken");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = getCookie("accessToken");
 
-    useEffect(() => {
-        if (!token) {
-            navigate("/login");
-        } else {
-            // navigate('/vacancies');
-            dispatch(getDataProfile());
-        }
-    }, [token]);
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      // navigate('/vacancies');
+      dispatch(getDataProfile());
+    }
+  }, [token]);
 
-    return (
-        <main>
-            <Routes>
-                <Route path="/*" element={<Orders />} />
-            </Routes>
-        </main>
-    );
+  return (
+    <main>
+      <Routes>
+        <Route path="/*" element={<Orders />} />
+      </Routes>
+    </main>
+  );
 };
 
 export default Main_isEmployee;

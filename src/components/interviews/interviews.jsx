@@ -40,7 +40,8 @@ const Interview = () => {
         endDate.setHours(endDate.getHours() + 1);
 
         return {
-          title: interviewItem.vacancy_review.employer_company_name,
+          // title: interviewItem.vacancy_review.employer_company_name,
+          title: interviewItem.vacancy_review.position,
           startDate: startDate,
           endDate: endDate,
         };
