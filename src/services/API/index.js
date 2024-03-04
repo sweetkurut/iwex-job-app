@@ -131,6 +131,11 @@ const allAPIs = {
     return instance.post(`/core/favorite-create/`, id);
   },
 
+  // interview-list
+  getInterView() {
+    return instance.get("/core/interviews-list/");
+  },
+
 
 
   sendHousinng(data) {

@@ -6,9 +6,13 @@ import { FaUser, FaUserCircle } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
 import cn from "clsx";
 import { deleteCookies } from "../../utils/js_cookie";
+import { setRole } from "../../store/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,6 +27,8 @@ const Header = () => {
   };
   const handleLogOutCookie = () => {
     deleteCookies(["accessToken", "role"]);
+    dispatch(setRole((null)))
+
     navigate("/login");
   };
 

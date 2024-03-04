@@ -19,6 +19,8 @@ import FavoritesPage from "../../pages/favorites/Favorites";
 import PageInterviews from "../../pages/interviews/interviews";
 import { sendToken, setRole } from "../../store/slices/userSlice";
 import Orders from "../../pages/orders/Orders";
+import Header_Employee from "../header/Header_Employee";
+import Header from "../header/Header";
 
 
 const Main = () => {
@@ -39,34 +41,37 @@ const Main = () => {
   }, [token]);
   console.log(role);
   return (
-    <main>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        {role === "is_employee" ? (
-          <>
-            <Route path="/*" element={<Orders />} />
+    <>
+      {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? < Header /> : role === 'is_employee' && <Header_Employee />}
+      <main>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          {role === "is_employee" ? (
+            <>
+              <Route path="/*" element={<Orders />} />
+              <Route path="*" element={<Page404 />} />
+            </>
+          ) : role === 'is_employer' ? (
+            <>
+              <Route path="/*" element={<Vacancies />} />
+              <Route path="/privacy" element={<PagePrivacy />} />
+              <Route path="/vacancy" element={<AddVacancy />} />
+              <Route path="/response" element={<PageResponse />} />
+              <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
+              <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
+              <Route path="/students" element={<StudentPage />} />
+              <Route path="/student-detail/:id" element={<Detail />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/list-interviews" element={<PageInterviews />} />
+              <Route path="*" element={<Page404 />} />
+            </>
+          ) : (
             <Route path="*" element={<Page404 />} />
-          </>
-        ) : role === 'is_employer' ? (
-          <>
-            <Route path="/*" element={<Vacancies />} />
-            <Route path="/privacy" element={<PagePrivacy />} />
-            <Route path="/vacancy" element={<AddVacancy />} />
-            <Route path="/response" element={<PageResponse />} />
-            <Route path="/card-detail-vacancies/:id" element={<PageDetailVacancies />} />
-            <Route path="/edit-detail-vacancy/:id" element={<EditVacancyPage />} />
-            <Route path="/students" element={<StudentPage />} />
-            <Route path="/student-detail/:id" element={<Detail />} />
-            <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/list-interviews" element={<PageInterviews />} />
-            <Route path="*" element={<Page404 />} />
-          </>
-        ) : (
-          <Route path="*" element={<Page404 />} />
-        )}
-      </Routes>
-    </main>
+          )}
+        </Routes>
+      </main>
+    </>
   );
 };
 

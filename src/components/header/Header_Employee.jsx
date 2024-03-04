@@ -5,10 +5,13 @@ import { useState } from "react";
 import { FaUser, FaUserCircle } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
 import cn from "clsx";
-import { deleteCookie } from "../../utils/js_cookie";
+import { deleteCookies } from "../../utils/js_cookie";
+import { useDispatch } from "react-redux";
+import { setRole } from "../../store/slices/userSlice";
 
 const Header_Employee = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -22,7 +25,8 @@ const Header_Employee = () => {
         handleClose();
     };
     const handleLogOutCookie = () => {
-        deleteCookie("accessToken");
+        deleteCookies(["accessToken", "role"]);
+        dispatch(setRole((null)))
         navigate("/login");
     };
 

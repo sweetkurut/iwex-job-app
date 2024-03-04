@@ -2,7 +2,7 @@ import { useState } from "react";
 import SignIn from "../../components/signIn/SignIn";
 import SignUp from "../../components/signUp/SignUp";
 import ConfirmEmail from "../../components/confirmEmail/ConfirmEmail";
-import EnterPassword from "../../components/enterPassword/enterPassword";
+import EnterPassword from "../../components/enterPassword/EnterPassword";
 import s from "./Login.module.sass";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSelector } from "react-redux";

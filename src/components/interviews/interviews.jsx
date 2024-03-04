@@ -1,97 +1,65 @@
-import { useState } from "react";
-import Paper from "@mui/material/Paper";
-import { ViewState, EditingState, IntegratedEditing } from "@devexpress/dx-react-scheduler";
+import styles from "./interview.module.sass";
 import {
   Scheduler,
-  DayView,
+  MonthView,
   Appointments,
-  AppointmentForm,
   AppointmentTooltip,
-  ConfirmationDialog,
+  DateNavigator,
+  Toolbar,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import styles from "./interview.module.sass";
-// import { appointments } from "../../../demo-data/appointments";
-
-const TextEditor = (props) => {
-  if (props.type === "multilineTextEditor") {
-    return null;
-  }
-  return <AppointmentForm.TextEditor {...props} />;
-};
-
-const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-  const onCustomFieldChange = (nextValue) => {
-    onFieldChange({ customField: nextValue });
-  };
-
-  return (
-    <AppointmentForm.BasicLayout
-      appointmentData={appointmentData}
-      onFieldChange={onFieldChange}
-      {...restProps}>
-      <AppointmentForm.Label text="Custom Field" type="title" />
-      <AppointmentForm.TextEditor
-        value={appointmentData.customField}
-        onValueChange={onCustomFieldChange}
-        placeholder="Custom field"
-      />
-    </AppointmentForm.BasicLayout>
-  );
-};
+import { useEffect, useState } from "react";
+import { ViewState } from "@devexpress/dx-react-scheduler";
+import { useDispatch, useSelector } from "react-redux";
+import { getInterviewList } from "../../store/slices/employeeDetailsSlice";
 
 const Interview = () => {
-  const appointments = [
-    {
-      id: 1,
-      title: "Meeting with John",
-      startDate: new Date(2024, 1, 22, 10, 0),
-      endDate: new Date(2024, 1, 22, 11, 0),
-    },
-    {
-      id: 2,
-      title: "Lunch with Alice",
-      startDate: new Date(2024, 1, 23, 12, 0),
-      endDate: new Date(2024, 1, 23, 13, 0),
-    },
-  ];
-  console.log(appointments);
-  const [data, setData] = useState(appointments);
-  const currentDate = "2018-06-27";
+  const { interview } = useSelector((state) => state.employeeDetails);
+  const dispatch = useDispatch();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [appointments, setAppointments] = useState([]);
 
-  const commitChanges = ({ added, changed, deleted }) => {
-    setData((prevData) => {
-      let updatedData = [...prevData];
-      if (added) {
-        const startingAddedId =
-          updatedData.length > 0 ? updatedData[updatedData.length - 1].id + 1 : 0;
-        updatedData = [...updatedData, { id: startingAddedId, ...added }];
-      }
-      if (changed) {
-        updatedData = updatedData.map((appointment) =>
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment
+  useEffect(() => {
+    dispatch(getInterviewList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(interview);
+    if (interview && interview.length > 0) {
+      const newAppointments = interview.map((interviewItem) => {
+        console.log(interviewItem.interviews_date);
+        const dateParts = interviewItem.interviews_date.split(",");
+        const startDate = new Date(
+          parseInt(dateParts[0]),
+          parseInt(dateParts[1]) - 1,
+          parseInt(dateParts[2]),
+          parseInt(dateParts[3]),
+          parseInt(dateParts[4])
         );
-      }
-      if (deleted !== undefined) {
-        updatedData = updatedData.filter((appointment) => appointment.id !== deleted);
-      }
-      return updatedData;
-    });
-  };
 
+        const endDate = new Date(startDate);
+        endDate.setHours(endDate.getHours() + 1);
+
+        return {
+          title: interviewItem.vacancy_review.employer_company_name,
+          startDate: startDate,
+          endDate: endDate,
+        };
+      });
+      setAppointments(newAppointments);
+    }
+  }, [interview]);
+
+  console.log(appointments);
   return (
     <div className={styles.container}>
-      <Paper>
-        <Scheduler data={data}>
-          <ViewState currentDate={currentDate} />
-          <EditingState onCommitChanges={commitChanges} />
-          <IntegratedEditing />
-          <DayView startDayHour={9} endDayHour={15} />
-          <Appointments />
-          <AppointmentTooltip showOpenButton showDeleteButton />
-          <ConfirmationDialog />
-          <AppointmentForm basicLayoutComponent={BasicLayout} textEditorComponent={TextEditor} />
-        </Scheduler>
-      </Paper>
+      <Scheduler data={appointments}>
+        <ViewState />
+        <MonthView />
+        <Appointments />
+        <Toolbar />
+        <DateNavigator currentDate={selectedDate} onCurrentDateChange={setSelectedDate} />
+        <AppointmentTooltip />
+      </Scheduler>
     </div>
   );
 };

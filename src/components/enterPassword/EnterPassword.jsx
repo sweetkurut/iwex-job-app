@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { useForm, Controller } from 'react-hook-form';
-import s from './EnterPassword.module.sass';
-import { sendEnterPassword } from '../../store/slices/userSlice';
-import { useDispatch } from 'react-redux';
-import { saveCookie } from '../../utils/js_cookie';
-import { useNavigate } from 'react-router-dom';
+// import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { useForm, Controller } from "react-hook-form";
+import s from "./EnterPassword.module.sass";
+import { sendEnterPassword } from "../../store/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { saveCookie } from "../../utils/js_cookie";
+import { useNavigate } from "react-router-dom";
 
 const EnterPassword = ({ setComponent, email }) => {
-    const { handleSubmit, control, watch, formState: { errors } } = useForm();
-    const password = watch('password', '');
+    const {
+        handleSubmit,
+        control,
+        watch,
+        formState: { errors },
+    } = useForm();
+    const password = watch("password", "");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -39,7 +44,7 @@ const EnterPassword = ({ setComponent, email }) => {
     };
 
     const handleCancel = () => {
-        setComponent('SignUp');
+        setComponent("SignUp");
     };
 
     return (
@@ -48,12 +53,11 @@ const EnterPassword = ({ setComponent, email }) => {
             <Box
                 sx={{
                     marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}>
+                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -64,7 +68,7 @@ const EnterPassword = ({ setComponent, email }) => {
                         name="password"
                         control={control}
                         defaultValue=""
-                        rules={{ required: 'Введите пароль' }}
+                        rules={{ required: "Введите пароль" }}
                         render={({ field }) => (
                             <TextField
                                 {...field}
@@ -84,8 +88,8 @@ const EnterPassword = ({ setComponent, email }) => {
                         control={control}
                         defaultValue=""
                         rules={{
-                            required: 'Введите подтверждение пароля',
-                            validate: (value) => value === password || 'Пароли должны совпадать',
+                            required: "Введите подтверждение пароля",
+                            validate: (value) => value === password || "Пароли должны совпадать",
                         }}
                         render={({ field }) => (
                             <TextField
@@ -101,17 +105,12 @@ const EnterPassword = ({ setComponent, email }) => {
                         )}
                     />
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
+                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                         Подтвердить
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link onClick={handleCancel} variant="body2" className={s.link} >
+                            <Link onClick={handleCancel} variant="body2" className={s.link}>
                                 Отмена
                             </Link>
                         </Grid>
