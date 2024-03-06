@@ -17,46 +17,32 @@ import { sendInterviews } from "../../store/slices/employeeDetailsSlice";
 import { useLocation, useParams } from "react-router";
 
 const ModalCalendar = ({ open, setOpen }) => {
-  const [value, onChange] = useState(new Date());
-  const [valueClock, setValueClock] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState();
   const { id } = useParams();
   let { state } = useLocation();
   const dispatch = useDispatch();
-
-  const getTime = (e, name) => {
-    if (e) {
-      const hours = e.hour().toString().padStart(2, "0");
-      const minutes = e.minute().toString().padStart(2, "0");
-      const timeString = `${hours}:${minutes}`;
-      setValueClock((prevData) => ({
-        ...prevData,
-        [name]: timeString,
-      }));
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => setValueClock(new Date()), 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleSubmit = async () => {
-    const date = value.toString().split("T")[0];
-    const time = valueClock.time;
+  console.log(date);
+  console.log(time);
 
+  const handleSubmit = async () => {
+    // Создаем новый объект Date на основе времени
+    const selectedTime = new Date(date);
+    selectedTime.setHours(time.getHours(), time.getMinutes());
+
+    // Форматируем дату и время
+    const formattedDate = `${date.toLocaleDateString()} ${selectedTime.toLocaleTimeString()}`;
+
+    // Создаем объект data
     const data = {
       user: id,
       vacancy: state.id_vacancy,
-      date: date,
-      time: time,
-      interviews_date: value,
+      interviews_date: formattedDate,
     };
 
     try {
@@ -77,7 +63,7 @@ const ModalCalendar = ({ open, setOpen }) => {
       aria-labelledby="max-width-dialog-title">
       <DialogTitle>{"Выберите дату и время"}</DialogTitle>
       <DialogContent>
-        <Calendar className={s.calendar} onChange={onChange} value={value} />
+        <Calendar className={s.calendar} onChange={setDate} value={date} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <TimePicker
             slotProps={{
@@ -89,7 +75,8 @@ const ModalCalendar = ({ open, setOpen }) => {
             className={s.input}
             label="Время собеседования:"
             ampm={false}
-            onChange={(time) => getTime(time, "time")}
+            value={time}
+            onChange={(newValue) => setTime(newValue)}
             renderInput={(params) => <TextField {...params} required />}
           />
         </LocalizationProvider>
