@@ -1,0 +1,54 @@
+.wrapper
+  .container
+    max-width: 1280px
+    margin: 0 auto
+    .title
+      padding-top: 24px
+      font-size: 30px
+      margin-bottom: 25px
+      position: relative
+      color: #00013d
+      &::before
+        content: ''
+        position: absolute
+        bottom: -10px
+        background: #00013d
+        width: 8%
+        height: 5px
+        border-radius: 10px
+    .cards
+      padding-top: 45px
+      display: grid
+      grid-template-columns: repeat(4, 1fr)
+      grid-auto-rows: 350px
+      grid-gap: 16px
+      .card
+        border: solid 1px #0000001d
+        padding: 14px
+        border-radius: 10px
+        box-shadow: rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 
+        .vacancies_name_image
+          display: flex
+          align-items: center
+          gap: 24px
+          margin-bottom: 20px
+          .last_first_name
+            display: flex
+            gap: 10px
+        .user_data
+          font-size: 17px
+          margin-bottom: 12px
+          
+        .card_descriptions
+          padding-top: 5px
+          display: flex
+          flex-direction: column
+          gap: 8px
+      .card_button
+          margin-top: 45px
+          .btn_link
+            padding: 10px 20px
+            width: 100%
+            background: #00013d
+            color: #fff
+            border-radius: 5px

@@ -1,31 +1,61 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './Notification.module.sass';
+import s from './Notification.module.sass';
+import io from 'socket.io-client';
 
-const Notification = ({ isOpen, onClose }) => {
+const Notification = ({ isOpen, onClose, setUnread_count }) => {
     const notificationRef = useRef(null);
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
+    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const ws = new WebSocket('ws://192.168.0.90:8001/ws/interviews/');
+        function connectWebSocket() {
+            const newSocket = new WebSocket('ws://192.168.0.90:8001/ws/interviews/');
 
-        ws.onopen = () => {
-            console.log('WebSocket соединение установлено.');
-        };
+            newSocket.onopen = () => {
+                console.log('WebSocket соединение установлено.');
+            };
 
-        ws.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            setData(message)
-        };
-        ws.onclose = () => {
-            console.log('WebSocket соединение закрыто.');
-        };
+            newSocket.onclose = () => {
+                console.log('WebSocket соединение закрыто.');
+                // Переподключаемся к веб-сокету через некоторое время
+                setTimeout(connectWebSocket, 2000); // Попробуйте переподключиться через 5 секунд
+            };
 
+            newSocket.onmessage = (event) => {
+                const newData = JSON.parse(event.data);
+                setData(prevData => {
+                    const index = prevData.findIndex(item => item.id === newData.id);
+                    if (index !== -1) {
+                        return prevData.map(item => (item.id === newData.id ? newData : item));
+                    } else {
+                        return prevData.concat(newData);
+                    }
+                });
+                setUnread_count(newData.unread_count);
+                console.log(newData);
+            };
+
+            setSocket(newSocket);
+        }
+
+        connectWebSocket();
 
         return () => {
-            console.error('Произошла ошибка:', event);
-            ws.close();
+            console.log('WebSocket соединение закрыто.');
+            if (socket) {
+                socket.close();
+            }
         };
     }, []);
+
+
+    const handlerRead = (id) => {
+        const data = {
+            id: id,
+        };
+        console.log(data);
+        socket.emit('read', data);
+    };
 
     const handleClickOutside = (event) => {
         if (notificationRef.current && !notificationRef.current.contains(event.target)) {
@@ -45,14 +75,21 @@ const Notification = ({ isOpen, onClose }) => {
     }, [isOpen]);
 
     return (
-        <div ref={notificationRef} className={`${styles.notifications} ${isOpen ? styles.open : ''}`}>
-            <h2 style={{ fontSize: 20, color: 'green', paddingTop: 10 }}>{data?.message?.notification}</h2>
-
+        <div ref={notificationRef} className={`${s.notifications} ${isOpen ? s.open : ''}`}>
+            <div className={s.header}>
+                <p>Уведомления</p>
+            </div>
+            <div className={s.wrapper}>
+                {data?.map(e => (
+                    <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
+                        <p className={s.message}>{e?.message?.notification}</p>
+                        <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
+                        <p className={s.date}>{e?.notification_date}</p>
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };
 
 export default Notification;
-
-
-

@@ -5,8 +5,55 @@
     height: 100vh
     width: 500px
     background-color: #fff
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
     transition: right 0.3s ease
+    z-index: 100
 
 .open
     right: 0
+
+.header
+    padding: 20px
+    height: 90px
+    border-bottom: solid 1px #8f8f8f
+    p
+        font-size: 20px
+
+.wrapper
+    background: #efefef
+    height: 100%
+    overflow-y: scroll
+
+    &::-webkit-scrollbar
+        width: 7px
+
+    &::-webkit-scrollbar-track
+        background: #f1f1f1
+
+    &::-webkit-scrollbar-thumb
+        background: #888
+        border-radius: 6px
+
+    &::-webkit-scrollbar-thumb:hover
+        background: #555
+
+    .card
+        width: 100%
+        display: flex
+        flex-direction: column
+        gap: 5px
+        padding: 20px
+        transition: all 0.3s ease
+        border-bottom: solid 1px #8f8f8f
+        &:hover
+            background: #00b3e07f
+        .message
+            font-size: 16px
+        .email
+            font-size: 16px
+            span
+                color: #0066ff
+                font-size: 16px
+        .date
+            margin-left: auto
+            font-size: 16px

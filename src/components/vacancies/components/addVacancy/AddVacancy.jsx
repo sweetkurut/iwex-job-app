@@ -1,22 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import s from './AddVacancy.module.sass';
-import { Breadcrumbs, Checkbox, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { getHousing, getMyBranch, sendHousinng } from '../../../../store/slices/companyDetailsSlice';
-import { send_create_vacancy } from '../../../../store/slices/vacancySlice';
-import { Link, useNavigate } from 'react-router-dom';
-import { GoHome } from 'react-icons/go';
-import { Box } from '@mui/system';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-
+import {
+    Breadcrumbs,
+    Checkbox,
+    CircularProgress,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import {
+    getHousing,
+    getMyBranch,
+    sendHousinng,
+} from "../../../../store/slices/companyDetailsSlice";
+import { send_create_vacancy } from "../../../../store/slices/vacancySlice";
+import { Link, useNavigate } from "react-router-dom";
+import { GoHome } from "react-icons/go";
+import { Box } from "@mui/system";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 const AddVacancy = () => {
     const navigate = useNavigate();
@@ -33,7 +46,7 @@ const AddVacancy = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getMyBranch());
-        dispatch(getHousing())
+        dispatch(getHousing());
     }, []);
 
     const handleInputChange = (e) => {
@@ -67,7 +80,7 @@ const AddVacancy = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await dispatch(send_create_vacancy(data)).unwrap()
+            const response = await dispatch(send_create_vacancy(data)).unwrap();
             console.log("response", response);
             if (response) {
                 setModalMessage({ title: "Успех", text: "Вакансия успешно добавлена", vacancy: true });
@@ -85,19 +98,21 @@ const AddVacancy = () => {
         setOpen(false);
     };
     const level_language = ["A1", "A2", "B1", "B2", "C1", "C2"];
-    const gender = [{ gender: 'Мужской', value: 'Male' }, { gender: 'Женский', value: 'Female' }, { gender: 'Неважно', value: 'Any' }]
+    const gender = [
+        { gender: "Мужской", value: "Male" },
+        { gender: "Женский", value: "Female" },
+        { gender: "Неважно", value: "Any" },
+    ];
 
-
-
-    //Жилье 
+    //Жилье
     const [addHousing, setAddHousing] = useState(false);
     const [dataHousing, setDataHousing] = useState({
-        files: []
+        files: [],
     });
     const changeStateHousing = (e) => {
-        e.preventDefault()
-        setAddHousing(!addHousing)
-    }
+        e.preventDefault();
+        setAddHousing(!addHousing);
+    };
     const handleInputChangeHousing = (e) => {
         const { name, value } = e.target;
         setDataHousing((prevData) => ({
@@ -107,12 +122,12 @@ const AddVacancy = () => {
     };
     const handlerSendHousing = async (formData) => {
         try {
-            const response = await dispatch(sendHousinng(formData)).unwrap()
-            setAddHousing(false)
+            const response = await dispatch(sendHousinng(formData)).unwrap();
+            setAddHousing(false);
         } catch (error) {
             console.log(error);
         }
-    }
+    };
     const handleFileChange = (e) => {
         const files = e.target.files;
         const updatedFiles = [];
@@ -122,12 +137,12 @@ const AddVacancy = () => {
             reader.onload = (e) => {
                 updatedFiles.push({
                     file: file,
-                    preview: e.target.result
+                    preview: e.target.result,
                 });
                 if (updatedFiles.length === files.length) {
-                    setDataHousing(prevState => ({
+                    setDataHousing((prevState) => ({
                         ...prevState,
-                        files: [...prevState.files, ...updatedFiles]
+                        files: [...prevState.files, ...updatedFiles],
                     }));
                 }
             };
@@ -136,20 +151,20 @@ const AddVacancy = () => {
     };
 
     const onSubmitHousing = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const formData = new FormData();
         for (let key in dataHousing) {
             if (key === "files") {
                 dataHousing.files.forEach((file, index) => {
-                    formData.append('files', file);
+                    formData.append("files", file);
                 });
             } else {
                 formData.append(key, dataHousing[key]);
             }
         }
 
-        handlerSendHousing(formData)
-    }
+        handlerSendHousing(formData);
+    };
 
     const ModalConfirm = () => {
         return (
@@ -239,28 +254,24 @@ const AddVacancy = () => {
                             <InputLabel id="demo-simple-select-label">Выберите фото-видео *</InputLabel>
                             <input type="file" onChange={handleFileChange} multiple />
                             <div className={s.wrapper_img}>
-                                {
-                                    dataHousing.files?.map((file, index) => (
-                                        <div className={s.box_img} key={index}>
-                                            {file.preview && <img src={file.preview} alt={file.name} />}
-                                        </div>
-                                    ))
-                                }
+                                {dataHousing.files?.map((file, index) => (
+                                    <div className={s.box_img} key={index}>
+                                        {file.preview && <img src={file.preview} alt={file.name} />}
+                                    </div>
+                                ))}
                             </div>
                         </DialogContent>
                         <DialogActions>
-                            <button autoFocus>
-                                Сохранить
-                            </button>
+                            <button autoFocus>Сохранить</button>
                             <button onClick={changeStateHousing} autoFocus>
                                 Отмена
                             </button>
                         </DialogActions>
                     </form>
                 </Dialog>
-            </React.Fragment >
-        )
-    }
+            </React.Fragment>
+        );
+    };
     return (
         <>
             {isLoading ||
@@ -359,7 +370,6 @@ const AddVacancy = () => {
                                                 <span>Пол: </span>
                                                 <span>{item?.gender}</span>
                                             </div>
-
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -370,20 +380,14 @@ const AddVacancy = () => {
                                     className={s.input}
                                     onChange={(time) => getTime(time, "time_start")}
                                     label="Время начала работы:"
-                                    renderInput={(params) => <TextField
-                                        {...params}
-                                        required
-                                    />}
+                                    renderInput={(params) => <TextField {...params} required />}
                                 />
                                 <TimePicker
                                     ampm={false}
                                     className={s.input}
                                     label="Время окончания работы:"
                                     onChange={(time) => getTime(time, "time_end")}
-                                    renderInput={(params) => <TextField
-                                        {...params}
-                                        required
-                                    />}
+                                    renderInput={(params) => <TextField {...params} required />}
                                 />
                                 <DatePicker
                                     className={s.input}
@@ -397,10 +401,7 @@ const AddVacancy = () => {
                                             start_holidays_date: formattedDate,
                                         }));
                                     }}
-                                    renderInput={(params) => <TextField
-                                        {...params}
-                                        required
-                                    />}
+                                    renderInput={(params) => <TextField {...params} required />}
                                 />
                                 <DatePicker
                                     className={s.input}
@@ -414,10 +415,7 @@ const AddVacancy = () => {
                                             end_holidays_date: formattedDate,
                                         }));
                                     }}
-                                    renderInput={(params) => <TextField
-                                        {...params}
-                                        required
-                                    />}
+                                    renderInput={(params) => <TextField {...params} required />}
                                 />
                             </LocalizationProvider>
 
@@ -483,12 +481,10 @@ const AddVacancy = () => {
                                     onChange={handleInputChange}
                                     inputProps={{ "aria-label": "controlled" }}
                                 />
-                                <p className={s.text}>
-                                    Предоставляется ли жилье
-                                </p>
+                                <p className={s.text}>Предоставляется ли жилье</p>
                             </div>
 
-                            {data?.housing_status &&
+                            {data?.housing_status && (
                                 <>
                                     <FormControl fullWidth>
                                         <InputLabel id="demo-simple-select-label">Жилье </InputLabel>
@@ -515,9 +511,11 @@ const AddVacancy = () => {
                                             ))}
                                         </Select>
                                     </FormControl>
-                                    <button onClick={changeStateHousing} className={s.add}>Добавить жилье</button>
+                                    <button onClick={changeStateHousing} className={s.add}>
+                                        Добавить жилье
+                                    </button>
                                 </>
-                            }
+                            )}
                             <p className={s.text}>Соискатель должен знать:</p>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Английский</InputLabel>

@@ -15,6 +15,7 @@ const Header_Employee = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = useState(null);
+    const [unread_count, setUnread_count] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -41,7 +42,7 @@ const Header_Employee = () => {
 
     return (
         <>
-            <Notification isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
+            <Notification setUnread_count={setUnread_count} isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
             <header className={styles.header}>
                 <div className={styles.header_container}>
                     <nav className={styles.nav}>
@@ -59,9 +60,9 @@ const Header_Employee = () => {
                             Список Работодателей
                         </NavLink>
                         <NavLink
-                            to={"/list-interviews"}
+                            to={"/list-students"}
                             className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-                            Список собеседований
+                            Список студентов
                         </NavLink>
                         <NavLink
                             to={"/message"}
@@ -72,7 +73,7 @@ const Header_Employee = () => {
                     <div className={styles.box_profile}>
                         <button className={styles.notification} onClick={handleToggleNotifications}>
                             <IoNotifications size={20} />
-                            <span>+2</span>
+                            {unread_count && <span>+{unread_count}</span>}
                         </button>
                         <div className={styles.profile}>
                             <Button
@@ -105,9 +106,8 @@ const Header_Employee = () => {
                         </div>
                     </div>
                 </div>
-            </header >
+            </header>
         </>
-
     );
 };
 

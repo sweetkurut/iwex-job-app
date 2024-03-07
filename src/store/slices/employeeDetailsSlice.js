@@ -70,18 +70,6 @@ export const getInvitation = createAsyncThunk(
     }
   }
 );
-export const sendInterviews = createAsyncThunk(
-  "employeeDetails/sendInterviews",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await allAPIs.sendInterviews(id);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.response.data.error);
-    }
-  }
-);
 
 export const getFavorite = createAsyncThunk(
   "employeeDetails/getFavorite",
@@ -128,6 +116,19 @@ export const getEmployeeFilter = createAsyncThunk(
 );
 
 // interview
+
+export const sendInterviews = createAsyncThunk(
+  "employeeDetails/sendInterviews",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.sendInterviews(id);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
 
 export const getInterviewList = createAsyncThunk(
   "employeeDetails/getInterviewList",
@@ -234,8 +235,8 @@ const employeeDetailsSlice = createSlice({
       .addCase(sendInvitation.rejected, (state) => {
         state.isLoading = false;
       })
-    
-     .addCase(getInterviewList.pending, (state) => {
+
+      .addCase(getInterviewList.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getInterviewList.fulfilled, (state, action) => {
@@ -248,5 +249,5 @@ const employeeDetailsSlice = createSlice({
   },
 });
 
-export const { } = employeeDetailsSlice.actions;
+export const {} = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;

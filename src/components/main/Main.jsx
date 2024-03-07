@@ -21,11 +21,13 @@ import { sendToken, setRole } from "../../store/slices/userSlice";
 import Orders from "../../pages/orders/Orders";
 import Header_Employee from "../header/Header_Employee";
 import Header from "../header/Header";
-import Loaders from "../../UI/loaders";
-
+import Employer from "../../pages/employer/emloyee";
+import ListStudentsPage from "../../pages/ListStudents/listStudentsPage";
+import ChatPage from "../../pages/chatPage/ChatPage";
+import ModalError from "../modalError/ModalError";
 
 const Main = () => {
-  const { role } = useSelector(state => state.user)
+  const { role } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
@@ -40,7 +42,12 @@ const Main = () => {
   }, [token]);
   return (
     <>
-      {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? < Header /> : role === 'is_employee' && <Header_Employee />}
+      <ModalError />
+      {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
+        <Header />
+      ) : (
+        role === "is_employee" && <Header_Employee />
+      )}
       <main>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -48,9 +55,12 @@ const Main = () => {
           {role === "is_employee" ? (
             <>
               <Route path="/*" element={<Orders />} />
+              <Route path="/list-employer" element={<Employer />} />
+              <Route path="/list-students" element={<ListStudentsPage />} />
+              <Route path="/message" element={<ChatPage />} />
               <Route path="*" element={<Page404 />} />
             </>
-          ) : role === 'is_employer' ? (
+          ) : role === "is_employer" ? (
             <>
               <Route path="/*" element={<Vacancies />} />
               <Route path="/privacy" element={<PagePrivacy />} />
