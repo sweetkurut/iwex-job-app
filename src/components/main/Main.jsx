@@ -25,6 +25,7 @@ import Employer from "../../pages/employer/emloyee";
 import ListStudentsPage from "../../pages/ListStudents/listStudentsPage";
 import ChatPage from "../../pages/chatPage/ChatPage";
 import ModalError from "../modalError/ModalError";
+import Interviewstaff from "../../pages/interviewStaff/interviewstaff";
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -36,8 +37,8 @@ const Main = () => {
     if (!token) {
       navigate("/login");
     } else {
-      dispatch(sendToken(token))
-      role === 'is_employer' && dispatch(getDataProfile())
+      dispatch(sendToken(token));
+      role === "is_employer" && dispatch(getDataProfile());
     }
   }, [token]);
   return (
@@ -57,6 +58,7 @@ const Main = () => {
               <Route path="/*" element={<Orders />} />
               <Route path="/list-employer" element={<Employer />} />
               <Route path="/list-students" element={<ListStudentsPage />} />
+              <Route path="/interview-staff" element={<Interviewstaff />} />
               <Route path="/message" element={<ChatPage />} />
               <Route path="*" element={<Page404 />} />
             </>
