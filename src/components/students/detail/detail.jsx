@@ -1,11 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./detail.module.sass";
 import React, { useEffect, useState } from "react";
-import {
-  SendFavorite,
-  getEmployeeDetail,
-  sendInvitation,
-} from "../../../store/slices/employeeDetailsSlice";
+import { getEmployeeDetail, sendInvitation } from "../../../store/slices/employeeDetailsSlice";
 import Loaders from "../../../UI/loaders";
 import { GoHome } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -60,13 +56,6 @@ const StudentDetail = () => {
       setModalMessage({ title: "Ошибка", text: error.toString() || "An unknown error occurred" });
       setOpen(true);
     }
-  };
-
-  const handleFavorite = () => {
-    const data = {
-      user: id,
-    };
-    dispatch(SendFavorite(data));
   };
 
   const handleClose = () => {
@@ -160,8 +149,12 @@ const StudentDetail = () => {
                         <button onClick={HandlerInvitation} className={styles.btn}>
                           Пригласить без собеседования
                         </button>
-                        <button onClick={handleFavorite} className={styles.btn}>
-                          {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+                        <button onClick={() => setFavorites(!favorites)} className={styles.btn}>
+                          {favorites ?
+                            <FaHeart size={20} />
+                            :
+                            <FaRegHeart size={20} />
+                          }
                         </button>
                       </div>
                     </div>
