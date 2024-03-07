@@ -24,6 +24,7 @@ import Header from "../header/Header";
 import Employer from "../../pages/employer/emloyee";
 import Students from "../students";
 import ListStudentsPage from "../../pages/ListStudents/listStudentsPage";
+import Interviewstaff from "../../pages/interviewStaff/interviewstaff";
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -58,6 +59,7 @@ const Main = () => {
               <Route path="/*" element={<Orders />} />
               <Route path="/list-employer" element={<Employer />} />
               <Route path="/list-students" element={<ListStudentsPage />} />
+              <Route path="/interviews-staff" element={<Interviewstaff />} />
               <Route path="*" element={<Page404 />} />
             </>
           ) : role === "is_employer" ? (

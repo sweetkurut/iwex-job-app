@@ -53,6 +53,11 @@ const Header_Employee = () => {
             Список студентов
           </NavLink>
           <NavLink
+            to={"/interviews-staff"}
+            className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
+            Вакансия
+          </NavLink>
+          <NavLink
             to={"/message"}
             className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
             Сообщение
