@@ -53,7 +53,7 @@ const StudentDetail = () => {
   };
 
   const HandlerInvitation = async () => {
-    const data = { user: id, vacancy: state.id_vacancy };
+    const data = { user: [id], vacancy: state.id_vacancy };
     try {
       const response = await dispatch(sendInvitation(data)).unwrap();
       if (response) {

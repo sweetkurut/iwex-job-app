@@ -24,8 +24,8 @@ import Header from "../header/Header";
 import Employer from "../../pages/employer/emloyee";
 import ListStudentsPage from "../../pages/ListStudents/listStudentsPage";
 import ChatPage from "../../pages/chatPage/ChatPage";
-import ModalError from "../modalError/ModalError";
 import Interviewstaff from "../../pages/interviewStaff/interviewstaff";
+
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -43,7 +43,6 @@ const Main = () => {
   }, [token]);
   return (
     <>
-      <ModalError />
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
         <Header />
       ) : (

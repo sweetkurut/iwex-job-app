@@ -6,21 +6,10 @@ import {
   patchCompanyData,
   sendCompanyData,
 } from "../../../../store/slices/companyDetailsSlice";
-
-const Input = ({ value, onChange, edit, required }) => (
-  <input
-    style={{ verticalAlign: "top" }}
-    className={`${s.input} ${edit ? s.active : ""}`}
-    disabled={!edit}
-    value={value || ""}
-    onChange={onChange}
-    required={required}
-    multiple
-  />
-);
+import { TextField } from "@mui/material";
 
 const Company = ({ setComponent }) => {
-  const { isLoading, detailCompany = {} } = useSelector((state) => state.companyDetails);
+  const { detailCompany = {} } = useSelector((state) => state.companyDetails);
   const dispatch = useDispatch();
 
   const [initialData, setInitialData] = useState({
@@ -39,17 +28,20 @@ const Company = ({ setComponent }) => {
   const [data, setData] = useState(initialData);
   const [edit, setEdit] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
+  const [isImageChanged, setIsImageChanged] = useState(false);
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setData((prevData) => ({
       ...prevData,
-      [field]: value,
+      [name]: value,
     }));
   };
 
   useEffect(() => {
     dispatch(getCompanyData());
   }, []);
+
   useEffect(() => {
     if (Object.keys(detailCompany).length > 0) {
       const newData = {};
@@ -72,19 +64,24 @@ const Company = ({ setComponent }) => {
     setImageSrc(null);
     setEdit(false);
   };
-  const [isImageChanged, setIsImageChanged] = useState(false);
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setIsImageChanged(true);
-    handleInputChange("icon", file);
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageSrc(reader.result);
       };
       reader.readAsDataURL(file);
+      setData((prevData) => ({
+        ...prevData,
+        icon: file,
+      }));
     }
   };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -113,120 +110,134 @@ const Company = ({ setComponent }) => {
   return (
     <form onSubmit={onSubmit} className={s.container}>
       <div className={s.box}>
-        <div className={s.icon}>
-          <img src={imageSrc || data?.icon} alt="logo" />
+        <div>
+          <div className={s.icon}>
+            <img src={imageSrc || data?.icon} alt="logo" />
+          </div>
+          {edit && (
+            <div>
+              <input
+                required={!detailCompany?.icon}
+                type="file"
+                onChange={handleImageChange}
+              />
+              <span className={s.errorMessage}>Выберите логотип</span>
+            </div>
+          )}
         </div>
-        {edit && (
-          <>
-            <input
-              required={detailCompany?.icon ? false : true}
-              type="file"
-              onChange={handleImageChange}
-            />
-            <span className={s.errorMessage}>Выберите логотип</span>
-          </>
-        )}
-      </div>
-      <ul className={s.ul}>
-        <li>
-          <span>Имя</span>
-          <Input
-            value={data?.first_name || ""}
-            onChange={(e) => handleInputChange("first_name", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>Фамилия</span>
-          <Input
-            value={data?.last_name || ""}
-            onChange={(e) => handleInputChange("last_name", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>Название компании</span>
-          <Input
-            value={data?.name || ""}
-            onChange={(e) => handleInputChange("name", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>Должность</span>
-          <Input
-            value={data?.position || ""}
-            onChange={(e) => handleInputChange("position", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>Контактные данные</span>
-          <Input
-            value={data?.contact_info || ""}
-            onChange={(e) => handleInputChange("contact_info", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>Контактное<br />лицо</span>
-          <Input
-            value={data?.contact_person || ""}
-            onChange={(e) => handleInputChange("contact_person", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>Реквезиты компании</span>
-          <Input
-            value={data?.payment_info || ""}
-            onChange={(e) => handleInputChange("payment_info", e.target.value)}
-            edit={edit}
-            required
-          />
-        </li>
-        <li>
-          <span>ИИН</span>
-          <Input
-            value={data?.iin || ""}
-            onChange={(e) => handleInputChange("iin", e.target.value)}
-            edit={edit}
-          />
-        </li>
-        <li>
-          <span>Описание</span>
-          <textarea
-            className={`${s.input} ${edit ? s.active : ""}`}
-            disabled={!edit}
-            value={data?.description || ""}
-            onChange={(e) => handleInputChange("description", e.target.value)}
-          />
-        </li>
-      </ul>
-      <div className={s.box_button}>
-        {!edit ? (
-          <button
-            className={s.btn}
-            onClick={(e) => {
-              e.preventDefault();
-              setEdit(!edit);
-            }}>
-            Редактировать
-          </button>
-        ) : (
-          <>
-            <button className={s.btn}>Сохранить</button>
-            <button className={s.btn} onClick={handleCancel}>
-              Отмена
+        <div className={s.box_button}>
+          {!edit ? (
+            <button
+              className={s.btn}
+              onClick={(e) => {
+                e.preventDefault();
+                setEdit(!edit);
+              }}
+            >
+              Редактировать
             </button>
-          </>
-        )}
+          ) : (
+            <>
+              <button className={s.btn}>Сохранить</button>
+              <button className={s.btn} onClick={handleCancel}>
+                Отмена
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+      <div className={s.wrapper}>
+        <div className={s.ul}>
+          <h2 className={s.title}>Основные данные</h2>
+          <TextField
+            value={data?.first_name || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="first_name"
+            label="Имя"
+            disabled={!edit}
+            required
+          />
+          <TextField
+            value={data?.last_name || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="last_name"
+            label="Фамилия"
+            disabled={!edit}
+            required
+          />
+          <TextField
+            value={data?.position || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="position"
+            label="Должность"
+            disabled={!edit}
+            required
+          />
+
+          <h2 className={s.title}>Контактные данные</h2>
+          <TextField
+            value={data?.contact_info || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="contact_info"
+            label="Контактные данные"
+            disabled={!edit}
+            required
+          />
+          <TextField
+            value={data?.contact_person || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="contact_person"
+            label="Контактное лицо"
+            disabled={!edit}
+            required
+          />
+        </div>
+        <div className={s.ul}>
+          <h2 className={s.title}>Данные компании</h2>
+          <TextField
+            value={data?.name || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="name"
+            label="Название компании"
+            disabled={!edit}
+            required
+          />
+          <TextField
+            value={data?.iin || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="iin"
+            label="ИИН"
+            disabled={!edit}
+            required
+          />
+          <TextField
+            value={data?.payment_info || ""}
+            onChange={handleInputChange}
+            className={s.input}
+            name="payment_info"
+            label="Реквизиты компании"
+            disabled={!edit}
+            required
+          />
+          <TextField
+            value={data?.description || ""}
+            name="description"
+            className={s.input}
+            label="Описание"
+            disabled={!edit}
+            required
+            multiline
+            rows={6}
+            onChange={handleInputChange}
+          />
+        </div>
       </div>
     </form>
   );

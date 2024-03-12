@@ -29,7 +29,6 @@ const Wrapper = styled.div`
 `;
 
 const ErrorCard = styled.div`
-    background-color: orange;
     padding: 15px;
     margin-bottom: 10px;
     color:#FFF;
@@ -40,25 +39,30 @@ const ErrorCard = styled.div`
     }
 `;
 
-const ModalError = () => {
+const ModalWarning = ({ modalMessage }) => {
     const [errors, setErrors] = useState([]);
 
     const addError = () => {
-        const newError = { id: Date.now(), text: 'Новая ошибка' };
+        const newError = { id: Date.now(), title: `${modalMessage.title}`, text: `${modalMessage.text}` };
         setErrors([newError, ...errors]);
         setTimeout(() => {
             setErrors(errors => errors.filter(e => e.id !== newError.id));
         }, 3000);
     };
+    useEffect(() => {
+        modalMessage.title && addError();
 
+    }, [modalMessage]);
     return (
         <Wrapper>
-            <button onClick={addError}>добавить ошибку</button>
             {errors.map((e, index) => (
-                <ErrorCard key={e.id}>{e.text}</ErrorCard>
+                <ErrorCard key={e.id} style={{ background: modalMessage.title === 'Ошибка' ? 'orange' : 'green' }}>
+                    <p style={{ marginBottom: 5 }}>{e.title}</p>
+                    <p>{e.text}</p>
+                </ErrorCard>
             ))}
         </Wrapper>
     );
 };
 
-export default ModalError;
+export default ModalWarning;

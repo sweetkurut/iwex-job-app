@@ -19,8 +19,6 @@ const Profile = () => {
         return <Branch setComponent={setComponent} />;
       case "editCompany":
         return <EditCompany setComponent={setComponent} />;
-      case "position":
-        return <Position />;
       default:
         return null;
     }
@@ -38,7 +36,6 @@ const Profile = () => {
             <TabList onChange={activeComponent} aria-label="lab API tabs example">
               <Tab label="Данные о компании" value="company" />
               <Tab label="Филиалы" value="branch" />
-              <Tab label="Позиции" value="position" />
               <Tab label="Жильё" value="housing" />
             </TabList>
           </Box>

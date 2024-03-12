@@ -15,6 +15,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import ModalWarning from "../../../../../components/modalWarning/ModalWarning";
 
 const AddBranch = ({ handlerComponent, id_branch }) => {
   const { country, detailBranch, detailCompany } = useSelector((state) => state.companyDetails);
@@ -68,43 +69,18 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
       if (response) {
         dispatch(getMyBranch());
         setModalMessage({ title: "Успех", text: "Филиал успешно сохранен" });
-        setOpen(true);
+        handlerComponent("branch");
+
       }
     } catch (error) {
       setModalMessage({ title: "Ошибка", text: error });
-      setOpen(true);
 
     }
   };
-  const handleClose = () => {
-    setOpen(false);
-    handlerComponent("branch");
-  };
 
-  const modalConfirm = () => {
-    return (
-      <React.Fragment>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description">
-          <DialogTitle id="alert-dialog-title">{modalMessage.title}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">{modalMessage.text}</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </React.Fragment>
-    );
-  };
   return (
     <>
-      {open && modalConfirm()}
+      <ModalWarning modalMessage={modalMessage} />
       <form onSubmit={(e) => onSubmit(e)} className={s.container}>
         <div className={s.wrapper}>
           <div className={s.box}>
@@ -190,3 +166,5 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
 };
 
 export default AddBranch;
+
+
