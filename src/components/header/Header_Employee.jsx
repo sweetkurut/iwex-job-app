@@ -38,7 +38,7 @@ const Header_Employee = () => {
     const handleToggleNotifications = () => {
         setIsNotificationsOpen(!isNotificationsOpen);
     };
-
+    console.log(unread_count);
 
     return (
         <>
@@ -68,6 +68,11 @@ const Header_Employee = () => {
                             to={"/message"}
                             className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
                             Сообщение
+                        </NavLink>
+                        <NavLink
+                            to={"/interviews-staff"}
+                            className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
+                            Вакансия
                         </NavLink>
                     </nav>
                     <div className={styles.box_profile}>

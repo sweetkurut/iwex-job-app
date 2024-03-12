@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyBranch } from "../../../../store/slices/companyDetailsSlice";
 import { useState } from "react";
 import AddBranch from "./AddBranch/AddBranch";
+import ModalWarning from "../../../../components/modalWarning/ModalWarning";
 
 const Branch = () => {
-  const { branch } = useSelector((state) => state.companyDetails);
+  const { branch, detailCompany } = useSelector((state) => state.companyDetails);
   const [id_branch, setId_branch] = useState(null);
   const [component, setComponent] = useState(false);
+  const [modalMessage, setModalMessage] = useState(false);
   const dispatch = useDispatch();
   const handlerComponent = (id) => {
     setId_branch(id);
@@ -22,6 +24,7 @@ const Branch = () => {
 
   return (
     <div className={s.container}>
+      <ModalWarning modalMessage={modalMessage} />
       {!component && (
         <button className={s.btn} onClick={() => handlerComponent(null)}>
           Добавить филиал

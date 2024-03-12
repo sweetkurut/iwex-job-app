@@ -1,6 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import s from './Notification.module.sass';
-import io from 'socket.io-client';
+
+const Notification_interviews = ({ e, handlerRead }) => {
+    return (
+        <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
+            <p className={s.message}>{e?.message?.notification}</p>
+            <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
+            <p className={s.date}>{e?.notification_date}</p>
+        </button>
+    );
+};
+
+
+const Notification_vacancy = ({ e, handlerRead }) => {
+    return (
+        <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
+            <p className={s.message}>{e?.message?.notification}</p>
+            <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
+            <p className={s.date}>{e?.notification_date}</p>
+        </button>
+    );
+};
+
+
+
 
 const Notification = ({ isOpen, onClose, setUnread_count }) => {
     const notificationRef = useRef(null);
@@ -9,6 +32,8 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
 
     useEffect(() => {
         function connectWebSocket() {
+            // const newSocket = new WebSocket('ws://10.137.60.134:8003/ws/notify/');
+            // const newSocket = new WebSocket('ws://10.137.60.134:8003/ws/notifications/');
             const newSocket = new WebSocket('ws://192.168.0.90:8001/ws/interviews/');
 
             newSocket.onopen = () => {
@@ -17,8 +42,7 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
 
             newSocket.onclose = () => {
                 console.log('WebSocket соединение закрыто.');
-                // Переподключаемся к веб-сокету через некоторое время
-                setTimeout(connectWebSocket, 2000); // Попробуйте переподключиться через 5 секунд
+                setTimeout(connectWebSocket, 3000);
             };
 
             newSocket.onmessage = (event) => {
@@ -53,8 +77,7 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
         const data = {
             id: id,
         };
-        console.log(data);
-        socket.emit('read', data);
+        socket.send(JSON.stringify(data));
     };
 
     const handleClickOutside = (event) => {
@@ -81,11 +104,15 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
             </div>
             <div className={s.wrapper}>
                 {data?.map(e => (
-                    <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
-                        <p className={s.message}>{e?.message?.notification}</p>
-                        <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
-                        <p className={s.date}>{e?.notification_date}</p>
-                    </button>
+                    e?.type_notification === 'interviews_notification' ? (
+                        <Notification_interviews e={e} handlerRead={handlerRead} />
+                    ) : e?.type_notification === 'vacancy_notification' ? (
+                        <Notification_vacancy e={e} handlerRead={handlerRead} />
+                    )
+                        // : e?.type_notification === 'message_notification' ? (
+                        //     <NotificationButton e={e} handlerRead={handlerRead} />
+                        // ) 
+                        : null
                 ))}
             </div>
         </div>

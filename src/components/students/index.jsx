@@ -16,7 +16,7 @@ const Students = () => {
   const dispatch = useDispatch();
   let { state } = useLocation();
   const { employee, isLoading } = useSelector((state) => state.employeeDetails);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -38,8 +38,8 @@ const Students = () => {
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Фильтрация" value={true} />
-                <Tab label="Все студенты" value={false} />
+                <Tab label="Фильтрация" value={0} />
+                <Tab label="Все студенты" value={1} />
               </TabList>
             </Box>
           </TabContext>
