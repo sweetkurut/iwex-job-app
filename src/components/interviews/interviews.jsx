@@ -37,7 +37,7 @@ const Interview = () => {
           parseInt(dateParts[4])
         );
 
-        const student = interviewItem.user_profile.first_name;
+        // const student = interviewItem.user_profile.first_name;
 
         const endDate = new Date(startDate);
         endDate.setHours(endDate.getHours() + 1);
@@ -45,7 +45,7 @@ const Interview = () => {
         return {
           // title: interviewItem.vacancy_review.employer_company_name,
           title: interviewItem.vacancy_review.position,
-          student: student,
+          // student: student,
           startDate: startDate,
           endDate: endDate,
         };

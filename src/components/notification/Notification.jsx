@@ -105,9 +105,9 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
             <div className={s.wrapper}>
                 {data?.map(e => (
                     e?.type_notification === 'interviews_notification' ? (
-                        <Notification_interviews e={e} handlerRead={handlerRead} />
+                        <Notification_interviews key={e.id} e={e} handlerRead={handlerRead} />
                     ) : e?.type_notification === 'vacancy_notification' ? (
-                        <Notification_vacancy e={e} handlerRead={handlerRead} />
+                        <Notification_vacancy key={e.id} e={e} handlerRead={handlerRead} />
                     )
                         // : e?.type_notification === 'message_notification' ? (
                         //     <NotificationButton e={e} handlerRead={handlerRead} />

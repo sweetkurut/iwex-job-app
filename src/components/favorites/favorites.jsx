@@ -1,82 +1,159 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./favorite.module.sass";
-import { useEffect } from "react";
-import { getFavorite } from "../../store/slices/employeeDetailsSlice";
-import { Avatar } from "@mui/material";
+import {
+  Avatar,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+} from "@mui/material";
 import { IoHeartSharp } from "react-icons/io5";
+import { getFavorite } from "../../store/slices/employeeDetailsSlice";
+import styles from "./favorite.module.sass";
 
 const Favorites = () => {
   const { favorite } = useSelector((state) => state.employeeDetails);
   const dispatch = useDispatch();
-
-  console.log(favorite);
+  const [selected, setSelected] = useState([]);
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
     dispatch(getFavorite());
   }, [dispatch]);
 
+  useEffect(() => {
+    setShowButton(selected.length > 0);
+  }, [selected]);
+
+  const handleSelectAll = (event) => {
+    if (event.target.checked) {
+      const newSelected = favorite.map((elem) => elem.id);
+      setSelected(newSelected);
+    } else {
+      setSelected([]);
+    }
+  };
+
+  const handleSelectOne = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
+  const handleButtonClick = () => {
+    // Действие при нажатии кнопки
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <h2 className={styles.title}>Избранные</h2>
-        <div className={styles.cards}>
-          {favorite && favorite.length > 0 ? (
-            favorite.map((elem) => (
-              // eslint-disable-next-line react/jsx-key
-              <div className={styles.card} key={elem?.id}>
-                <div className={styles.card_user_photo}>
-                  <Avatar
-                    src={elem?.user_profile.profile_photo}
-                    alt="user_photo"
-                    sx={{
-                      width: 120,
-                      height: 120,
-                    }}></Avatar>
-                </div>
-                <div className={styles.card_info_desc}>
-                  <p className={styles.card_info_desc_subTitle}>
-                    <span>Студент: {elem?.user_profile.first_name}</span>
-                  </p>
-
-                  <p className={styles.card_info_desc_subTitle}>
-                    <span>Гражданство: {elem?.user_profile.nationality_en}</span>
-                  </p>
-                  <p className={styles.card_info_desc_subTitle}>
-                    <span>Пол: {elem?.user_profile.gender_en}</span>{" "}
-                  </p>
-                  <p className={styles.card_info_desc_subTitle}>
-                    <span>Знание немецкого языка: {elem?.user_profile.german}</span>{" "}
-                  </p>
-                  <p className={styles.card_info_desc_subTitle}>
-                    <span>Знание английского языка: {elem?.user_profile.english}</span>{" "}
-                  </p>
-                </div>
-                <div className={styles.createXZ}>
-                  <p>
-                    <span>Дата: {elem?.created_date}</span>
-                  </p>
-                </div>
-                <div className={styles.card_izbrannoe}>
-                  {" "}
-                  <IoHeartSharp className={styles.heart} />
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className={styles.student_search}>
-              <div className={styles.student_img}>
-                <img
-                  alt="img-student"
-                  src="/izbrannoe.svg"
-                  style={{
-                    width: "500px",
-                  }}
-                />
-              </div>
-              <p className={styles.student_search_title}>Кажется вы ещё не выбрали студента</p>
-            </div>
-          )}
-        </div>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Checkbox
+                    indeterminate={selected.length > 0 && selected.length < favorite.length}
+                    checked={selected.length === favorite.length}
+                    onChange={handleSelectAll}
+                  />
+                </TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Фото</TableCell>
+                <TableCell>Имя</TableCell>
+                <TableCell>Гражданство</TableCell>
+                <TableCell>Пол</TableCell>
+                <TableCell>Знание немецкого языка</TableCell>
+                <TableCell>Знание английского языка</TableCell>
+                <TableCell>Дата</TableCell>
+                <TableCell>Избранное</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {favorite && favorite.length > 0 ? (
+                favorite.map((elem) => (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleSelectOne(event, elem.id)}
+                    role="checkbox"
+                    aria-checked={isSelected(elem.id)}
+                    tabIndex={-1}
+                    key={elem.id}
+                    selected={isSelected(elem.id)}>
+                    <TableCell>
+                      <Checkbox checked={isSelected(elem.id)} />
+                    </TableCell>
+                    <TableCell>{elem.id}</TableCell>
+                    <TableCell>
+                      <Avatar
+                        src={elem?.user_profile.profile_photo}
+                        alt="user_photo"
+                        sx={{
+                          width: 50,
+                          height: 50,
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>{elem?.user_profile.first_name}</TableCell>
+                    <TableCell>{elem?.user_profile.nationality_en}</TableCell>
+                    <TableCell>{elem?.user_profile.gender_en}</TableCell>
+                    <TableCell>{elem?.user_profile.german}</TableCell>
+                    <TableCell>{elem?.user_profile.english}</TableCell>
+                    <TableCell>{elem?.created_date}</TableCell>
+                    <TableCell>
+                      <IoHeartSharp className={styles.heart} />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <div className={styles.student_search}>
+                      <div className={styles.student_img}>
+                        <img
+                          alt="img-student"
+                          src="/izbrannoe.svg"
+                          style={{
+                            width: "500px",
+                          }}
+                        />
+                      </div>
+                      <p className={styles.student_search_title}>
+                        Кажется вы ещё не выбрали студента
+                      </p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {showButton && (
+          <button className={styles.btn} onClick={handleButtonClick}>
+            Пригласить
+          </button>
+        )}
       </div>
     </div>
   );

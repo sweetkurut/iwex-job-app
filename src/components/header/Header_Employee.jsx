@@ -13,7 +13,7 @@ import Notification from "../notification/Notification";
 
 const Header_Employee = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const [unread_count, setUnread_count] = useState(null);
     const open = Boolean(anchorEl);
@@ -29,7 +29,7 @@ const Header_Employee = () => {
     };
     const handleLogOutCookie = () => {
         deleteCookies(["accessToken", "role"]);
-        dispatch(setRole((null)))
+        dispatch(setRole(null));
         navigate("/login");
     };
 

@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./detail.module.sass";
 import React, { useEffect, useState } from "react";
-import { getEmployeeDetail, sendInvitation } from "../../../store/slices/employeeDetailsSlice";
+import {
+  SendFavorite,
+  getEmployeeDetail,
+  sendInvitation,
+} from "../../../store/slices/employeeDetailsSlice";
 import Loaders from "../../../UI/loaders";
 import { GoHome } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -44,6 +48,10 @@ const StudentDetail = () => {
     dispatch(getEmployeeDetail(id));
   }, [id]);
 
+  const handleFav = (id) => {
+    dispatch(SendFavorite(id));
+  };
+
   const HandlerInvitation = async () => {
     const data = { user: [id], vacancy: state.id_vacancy };
     try {
@@ -85,7 +93,12 @@ const StudentDetail = () => {
   };
   return (
     <>
-      <ModalCalendar user={id} vacancy={state.id_vacancy} open={openCalendar} setOpen={setOpenCalendar} />
+      <ModalCalendar
+        user={id}
+        vacancy={state.id_vacancy}
+        open={openCalendar}
+        setOpen={setOpenCalendar}
+      />
       {open && modalConfirm()}
       <div className={styles.wrapper}>
         <div className={styles.container}>
@@ -149,12 +162,8 @@ const StudentDetail = () => {
                         <button onClick={HandlerInvitation} className={styles.btn}>
                           Пригласить без собеседования
                         </button>
-                        <button onClick={() => setFavorites(!favorites)} className={styles.btn}>
-                          {favorites ?
-                            <FaHeart size={20} />
-                            :
-                            <FaRegHeart size={20} />
-                          }
+                        <button onClick={() => handleFav()} className={styles.btn}>
+                          {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
                         </button>
                       </div>
                     </div>
@@ -186,8 +195,8 @@ const StudentDetail = () => {
                 </TabPanel>
                 <TabPanel style={{ padding: "50px 0" }} value="3">
                   {detailEmployee &&
-                    detailEmployee.universities &&
-                    detailEmployee.universities.length > 0 ? (
+                  detailEmployee.universities &&
+                  detailEmployee.universities.length > 0 ? (
                     detailEmployee.universities.map((elem) => (
                       <div key={elem?.id}>
                         <div className={styles.ul}>

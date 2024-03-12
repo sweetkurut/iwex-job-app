@@ -24,6 +24,7 @@ instance.interceptors.request.use((config) => {
 const allAPIs = {
   // authorizantion || registration
   signIn(userData) {
+    w
     return instance.post("/accounts/signin/", userData);
   },
   signUp(userData) {
@@ -133,7 +134,7 @@ const allAPIs = {
 
   // interview-list
   getInterView() {
-    return instance.get("/core/interviews-list/");
+    return instance.get(`/core/interviews-list/`);
   },
 
   sendHousinng(data) {
