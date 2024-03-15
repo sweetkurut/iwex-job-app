@@ -158,7 +158,16 @@ const Favorites = () => {
             Пригласить
           </button>
         )}
-        {showCalendar && <ModalCalendar open={open} setOpen={setOpen} />}
+        {showCalendar &&
+          selected.length > 0 &&
+          selected.map((id) => (
+            <ModalCalendar
+              key={id}
+              open={open}
+              setOpen={setOpen}
+              state={{ id_vacancy: favorite.find((elem) => elem.id === id).id_vacancy }}
+            />
+          ))}
       </div>
     </div>
   );

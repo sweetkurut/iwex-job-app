@@ -2,8 +2,8 @@ import axios from "axios";
 import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
-  // baseURL: "http://10.137.60.119:8001",
-  baseURL: "http://192.168.0.90:8000",
+  // baseURL: "http://10.137.60.134:8001",
+  baseURL: "http://10.137.60.134:8000",
   // baseURL: "https://crm.iwex.kg",
   // baseURL: "http://146.190.135.114:8002/",
 
@@ -24,7 +24,6 @@ instance.interceptors.request.use((config) => {
 const allAPIs = {
   // authorizantion || registration
   signIn(userData) {
-    w
     return instance.post("/accounts/signin/", userData);
   },
   signUp(userData) {
@@ -142,6 +141,23 @@ const allAPIs = {
   },
   getHousing() {
     return instance.get("/core/housing-list/");
+  },
+
+  // staff
+  getAllProfilesStaff() {
+    return instance.get("/staff/all-profiles/");
+  },
+
+  getProfileStaffById(id) {
+    return instance.get(`/staff/profile-detail/${id}/`);
+  },
+
+  getAllVacanciesStaff() {
+    return instance.get("/staff/all-vacancies/");
+  },
+
+  getVacancyByIdStaff(id) {
+    return instance.get(`/staff/vacancies-detail/${id}/`);
   },
 };
 

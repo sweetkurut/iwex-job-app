@@ -51,6 +51,11 @@ const ModalCalendar = ({ open, setOpen }) => {
     const date = value.toString().split("T")[0];
     const time = valueClock.time;
 
+    if (!state || !state.id_vacancy) {
+      console.error("Ошибка: объект state или свойство id_vacancy отсутствует.");
+      return;
+    }
+
     const data = {
       user: id,
       vacancy: state.id_vacancy,

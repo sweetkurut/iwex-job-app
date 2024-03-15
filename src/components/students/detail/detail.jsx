@@ -168,6 +168,7 @@ const StudentDetail = () => {
                       </div>
                     </div>
                   </div>
+
                   <div className={styles.ul}>
                     <h4>Гражданство(ru)</h4>
                     <p>
@@ -180,6 +181,7 @@ const StudentDetail = () => {
                       <span>Область/Регион:</span> <span>{detailEmployee?.birth_region_ru}</span>
                     </p>
                   </div>
+
                   <div className={styles.ul}>
                     <h4>Уровень владения языком</h4>
                     <p>
