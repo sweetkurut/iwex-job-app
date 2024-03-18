@@ -56,7 +56,7 @@ const ModalWarning = ({ modalMessage }) => {
     return (
         <Wrapper>
             {errors.map((e, index) => (
-                <ErrorCard key={e.id} style={{ background: modalMessage.title === 'Ошибка' ? 'orange' : 'green' }}>
+                <ErrorCard key={e.id} style={{ background: modalMessage.title === 'Успех' ? 'green' : 'orange' }}>
                     <p style={{ marginBottom: 5 }}>{e.title}</p>
                     <p>{e.text}</p>
                 </ErrorCard>

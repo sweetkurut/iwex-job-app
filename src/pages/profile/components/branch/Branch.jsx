@@ -11,11 +11,21 @@ const Branch = () => {
   const [id_branch, setId_branch] = useState(null);
   const [component, setComponent] = useState(false);
   const [modalMessage, setModalMessage] = useState(false);
+
   const dispatch = useDispatch();
   const handlerComponent = (id) => {
-    setId_branch(id);
-    setComponent(!component);
+    if (detailCompany) {
+      setId_branch(id);
+      setComponent(!component);
+    } else {
+      const message = {
+        title: 'Предупреждение',
+        text: 'Вам нужно заполнить данные о компании',
+      }
+      setModalMessage(message)
+    }
   };
+
   useEffect(() => {
     dispatch(getMyBranch());
   }, []);

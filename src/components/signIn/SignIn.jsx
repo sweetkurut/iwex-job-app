@@ -28,13 +28,11 @@ const SignIn = ({ setComponent }) => {
             email: formData.email,
             password: formData.password,
         };
-
         try {
             const response = await dispatch(sendSignIn(data)).unwrap();
             saveCookie('accessToken', response.access)
             navigate('/vacancies');
         } catch (error) {
-            console.log(error);
             setVerificationError(error?.error || 'An unknown error occurred');
         }
     };
