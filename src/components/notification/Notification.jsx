@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import s from './Notification.module.sass';
+import { getCookie } from '../../utils/js_cookie';
 
 const Notification_interviews = ({ e, handlerRead }) => {
     return (
@@ -17,6 +18,8 @@ const Notification_vacancy = ({ e, handlerRead }) => {
         <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
             <p className={s.message}>{e?.message?.notification}</p>
             <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
+            <p className={s.email}>филиал: <span>{e?.message?.branch}</span></p>
+            <p className={s.email}>требуется студентов: <span>{e?.message?.employee_count}</span></p>
             <p className={s.date}>{e?.notification_date}</p>
         </button>
     );
@@ -32,8 +35,7 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
 
     useEffect(() => {
         function connectWebSocket() {
-            // const newSocket = new WebSocket('ws://10.137.60.134:8003/ws/notify/');
-            // const newSocket = new WebSocket('ws://10.137.60.134:8003/ws/notifications/');
+            // const newSocket = new WebSocket('ws://10.137.60.134:8001/ws/order_students/');
             const newSocket = new WebSocket('ws://192.168.0.90:8001/ws/interviews/');
 
             newSocket.onopen = () => {
@@ -56,7 +58,6 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
                     }
                 });
                 setUnread_count(newData.unread_count);
-                console.log(newData);
             };
 
             setSocket(newSocket);
@@ -104,6 +105,7 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
             </div>
             <div className={s.wrapper}>
                 {data?.map(e => (
+
                     e?.type_notification === 'interviews_notification' ? (
                         <Notification_interviews key={e.id} e={e} handlerRead={handlerRead} />
                     ) : e?.type_notification === 'vacancy_notification' ? (

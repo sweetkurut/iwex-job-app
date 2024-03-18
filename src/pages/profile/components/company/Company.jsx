@@ -24,7 +24,7 @@ const Company = ({ setComponent }) => {
     contact_person: "",
     payment_info: "",
   });
-
+  console.log(detailCompany);
   const [data, setData] = useState(initialData);
   const [edit, setEdit] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
@@ -97,6 +97,7 @@ const Company = ({ setComponent }) => {
     try {
       if (Object.keys(detailCompany).length === 0) {
         const response = await dispatch(sendCompanyData(formData)).unwrap();
+        dispatch(getCompanyData());
         response && setEdit(false);
       } else {
         const response = await dispatch(patchCompanyData(formData)).unwrap();
@@ -134,7 +135,7 @@ const Company = ({ setComponent }) => {
                 setEdit(!edit);
               }}
             >
-              Редактировать
+              {detailCompany > 0 ? 'Редактировать' : 'Добавить'}
             </button>
           ) : (
             <>

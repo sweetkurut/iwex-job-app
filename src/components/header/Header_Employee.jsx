@@ -38,7 +38,6 @@ const Header_Employee = () => {
     const handleToggleNotifications = () => {
         setIsNotificationsOpen(!isNotificationsOpen);
     };
-    console.log(unread_count);
 
     return (
         <>
