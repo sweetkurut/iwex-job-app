@@ -85,12 +85,46 @@ export const editVacancy = createAsyncThunk(
   }
 );
 
+//vacancies-staff
+
+export const getAllVacanciesStaffList = createAsyncThunk(
+  "vacancy/getAllVacanciesStaffList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getAllVacanciesStaff();
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+//By ID
+
+export const getVacanciesById = createAsyncThunk(
+  "vacancy/getVacanciesById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getVacancyByIdStaff(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.error);
+    }
+  }
+);
+
 const initialState = {
   isLoading: false,
   error: null,
   allVacancy: [],
   vacancyEmployer: [],
   detailVacancy: {},
+  staffVacancy: [],
+  detailStaffVacancy: {},
 };
 
 const vacancySlice = createSlice({
@@ -156,6 +190,28 @@ const vacancySlice = createSlice({
         state.isLoading = false;
       })
       .addCase(editVacancy.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(getAllVacanciesStaffList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllVacanciesStaffList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.staffVacancy = action.payload;
+      })
+      .addCase(getAllVacanciesStaffList.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(getVacanciesById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getVacanciesById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.detailStaffVacancy = action.payload;
+      })
+      .addCase(getVacanciesById.rejected, (state) => {
         state.isLoading = false;
       });
   },

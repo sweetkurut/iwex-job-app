@@ -25,7 +25,9 @@ import Employer from "../../pages/employer/emloyee";
 import ListStudentsPage from "../../pages/ListStudents/listStudentsPage";
 import ChatPage from "../../pages/chatPage/ChatPage";
 import Interviewstaff from "../../pages/interviewStaff/interviewstaff";
-
+import StaffDetailProfiles from "../../pages/staff-detail-profiles/staffDetailProfiles";
+import Vacancy_isemployee from "../../pages/vacancy_isemployee/vacancy_isemployee";
+import Vacancy_Detail_Staff from "../../pages/vacancy_isEmployee_detail/vacancy_detail_staff";
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -55,8 +57,11 @@ const Main = () => {
           {role === "is_employee" ? (
             <>
               <Route path="/*" element={<Orders />} />
+              <Route path="/vacancies-list" element={<Vacancy_isemployee />} />
+              <Route path="/vacancy-detail/:id" element={<Vacancy_Detail_Staff />} />
               <Route path="/list-employer" element={<Employer />} />
               <Route path="/list-students" element={<ListStudentsPage />} />
+              <Route path="/list-students-byID/:id" element={<StaffDetailProfiles />} />
               <Route path="/interview-staff" element={<Interviewstaff />} />
               <Route path="/message" element={<ChatPage />} />
               <Route path="*" element={<Page404 />} />

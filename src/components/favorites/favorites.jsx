@@ -14,12 +14,15 @@ import {
 import { IoHeartSharp } from "react-icons/io5";
 import { getFavorite } from "../../store/slices/employeeDetailsSlice";
 import styles from "./favorite.module.sass";
+import ModalCalendar from "../calendar/Calendar";
 
 const Favorites = () => {
   const { favorite } = useSelector((state) => state.employeeDetails);
   const dispatch = useDispatch();
   const [selected, setSelected] = useState([]);
   const [showButton, setShowButton] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getFavorite());
@@ -61,7 +64,8 @@ const Favorites = () => {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const handleButtonClick = () => {
-    // Действие при нажатии кнопки
+    setShowCalendar(true);
+    setOpen(true);
   };
 
   return (
@@ -154,6 +158,16 @@ const Favorites = () => {
             Пригласить
           </button>
         )}
+        {showCalendar &&
+          selected.length > 0 &&
+          selected.map((id) => (
+            <ModalCalendar
+              key={id}
+              open={open}
+              setOpen={setOpen}
+              state={{ id_vacancy: favorite.find((elem) => elem.id === id).id_vacancy }}
+            />
+          ))}
       </div>
     </div>
   );

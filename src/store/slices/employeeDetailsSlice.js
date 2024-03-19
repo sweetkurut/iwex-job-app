@@ -88,9 +88,9 @@ export const getFavorite = createAsyncThunk(
 
 export const SendFavorite = createAsyncThunk(
   "employeeDetails/SendFavorite",
-  async (id, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await allAPIs.sendFavorite(id);
+      const response = await allAPIs.sendFavorite(data);
       console.log(response);
       return response.data;
     } catch (error) {
@@ -99,6 +99,20 @@ export const SendFavorite = createAsyncThunk(
     }
   }
 );
+
+export const DeleteFavorite = createAsyncThunk(
+  "employeeDetails/DeleteFavorite",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.deleteFavorite(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+)
 
 // getEmployeeFilter
 export const getEmployeeFilter = createAsyncThunk(
@@ -144,6 +158,36 @@ export const getInterviewList = createAsyncThunk(
   }
 );
 
+// staff profile students(id) / vacancies(id)
+
+export const getAllProfilesStaffList = createAsyncThunk(
+  "employeeDetails/getAllProfilesStaffList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getAllProfilesStaff();
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const getProfileById = createAsyncThunk(
+  "employeeDetails/getProfileById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getProfileStaffById(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue;
+    }
+  }
+);
+
 const initialState = {
   isLoading: false,
   error: null,
@@ -153,6 +197,7 @@ const initialState = {
   invitation: [],
   favorite: [],
   interview: [],
+  staff: [],
 };
 
 const employeeDetailsSlice = createSlice({
@@ -245,9 +290,31 @@ const employeeDetailsSlice = createSlice({
       })
       .addCase(getInterviewList.rejected, (state) => {
         state.isLoading = false;
+      })
+
+      .addCase(getAllProfilesStaffList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllProfilesStaffList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.staff = action.payload;
+      })
+      .addCase(getAllProfilesStaffList.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(getProfileById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProfileById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.staff = action.payload;
+      })
+      .addCase(getProfileById.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
 
-export const {} = employeeDetailsSlice.actions;
+export const { } = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;

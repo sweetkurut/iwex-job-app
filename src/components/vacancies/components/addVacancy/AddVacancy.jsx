@@ -27,9 +27,9 @@ import { send_create_vacancy } from "../../../../store/slices/vacancySlice";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { Box } from "@mui/system";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 const AddVacancy = () => {
     const navigate = useNavigate();
@@ -58,22 +58,31 @@ const AddVacancy = () => {
     };
 
     const getTime = (e, name) => {
-        if (e === null) {
-            const defaultTime = name === "time_start" ? "09:00" : "18:00";
-            setData((prevData) => ({
-                ...prevData,
-                [name]: defaultTime,
-            }));
-        } else {
-            const hours = e.hour().toString().padStart(2, "0");
-            const minutes = e.minute().toString().padStart(2, "0");
-            const timeString = `${hours}:${minutes}`;
-            setData((prevData) => ({
-                ...prevData,
-                [name]: timeString,
-            }));
-        }
+        // if (e === null) {
+        //     const defaultTime = name === "time_start" ? "09:00" : "18:00";
+        //     setData((prevData) => ({
+        //         ...prevData,
+        //         [name]: defaultTime,
+        //     }));
+        // } else {
+        //     const hours = e.hour().toString().padStart(2, "0");
+        //     const minutes = e.minute().toString().padStart(2, "0");
+        //     const timeString = `${hours}:${minutes}`;
+        //     setData((prevData) => ({
+        //         ...prevData,
+        //         [name]: timeString,
+        //     }));
+        // }
+        const hours = e?.hour().toString().padStart(2, "0");
+        const minutes = e?.minute().toString().padStart(2, "0");
+        const timeString = `${hours}:${minutes}`;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: timeString,
+        }));
     };
+    console.log(data);
+
 
     const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
 

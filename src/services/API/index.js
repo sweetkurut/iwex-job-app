@@ -3,7 +3,7 @@ import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
   // baseURL: "http://10.137.60.134:8000",
-  baseURL: "http://192.168.0.90:8000/",
+  baseURL: "http://192.168.0.90:8000",
   // baseURL: "http://10.137.60.126:8000",
   // baseURL: "https://crm.iwex.kg",
   // baseURL: "http://146.190.135.114:8002/",
@@ -126,10 +126,13 @@ const allAPIs = {
 
   // favarite students
   getFavariteStudent() {
-    return instance.get("/core/favorite-list/");
+    return instance.get("/core/favorite/");
   },
-  sendFavorite(id) {
-    return instance.post(`/core/favorite-create/`, id);
+  sendFavorite(data) {
+    return instance.post(`/core/favorite/`, data);
+  },
+  deleteFavorite(id) {
+    return instance.delete(`/core/favorite/${id}/`);
   },
 
   // interview-list
@@ -142,6 +145,23 @@ const allAPIs = {
   },
   getHousing() {
     return instance.get("/core/housing-list/");
+  },
+
+  // staff
+  getAllProfilesStaff() {
+    return instance.get("/staff/all-profiles/");
+  },
+
+  getProfileStaffById(id) {
+    return instance.get(`/staff/profile-detail/${id}/`);
+  },
+
+  getAllVacanciesStaff() {
+    return instance.get("/staff/all-vacancies/");
+  },
+
+  getVacancyByIdStaff(id) {
+    return instance.get(`/staff/vacancies-detail/${id}/`);
   },
 };
 
