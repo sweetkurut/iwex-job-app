@@ -3,7 +3,7 @@ import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
   // baseURL: "http://10.137.60.134:8000",
-  baseURL: "http://192.168.0.90:8000/",
+  baseURL: "http://192.168.0.90:8000",
   // baseURL: "http://10.137.60.126:8000",
   // baseURL: "https://crm.iwex.kg",
   // baseURL: "http://146.190.135.114:8002/",
@@ -53,9 +53,11 @@ const allAPIs = {
   sendCompanyData(data) {
     return instance.post("/core/employercompany/", data);
   },
+
   getCompanyData(id) {
     return instance.get(`/core/employercompany/`);
   },
+
   patchCompanyData(data) {
     return instance.patch(`/core/employercompany-update/`, data);
   },
@@ -68,9 +70,11 @@ const allAPIs = {
   getMyBranchDetail(id) {
     return instance.get(`/core/branch-detail/?branch_id=${id}`);
   },
+
   patchBranchData(id, data) {
     return instance.patch(`/core/branch-update/${id}/`, data);
   },
+
   sendAddBranch(data) {
     return instance.post(`/core/branch/`, data);
   },
@@ -82,6 +86,7 @@ const allAPIs = {
   send_create_vacancy(data) {
     return instance.post(`/core/vacancy-create/`, data);
   },
+
   getVacancyEmployer() {
     return instance.get(`/core/vacancy-employer/`);
   },
@@ -90,13 +95,16 @@ const allAPIs = {
   sendDataEmployee(data) {
     return instance.post("/accounts/profiles/", data);
   },
+
   // Vacancy
   getAllVacancy(value) {
     return instance.get(`/core/vacancy-list/?search=${value}`);
   },
+
   getVacancyDetail(id) {
     return instance.get(`/core/vacancy-detail/${id}/`);
   },
+
   editVacancy(id, data) {
     return instance.patch(`/core/vacancy-update/${id}/`, data);
   },
@@ -105,18 +113,26 @@ const allAPIs = {
   getAllEmployee() {
     return instance.get(`/accounts/profile-list/`);
   },
+
   getEmployeeDetail(id) {
     console.log(id);
     return instance.get(`/accounts/profile-detail/${id}/`);
   },
+
   sendInvitation(data) {
     return instance.post(`/core/invitation/`, data);
   },
+
   getInvitation() {
     return instance.get(`/core/invitation/`);
   },
-  sendInterviews(id) {
-    return instance.post(`/core/interviews-create/`, id);
+
+  sendInterviews(data) {
+    return instance.post(`/core/interviews-create/`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   // /accounts/profile-detail/{id}/
 
@@ -126,8 +142,9 @@ const allAPIs = {
 
   // favarite students
   getFavariteStudent() {
-    return instance.get("/core/favorite-list/");
+    return instance.get("/core/favorite/");
   },
+
   sendFavorite(id) {
     return instance.post(`/core/favorite-create/`, id);
   },

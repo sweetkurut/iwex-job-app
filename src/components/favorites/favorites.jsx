@@ -15,6 +15,7 @@ import { IoHeartSharp } from "react-icons/io5";
 import { getFavorite } from "../../store/slices/employeeDetailsSlice";
 import styles from "./favorite.module.sass";
 import ModalCalendar from "../calendar/Calendar";
+import VacancyList from "./vacancy/vacancylist";
 
 const Favorites = () => {
   const { favorite } = useSelector((state) => state.employeeDetails);
@@ -23,6 +24,8 @@ const Favorites = () => {
   const [showButton, setShowButton] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const [showVacancyList, setShowVacancyList] = useState(false);
 
   useEffect(() => {
     dispatch(getFavorite());
@@ -66,7 +69,16 @@ const Favorites = () => {
   const handleButtonClick = () => {
     setShowCalendar(true);
     setOpen(true);
+    setShowVacancyList(true);
   };
+
+  const openSelectVcancy = () => {
+    setOpen(!open);
+  };
+
+  // const handleShowVacancyList = () => {
+  //   // Функция для отображения VacancyList по клику
+  // };
 
   return (
     <div className={styles.wrapper}>
@@ -154,9 +166,11 @@ const Favorites = () => {
           </Table>
         </TableContainer>
         {showButton && (
-          <button className={styles.btn} onClick={handleButtonClick}>
-            Пригласить
-          </button>
+          <div className={styles.btns}>
+            <button className={styles.btn} onClick={handleButtonClick}>
+              Пригласить
+            </button>
+          </div>
         )}
         {showCalendar &&
           selected.length > 0 &&
@@ -164,11 +178,14 @@ const Favorites = () => {
             <ModalCalendar
               key={id}
               open={open}
+              modalOpen={open}
               setOpen={setOpen}
-              state={{ id_vacancy: favorite.find((elem) => elem.id === id).id_vacancy }}
+              page={"/favorites"}
+              selected={selected}
             />
           ))}
       </div>
+      {/* {open || <VacancyList openSelectVcancy={openSelectVcancy} open={open} />} */}
     </div>
   );
 };
