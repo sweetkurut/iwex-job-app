@@ -132,9 +132,9 @@ export const sendInterviews = createAsyncThunk(
 
 export const getInterviewList = createAsyncThunk(
   "employeeDetails/getInterviewList",
-  async (_, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const response = await allAPIs.getInterView();
+      const response = await allAPIs.getInterView(id);
       console.log(response);
       return response.data;
     } catch (error) {
