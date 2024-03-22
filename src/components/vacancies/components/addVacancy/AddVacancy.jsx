@@ -29,6 +29,7 @@ import { GoHome } from "react-icons/go";
 import { Box } from "@mui/system";
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import ModalAddBranch from "../modalAdd_branch/Add_branch";
 
 
 const AddVacancy = () => {
@@ -58,21 +59,6 @@ const AddVacancy = () => {
   };
 
   const getTime = (e, name) => {
-    // if (e === null) {
-    //     const defaultTime = name === "time_start" ? "09:00" : "18:00";
-    //     setData((prevData) => ({
-    //         ...prevData,
-    //         [name]: defaultTime,
-    //     }));
-    // } else {
-    //     const hours = e.hour().toString().padStart(2, "0");
-    //     const minutes = e.minute().toString().padStart(2, "0");
-    //     const timeString = `${hours}:${minutes}`;
-    //     setData((prevData) => ({
-    //         ...prevData,
-    //         [name]: timeString,
-    //     }));
-    // }
     const hours = e?.hour().toString().padStart(2, "0");
     const minutes = e?.minute().toString().padStart(2, "0");
     const timeString = `${hours}:${minutes}`;
@@ -81,7 +67,6 @@ const AddVacancy = () => {
       [name]: timeString,
     }));
   };
-  console.log(data);
 
 
   const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
@@ -112,6 +97,16 @@ const AddVacancy = () => {
     { gender: "Женский", value: "Female" },
     { gender: "Неважно", value: "Any" },
   ];
+
+  // branch
+  const [addBranch, setAddBranch] = useState(false);
+
+  const changeStateBranch = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    setAddBranch(!addBranch);
+  };
 
   //Жилье
   const [addHousing, setAddHousing] = useState(false);
@@ -296,6 +291,7 @@ const AddVacancy = () => {
         ))}
       {open && ModalConfirm()}
       {addHousing && ModalAddHousing()}
+      {addBranch && <ModalAddBranch changeStateBranch={changeStateBranch} addBranch={addBranch} />}
       <div className={s.container}>
         <div style={{ marginBottom: 50 }}>
           <Breadcrumbs aria-label="breadcrumb" className={s.breadcrumbs}>
@@ -342,6 +338,9 @@ const AddVacancy = () => {
                   ))}
                 </Select>
               </FormControl>
+              <button onClick={changeStateBranch} className={s.add}>
+                Добавить филиал
+              </button>
               <TextField
                 className={s.input}
                 id="outlined-basic"

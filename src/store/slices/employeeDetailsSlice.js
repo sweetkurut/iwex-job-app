@@ -139,16 +139,16 @@ export const sendInterviews = createAsyncThunk(
       console.log(response);
     } catch (error) {
       console.log(error);
-      return rejectWithValue(error.response.data.error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const getInterviewList = createAsyncThunk(
   "employeeDetails/getInterviewList",
-  async (_, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const response = await allAPIs.getInterView();
+      const response = await allAPIs.getInterView(id);
       console.log(response);
       return response.data;
     } catch (error) {

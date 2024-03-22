@@ -63,8 +63,7 @@ const Vacancy_isEmployee_Detail = () => {
                   {detailStaffVacancy?.branch.name}
                 </p>
                 <p>
-                  <span>Город:</span>{" "}
-                  {detailStaffVacancy?.branch.city}
+                  <span>Город:</span> {detailStaffVacancy?.branch.city}
                 </p>
                 <p>
                   <span>Адресс:</span> {detailStaffVacancy?.branch.address}
@@ -88,13 +87,25 @@ const Vacancy_isEmployee_Detail = () => {
               <span>{detailStaffVacancy?.employer_company.name}</span>
             </p>
             <p>
-              <span>Имя работадателя:</span> <span>{detailStaffVacancy?.branch.company.first_name} <br/> {detailStaffVacancy?.branch.company.last_name}</span>
+              <span>Имя работадателя:</span>{" "}
+              <span>
+                {detailStaffVacancy?.branch.company.first_name} <br />{" "}
+                {detailStaffVacancy?.branch.company.last_name}
+              </span>
             </p>
             <p>
-              <span>Контакты:</span> <span>{detailStaffVacancy?.branch.company.contact_info}{detailStaffVacancy?.branch.company.contact_person}</span>
+              <span>Контакты:</span>{" "}
+              <span>
+                {detailStaffVacancy?.branch.company.contact_info}
+                {detailStaffVacancy?.branch.company.contact_person}
+              </span>
             </p>
             <p>
-              <span>ИИН:</span> <span>{detailStaffVacancy?.branch.company.contact_info}{detailStaffVacancy?.branch.company.iin}</span>
+              <span>ИИН:</span>{" "}
+              <span>
+                {detailStaffVacancy?.branch.company.contact_info}
+                {detailStaffVacancy?.branch.company.iin}
+              </span>
             </p>
             <p>
               <span>Оплата:</span> <span>{detailStaffVacancy?.branch.company.payment_info}</span>
@@ -180,7 +191,6 @@ const Vacancy_isEmployee_Detail = () => {
       </div>
     </div>
   );
-  k;
 };
 
 export default Vacancy_isEmployee_Detail;

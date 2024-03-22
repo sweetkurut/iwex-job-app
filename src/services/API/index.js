@@ -4,7 +4,7 @@ import { getCookie } from "../../utils/js_cookie";
 const instance = axios.create({
   // baseURL: "http://10.137.60.134:8000",
   // baseURL: "http://10.137.60.126:8005",
-  baseURL: "http://10.137.60.126:8000",
+  baseURL: "http://10.137.60.134:8000",
   // baseURL: "https://crm.iwex.kg",
   // baseURL: "http://146.190.135.114:8002/",
 
@@ -147,12 +147,12 @@ const allAPIs = {
   sendFavorite(data) {
     return instance.post(`/core/favorite/`, data);
   },
-  sendFavorite(data) {
-    return instance.post(`/core/favorite/`, data);
+  deleteFavorite(id) {
+    return instance.delete(`/core/favorite/${id}/`);
   },
 
   // interview-list
-  getInterView() {
+  getInterView(id) {
     return instance.get(`/core/interviews-list/`);
   },
 

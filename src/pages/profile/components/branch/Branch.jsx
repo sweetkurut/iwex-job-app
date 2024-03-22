@@ -13,8 +13,9 @@ const Branch = () => {
   const [modalMessage, setModalMessage] = useState(false);
 
   const dispatch = useDispatch();
+
   const handlerComponent = (id) => {
-    if (detailCompany) {
+    if (Object.keys(detailCompany).length > 0) {
       setId_branch(id);
       setComponent(!component);
     } else {

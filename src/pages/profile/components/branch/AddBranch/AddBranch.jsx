@@ -85,7 +85,6 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
         dispatch(getMyBranch());
         setModalMessage({ title: "Успех", text: "Филиал успешно сохранен" });
         handlerComponent("branch");
-
       }
     } catch (error) {
       setModalMessage({ title: "Ошибка", text: error });

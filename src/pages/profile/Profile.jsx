@@ -7,7 +7,7 @@ import { CircularProgress, Tab } from "@mui/material";
 import { Box } from "@mui/system";
 import { TabContext, TabList } from "@mui/lab";
 
-const Profile = () => {
+const Profile = ({ }) => {
   const { isLoading } = useSelector((state) => state.companyDetails);
   const [component, setComponent] = useState("company");
 
@@ -29,7 +29,6 @@ const Profile = () => {
   return (
     <div className={s.container}>
       <p className={s.title}>Профиль</p>
-
       <Box sx={{ width: "100%", marginBottom: 5 }}>
         <TabContext value={component}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

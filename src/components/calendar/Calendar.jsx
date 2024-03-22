@@ -20,13 +20,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendInterviews } from "../../store/slices/employeeDetailsSlice";
 import { useLocation, useParams } from "react-router";
 import { getVacancyEmployer } from "../../store/slices/vacancySlice";
+import ModalWarning from "../modalWarning/ModalWarning";
 
 const ModalCalendar = ({ open, setOpen, page, selected }) => {
   const { vacancyEmployer } = useSelector((state) => state.vacancy);
   const [value, onChange] = useState(new Date());
   const [valueClock, setValueClock] = useState(null);
-
-
+  const [modalMessage, setModalMessage] = useState(false);
   const { id } = useParams();
   let { state } = useLocation();
   const dispatch = useDispatch();
@@ -65,73 +65,85 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
     const date = `${value.toISOString().split('T')[0]} ${valueClock.time}`;
 
     const data = {
-      user: [`${id}`] || selected,
+      user: id ? [id] : selected,
       vacancy: id_vacancy,
       interviews_date: date,
     };
+    console.log(data);
     try {
       const response = await dispatch(sendInterviews(data)).unwrap();
       console.log(response);
       handleClose(true);
+      const message = {
+        title: 'Успех',
+        text: 'Приглашение на собеседования ',
+      }
+      setModalMessage(message)
     } catch (error) {
       setOpen(true);
+      setModalMessage({ title: 'Ошибка', text: error?.non_field_errors[0] })
       console.error(error);
     }
   };
 
+
   return (
-    <Dialog
-      style={{ height: 800 }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="max-width-dialog-title">
-      {page === "/favorites" && (
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Выберите вакансию *</InputLabel>
-          <Select
-            name="vacancy"
-            required
-            className={s.input}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(e) => set_id_vacancy(e.target.value)}
-            value={id_vacancy}
-            label="Филиал"
-          >
-            {vacancyEmployer?.map((item, index) => (
-              <MenuItem className={s.item} key={item?.id} value={item?.id}>
-                <div className={s.box_span}>
-                  <span>{item?.position}</span>
-                </div>
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
-      <DialogTitle>{"Выберите дату и время"}</DialogTitle>
-      <DialogContent>
-        <Calendar className={s.calendar} onChange={onChange} value={value} />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker
-            name="time_start"
-            className={s.input}
-            label="Время собеседования:"
-            ampm={false}
-            onChange={(time) => getTime(time, "time")}
-            slotProps={{
-              textField: {
-                variant: 'outlined',
-                required: true,
-              }
-            }}
-          />
-        </LocalizationProvider>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Отмена</Button>
-        <Button onClick={handleSubmit}>Отправить</Button>
-      </DialogActions>
-    </Dialog>
+    <>
+      <ModalWarning modalMessage={modalMessage} />
+
+      <Dialog
+        style={{ height: 800 }}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="max-width-dialog-title">
+        {page === "/favorites" && (
+          <FormControl style={{ margin: 20 }}>
+            <InputLabel id="demo-simple-select-label">Выберите вакансию *</InputLabel>
+            <Select
+              name="vacancy"
+              required
+              className={s.input}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={(e) => set_id_vacancy(e.target.value)}
+              value={id_vacancy}
+              label="Выберите вакансию "
+            >
+              {vacancyEmployer?.map((item, index) => (
+                <MenuItem className={s.item} key={item?.id} value={item?.id}>
+                  <div className={s.box_span}>
+                    <span>{item?.position}</span>
+                  </div>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+        <DialogTitle>{"Выберите дату и время"}</DialogTitle>
+        <DialogContent>
+          <Calendar className={s.calendar} onChange={onChange} value={value} />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <TimePicker
+              name="time_start"
+              className={s.input}
+              label="Время собеседования:"
+              ampm={false}
+              onChange={(time) => getTime(time, "time")}
+              slotProps={{
+                textField: {
+                  variant: 'outlined',
+                  required: true,
+                }
+              }}
+            />
+          </LocalizationProvider>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Отмена</Button>
+          <Button onClick={handleSubmit}>Отправить</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
