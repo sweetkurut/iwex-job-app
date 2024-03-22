@@ -108,21 +108,7 @@ export const patchBranchData = createAsyncThunk(
   }
 );
 
-export const getCountry = createAsyncThunk(
-  "companyDetails/getCountry",
-  async (value, { rejectWithValue }) => {
-    try {
-      const response = await allAPIs.getCountry(value);
-      if (response.status !== 200) {
-        throw new Error("Server Error, unable to sign in");
-      }
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.response.data.error);
-    }
-  }
-);
+
 
 export const getDataProfile = createAsyncThunk(
   "companyDetails/getDataProfile",
@@ -188,6 +174,7 @@ export const sendHousinng = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await allAPIs.sendHousinng(data);
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -219,7 +206,6 @@ const initialState = {
   branch: [],
   detailBranch: {},
   company_id: null,
-  country: [],
   dataProfile: {},
   housing: []
 };
@@ -302,18 +288,6 @@ const companyDetailsSlice = createSlice({
         state.error = null;
       })
 
-      .addCase(getCountry.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getCountry.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.country = action.payload;
-      })
-      .addCase(getCountry.rejected, (state) => {
-        state.isLoading = false;
-        state.error = null;
-      })
 
       .addCase(getDataProfile.pending, (state) => {
         state.isLoading = true;

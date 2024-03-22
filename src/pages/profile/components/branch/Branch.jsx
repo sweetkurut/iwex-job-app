@@ -13,8 +13,9 @@ const Branch = () => {
   const [modalMessage, setModalMessage] = useState(false);
 
   const dispatch = useDispatch();
+
   const handlerComponent = (id) => {
-    if (detailCompany) {
+    if (Object.keys(detailCompany).length > 0) {
       setId_branch(id);
       setComponent(!component);
     } else {
@@ -56,7 +57,7 @@ const Branch = () => {
                 <>
                   <span>{index + 1}</span>
                   <span>{e?.name}</span>
-                  <span>{e?.country}</span>
+                  <span>{e?.land_name}</span>
                   <span>{e?.city}</span>
                   <button className={s.btn} onClick={() => handlerComponent(e?.id)}>
                     Подробнее

@@ -25,7 +25,7 @@ const Wrapper = styled.div`
     height:100%;
     top: 0;
     right: 0;
-    z-index: 90;
+    z-index: 1400;
 `;
 
 const ErrorCard = styled.div`
@@ -54,7 +54,7 @@ const ModalWarning = ({ modalMessage }) => {
 
     }, [modalMessage]);
     return (
-        <Wrapper>
+        <Wrapper >
             {errors.map((e, index) => (
                 <ErrorCard key={e.id} style={{ background: modalMessage.title === 'Успех' ? 'green' : 'orange' }}>
                     <p style={{ marginBottom: 5 }}>{e.title}</p>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import s from "./Notification.module.sass";
-import { getCookie } from "../../utils/js_cookie";
+import React, { useState, useEffect, useRef } from 'react';
+import s from './Notification.module.sass';
+import { getCookie } from '../../utils/js_cookie';
 
 const Notification_interviews = ({ e, handlerRead }) => {
   return (
@@ -20,21 +20,11 @@ const Notification_interviews = ({ e, handlerRead }) => {
 
 const Notification_vacancy = ({ e, handlerRead }) => {
   return (
-    <button
-      style={{ background: e?.read ? "#d1d7d836" : "#008eb136" }}
-      onClick={() => handlerRead(e?.id)}
-      key={e?.id}
-      className={s.card}>
+    <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
       <p className={s.message}>{e?.message?.notification}</p>
-      <p className={s.email}>
-        от: <span>{e?.message?.employer}</span>
-      </p>
-      <p className={s.email}>
-        филиал: <span>{e?.message?.branch}</span>
-      </p>
-      <p className={s.email}>
-        требуется студентов: <span>{e?.message?.employee_count}</span>
-      </p>
+      <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
+      <p className={s.email}>филиал: <span>{e?.message?.branch}</span></p>
+      <p className={s.email}>требуется студентов: <span>{e?.message?.employee_count}</span></p>
       <p className={s.date}>{e?.notification_date}</p>
     </button>
   );
@@ -63,8 +53,8 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
 
   useEffect(() => {
     function connectWebSocket() {
-      // const newSocket = new WebSocket('ws://10.137.60.116:8001/ws/order_students/');
-      const newSocket = new WebSocket("ws://10.137.60.134:8001/ws/users/2/chat/$");
+      // const newSocket = new WebSocket('ws://10.137.60.134:8001/ws/order_students/');
+      const newSocket = new WebSocket('ws://192.168.0.90:8001/ws/interviews/');
 
       newSocket.onopen = () => {
         console.log("WebSocket соединение установлено.");
@@ -73,15 +63,15 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
       newSocket.onclose = () => {
         console.log("WebSocket соединение закрыто.");
         // setTimeout(connectWebSocket, 3000);
+        // setTimeout(connectWebSocket, 3000);
       };
 
       newSocket.onmessage = (event) => {
         const newData = JSON.parse(event.data);
-        console.log(newData);
-        setData((prevData) => {
-          const index = prevData.findIndex((item) => item.id === newData.id);
+        setData(prevData => {
+          const index = prevData.findIndex(item => item.id === newData.id);
           if (index !== -1) {
-            return prevData.map((item) => (item.id === newData.id ? newData : item));
+            return prevData.map(item => (item.id === newData.id ? newData : item));
           } else {
             return prevData.concat(newData);
           }
@@ -127,21 +117,23 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
   }, [isOpen]);
 
   return (
-    <div ref={notificationRef} className={`${s.notifications} ${isOpen ? s.open : ""}`}>
+    <div ref={notificationRef} className={`${s.notifications} ${isOpen ? s.open : ''}`}>
       <div className={s.header}>
         <p>Уведомления</p>
       </div>
       <div className={s.wrapper}>
-        {data?.map((e) =>
-          e?.type_notification === "interviews_notification" ? (
+        {data?.map(e => (
+
+          e?.type_notification === 'interviews_notification' ? (
             <Notification_interviews key={e.id} e={e} handlerRead={handlerRead} />
-          ) : e?.type_notification === "vacancy_notification" ? (
+          ) : e?.type_notification === 'vacancy_notification' ? (
             <Notification_vacancy key={e.id} e={e} handlerRead={handlerRead} />
-          ) : // : e?.type_notification === 'message_notification' ? (
-          //     <NotificationButton e={e} handlerRead={handlerRead} />
-          // )
-          null
-        )}
+          )
+            // : e?.type_notification === 'message_notification' ? (
+            //     <NotificationButton e={e} handlerRead={handlerRead} />
+            // ) 
+            : null
+        ))}
       </div>
     </div>
   );

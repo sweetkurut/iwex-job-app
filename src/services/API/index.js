@@ -3,8 +3,8 @@ import { getCookie } from "../../utils/js_cookie";
 
 const instance = axios.create({
   // baseURL: "http://10.137.60.134:8000",
+  // baseURL: "http://10.137.60.126:8005",
   baseURL: "http://10.137.60.134:8000",
-  // baseURL: "http://10.137.60.126:8000",
   // baseURL: "https://crm.iwex.kg",
   // baseURL: "http://146.190.135.114:8002/",
 
@@ -79,8 +79,8 @@ const allAPIs = {
     return instance.post(`/core/branch/`, data);
   },
 
-  getCountry() {
-    return instance.get(`/core/country/`);
+  getLand_Name_List() {
+    return instance.get(`/core/land-names/`);
   },
 
   send_create_vacancy(data) {
@@ -144,9 +144,11 @@ const allAPIs = {
   getFavariteStudent() {
     return instance.get("/core/favorite/");
   },
-
-  sendFavorite(id) {
-    return instance.post(`/core/favorite-create/`, id);
+  sendFavorite(data) {
+    return instance.post(`/core/favorite/`, data);
+  },
+  deleteFavorite(id) {
+    return instance.delete(`/core/favorite/${id}/`);
   },
 
   // interview-list
@@ -158,7 +160,7 @@ const allAPIs = {
     return instance.post("/core/housing/", data);
   },
   getHousing() {
-    return instance.get("/core/housing-list/");
+    return instance.get("/core/housing/");
   },
 
   // staff

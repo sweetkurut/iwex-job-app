@@ -16,15 +16,15 @@ const ChatPage = () => {
     ]);
     const [newMessage, setNewMessage] = useState("");
 
-  const handleClick = (event, id) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedId(id);
-  };
+    const handleClick = (event, id) => {
+        setAnchorEl(event.currentTarget);
+        setSelectedId(id);
+    };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    setSelectedId(null);
-  };
+    const handleClose = () => {
+        setAnchorEl(null);
+        setSelectedId(null);
+    };
 
     const handleMessageSend = () => {
         if (newMessage.trim() !== "") {

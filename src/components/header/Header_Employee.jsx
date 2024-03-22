@@ -35,9 +35,9 @@ const Header_Employee = () => {
 
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
-    const handleToggleNotifications = () => {
-        setIsNotificationsOpen(!isNotificationsOpen);
-    };
+  const handleToggleNotifications = () => {
+    setIsNotificationsOpen(!isNotificationsOpen);
+  };
 
   return (
     <>

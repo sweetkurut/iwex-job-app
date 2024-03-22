@@ -135,7 +135,7 @@ const Company = ({ setComponent }) => {
                 setEdit(!edit);
               }}
             >
-              {detailCompany > 0 ? 'Редактировать' : 'Добавить'}
+              {detailCompany?.id ? 'Редактировать' : 'Добавить'}
             </button>
           ) : (
             <>

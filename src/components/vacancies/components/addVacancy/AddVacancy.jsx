@@ -27,9 +27,10 @@ import { send_create_vacancy } from "../../../../store/slices/vacancySlice";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { Box } from "@mui/system";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import ModalAddBranch from "../modalAdd_branch/Add_branch";
+
 
 const AddVacancy = () => {
   const navigate = useNavigate();
@@ -58,22 +59,15 @@ const AddVacancy = () => {
   };
 
   const getTime = (e, name) => {
-    if (e === null) {
-      const defaultTime = name === "time_start" ? "09:00" : "18:00";
-      setData((prevData) => ({
-        ...prevData,
-        [name]: defaultTime,
-      }));
-    } else {
-      const hours = e.hour().toString().padStart(2, "0");
-      const minutes = e.minute().toString().padStart(2, "0");
-      const timeString = `${hours}:${minutes}`;
-      setData((prevData) => ({
-        ...prevData,
-        [name]: timeString,
-      }));
-    }
+    const hours = e?.hour().toString().padStart(2, "0");
+    const minutes = e?.minute().toString().padStart(2, "0");
+    const timeString = `${hours}:${minutes}`;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: timeString,
+    }));
   };
+
 
   const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
 
@@ -104,6 +98,16 @@ const AddVacancy = () => {
     { gender: "Неважно", value: "Any" },
   ];
 
+  // branch
+  const [addBranch, setAddBranch] = useState(false);
+
+  const changeStateBranch = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    setAddBranch(!addBranch);
+  };
+
   //Жилье
   const [addHousing, setAddHousing] = useState(false);
   const [dataHousing, setDataHousing] = useState({
@@ -120,14 +124,19 @@ const AddVacancy = () => {
       [name]: value,
     }));
   };
+
+
   const handlerSendHousing = async (formData) => {
     try {
       const response = await dispatch(sendHousinng(formData)).unwrap();
+      console.log(response);
       setAddHousing(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+
   const handleFileChange = (e) => {
     const files = e.target.files;
     const updatedFiles = [];
@@ -155,9 +164,9 @@ const AddVacancy = () => {
     const formData = new FormData();
     for (let key in dataHousing) {
       if (key === "files") {
-        dataHousing.files.forEach((file, index) => {
-          formData.append("files", file);
-        });
+        for (let i = 0; i < dataHousing.files.length; i++) {
+          formData.append("files", dataHousing.files[i].file);
+        }
       } else {
         formData.append(key, dataHousing[key]);
       }
@@ -282,6 +291,7 @@ const AddVacancy = () => {
         ))}
       {open && ModalConfirm()}
       {addHousing && ModalAddHousing()}
+      {addBranch && <ModalAddBranch changeStateBranch={changeStateBranch} addBranch={addBranch} />}
       <div className={s.container}>
         <div style={{ marginBottom: 50 }}>
           <Breadcrumbs aria-label="breadcrumb" className={s.breadcrumbs}>
@@ -328,6 +338,9 @@ const AddVacancy = () => {
                   ))}
                 </Select>
               </FormControl>
+              <button onClick={changeStateBranch} className={s.add}>
+                Добавить филиал
+              </button>
               <TextField
                 className={s.input}
                 id="outlined-basic"

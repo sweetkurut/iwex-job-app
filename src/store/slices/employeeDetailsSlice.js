@@ -88,9 +88,9 @@ export const getFavorite = createAsyncThunk(
 
 export const SendFavorite = createAsyncThunk(
   "employeeDetails/SendFavorite",
-  async (id, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await allAPIs.sendFavorite(id);
+      const response = await allAPIs.sendFavorite(data);
       console.log(response);
       return response.data;
     } catch (error) {
@@ -99,6 +99,20 @@ export const SendFavorite = createAsyncThunk(
     }
   }
 );
+
+export const DeleteFavorite = createAsyncThunk(
+  "employeeDetails/DeleteFavorite",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.deleteFavorite(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+)
 
 // getEmployeeFilter
 export const getEmployeeFilter = createAsyncThunk(
@@ -125,7 +139,7 @@ export const sendInterviews = createAsyncThunk(
       console.log(response);
     } catch (error) {
       console.log(error);
-      return rejectWithValue(error.response.data.error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -302,5 +316,5 @@ const employeeDetailsSlice = createSlice({
   },
 });
 
-export const {} = employeeDetailsSlice.actions;
+export const { } = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;
