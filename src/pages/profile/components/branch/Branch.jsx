@@ -56,7 +56,7 @@ const Branch = () => {
                 <>
                   <span>{index + 1}</span>
                   <span>{e?.name}</span>
-                  <span>{e?.country}</span>
+                  <span>{e?.land_name}</span>
                   <span>{e?.city}</span>
                   <button className={s.btn} onClick={() => handlerComponent(e?.id)}>
                     Подробнее

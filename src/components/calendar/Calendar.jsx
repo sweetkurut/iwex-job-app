@@ -5,6 +5,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
 import Calendar from "react-calendar";
@@ -12,16 +16,21 @@ import "react-calendar/dist/Calendar.css";
 import s from "./Calendar.module.sass";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendInterviews } from "../../store/slices/employeeDetailsSlice";
 import { useLocation, useParams } from "react-router";
+import { getVacancyEmployer } from "../../store/slices/vacancySlice";
 
-const ModalCalendar = ({ open, setOpen }) => {
+const ModalCalendar = ({ open, setOpen, page, selected }) => {
+  const { vacancyEmployer } = useSelector((state) => state.vacancy);
   const [value, onChange] = useState(new Date());
-  const [valueClock, setValueClock] = useState(new Date());
+  const [valueClock, setValueClock] = useState(null);
+
+
   const { id } = useParams();
   let { state } = useLocation();
   const dispatch = useDispatch();
+  const [id_vacancy, set_id_vacancy] = useState(state?.id_vacancy || '');
 
   const getTime = (e, name) => {
     if (e) {
@@ -35,35 +44,31 @@ const ModalCalendar = ({ open, setOpen }) => {
     }
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => setValueClock(new Date()), 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  useEffect(() => {
+    dispatch(getVacancyEmployer());
+  }, [dispatch]);
+
+
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleSubmit = async () => {
-    const date = value.toString().split("T")[0];
-    const time = valueClock.time;
 
-    if (!state || !state.id_vacancy) {
+  const handleSubmit = async () => {
+    if (!id_vacancy) {
       console.error("Ошибка: объект state или свойство id_vacancy отсутствует.");
       return;
     }
 
+    const date = `${value.toISOString().split('T')[0]} ${valueClock.time}`;
+
     const data = {
-      user: id,
-      vacancy: state.id_vacancy,
-      date: date,
-      time: time,
-      interviews_date: value,
+      user: [`${id}`] || selected,
+      vacancy: id_vacancy,
+      interviews_date: date,
     };
-    console.log(data);
     try {
       const response = await dispatch(sendInterviews(data)).unwrap();
       console.log(response);
@@ -80,22 +85,45 @@ const ModalCalendar = ({ open, setOpen }) => {
       open={open}
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title">
+      {page === "/favorites" && (
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Выберите вакансию *</InputLabel>
+          <Select
+            name="vacancy"
+            required
+            className={s.input}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            onChange={(e) => set_id_vacancy(e.target.value)}
+            value={id_vacancy}
+            label="Филиал"
+          >
+            {vacancyEmployer?.map((item, index) => (
+              <MenuItem className={s.item} key={item?.id} value={item?.id}>
+                <div className={s.box_span}>
+                  <span>{item?.position}</span>
+                </div>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
       <DialogTitle>{"Выберите дату и время"}</DialogTitle>
       <DialogContent>
         <Calendar className={s.calendar} onChange={onChange} value={value} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <TimePicker
-            slotProps={{
-              textField: {
-                required: true,
-              },
-            }}
             name="time_start"
             className={s.input}
             label="Время собеседования:"
             ampm={false}
             onChange={(time) => getTime(time, "time")}
-            renderInput={(params) => <TextField {...params} required />}
+            slotProps={{
+              textField: {
+                variant: 'outlined',
+                required: true,
+              }
+            }}
           />
         </LocalizationProvider>
       </DialogContent>

@@ -3,7 +3,6 @@ import s from "./AddBranch.module.sass";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getCountry,
   getMyBranch,
   getMyBranchDetail,
   patchBranchData,
@@ -18,13 +17,30 @@ import DialogTitle from "@mui/material/DialogTitle";
 import ModalWarning from "../../../../../components/modalWarning/ModalWarning";
 
 const AddBranch = ({ handlerComponent, id_branch }) => {
-  const { country, detailBranch, detailCompany } = useSelector((state) => state.companyDetails);
+  const { detailBranch, detailCompany } = useSelector((state) => state.companyDetails);
   const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
+  const land_list = [
+    'Baden-Württemberg',
+    'Bavaria',
+    'Berlin',
+    'Brandenburg',
+    'Bremen',
+    'Hamburg',
+    'Hesse',
+    'Lower Saxony',
+    'Mecklenburg-Vorpommern',
+    'North Rhine-Westphalia',
+    'Rhineland-Palatinate',
+    'Saarland',
+    'Saxony',
+    'Saxony-Anhalt',
+    'Schleswig-Holstein',
+    'Thuringia',
+  ];
 
-  const [open, setOpen] = useState(false);
   const [data, setData] = useState({
     address: "",
-    country: "",
+    land_name: "",
     company: "",
     description: "",
     id: "",
@@ -34,7 +50,6 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
   });
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCountry());
     if (id_branch) {
       dispatch(getMyBranchDetail(id_branch));
     }
@@ -43,7 +58,7 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
     if (detailBranch && id_branch) {
       setData({
         address: detailBranch.address,
-        country: detailBranch.country,
+        land_name: detailBranch.land_name,
         company: String(detailBranch.company),
         description: detailBranch.description,
         id: String(detailBranch.id),
@@ -97,17 +112,17 @@ const AddBranch = ({ handlerComponent, id_branch }) => {
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Земля</InputLabel>
               <Select
-                name="country"
+                name="land_name"
                 required
                 className={s.input}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Земля"
-                value={data.country || ""}
+                value={data?.land_name}
                 onChange={handleInputChange}>
-                {country?.map((item, index) => (
-                  <MenuItem key={index} value={item?.id}>
-                    {item?.name}
+                {land_list?.map((item, index) => (
+                  <MenuItem key={index} value={item}>
+                    {item}
                   </MenuItem>
                 ))}
               </Select>

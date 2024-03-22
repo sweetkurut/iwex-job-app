@@ -63,6 +63,7 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
       newSocket.onclose = () => {
         console.log("WebSocket соединение закрыто.");
         // setTimeout(connectWebSocket, 3000);
+        // setTimeout(connectWebSocket, 3000);
       };
 
       newSocket.onmessage = (event) => {
