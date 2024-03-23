@@ -4,7 +4,7 @@ import { getCookie } from "../../utils/js_cookie";
 const instance = axios.create({
   // baseURL: "http://10.137.60.134:8000",
   // baseURL: "http://10.137.60.126:8005",
-  baseURL: "http://10.137.60.134:8000",
+  baseURL: "https://crm.iwex.kg",
   // baseURL: "https://crm.iwex.kg",
   // baseURL: "http://146.190.135.114:8002/",
 
@@ -153,7 +153,7 @@ const allAPIs = {
 
   // interview-list
   getInterView(id) {
-    return instance.get(`/core/interviews-list/`);
+    return instance.get(`/staff/interview-vacancies/interviews/`);
   },
 
   sendHousinng(data) {
@@ -179,6 +179,12 @@ const allAPIs = {
   getVacancyByIdStaff(id) {
     return instance.get(`/staff/vacancies-detail/${id}/`);
   },
+
+  // interview-vacancie/interviews
+
+  // getInterviewsVacancies() {
+  //   return instance.get(``);
+  // },
 };
 
 export default allAPIs;
