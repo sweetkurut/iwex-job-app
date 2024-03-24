@@ -32,16 +32,10 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
   const dispatch = useDispatch();
   const [id_vacancy, set_id_vacancy] = useState(state?.id_vacancy || '');
 
-  const getTime = (e, name) => {
-    if (e) {
-      const hours = e.hour().toString().padStart(2, "0");
-      const minutes = e.minute().toString().padStart(2, "0");
-      const timeString = `${hours}:${minutes}`;
-      setValueClock((prevData) => ({
-        ...prevData,
-        [name]: timeString,
-      }));
-    }
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setValueClock(value)
   };
 
 
@@ -62,7 +56,7 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
       return;
     }
 
-    const date = `${value.toISOString().split('T')[0]} ${valueClock.time}`;
+    const date = `${value.toISOString().split('T')[0]} ${valueClock}`;
 
     const data = {
       user: id ? [id] : selected,
@@ -123,18 +117,17 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
         <DialogContent>
           <Calendar className={s.calendar} onChange={onChange} value={value} />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-              name="time_start"
+
+            <TextField
+              required
               className={s.input}
-              label="Время собеседования:"
-              ampm={false}
-              onChange={(time) => getTime(time, "time")}
-              slotProps={{
-                textField: {
-                  variant: 'outlined',
-                  required: true,
-                }
+              onChange={handleInputChange}
+              label="Время начала работы:"
+              InputLabelProps={{
+                shrink: true,
               }}
+              type="time"
+              name="time_start"
             />
           </LocalizationProvider>
         </DialogContent>

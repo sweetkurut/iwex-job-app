@@ -153,7 +153,7 @@ const allAPIs = {
 
   // interview-list
   getInterView(id) {
-    return instance.get(`/staff/interview-vacancies/interviews/`);
+    return instance.get(`/staff/interview-vacancies/interviews/?vacancy=${id}`);
   },
 
   sendHousinng(data) {
