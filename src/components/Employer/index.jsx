@@ -3,10 +3,19 @@ import styles from "./employer.module.sass";
 import { Link } from "react-router-dom";
 
 const EmployerComponent = () => {
+  const openNewWindow = () => {
+    const url = "https://crm.iwex.kg/admin/core/employercompany/add/?_to_field=id&_popup=1";
+    const windowFeatures = "width=700,height=950,resizable=yes,scrollbars=yes,status=yes";
+    window.open(url, "_blank", windowFeatures);
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <h2 className={styles.title}>Список Работодателей</h2>
+        <button onClick={openNewWindow} className={styles.btn}>
+          Добавить работадателя
+        </button>
         <div className={styles.cards}>
           <div className={styles.card}>
             <div className={styles.vacancies_name_image}>

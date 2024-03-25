@@ -54,7 +54,8 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
   useEffect(() => {
     function connectWebSocket() {
       // const newSocket = new WebSocket('ws://10.137.60.134:8001/ws/order_students/');
-      const newSocket = new WebSocket('ws://https://crm.iwex.kg:8001/ws/interviews/');
+      // const newSocket = new WebSocket('ws://https://crm.iwex.kg:8001/ws/interviews/');
+      const newSocket = new WebSocket('ws://146.190.135.114:8001/ws/interviews/');
 
       newSocket.onopen = () => {
         console.log("WebSocket соединение установлено.");
