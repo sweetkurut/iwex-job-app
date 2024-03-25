@@ -112,7 +112,7 @@ export const DeleteFavorite = createAsyncThunk(
       return rejectWithValue(error.response.data.error);
     }
   }
-)
+);
 
 // getEmployeeFilter
 export const getEmployeeFilter = createAsyncThunk(
@@ -316,5 +316,5 @@ const employeeDetailsSlice = createSlice({
   },
 });
 
-export const { } = employeeDetailsSlice.actions;
+export const {} = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;

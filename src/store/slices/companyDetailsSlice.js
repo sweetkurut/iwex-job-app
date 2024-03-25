@@ -110,8 +110,6 @@ export const patchBranchData = createAsyncThunk(
   }
 );
 
-
-
 export const getDataProfile = createAsyncThunk(
   "companyDetails/getDataProfile",
   async (_, { rejectWithValue }) => {
@@ -184,7 +182,6 @@ export const sendHousinng = createAsyncThunk(
   }
 );
 
-
 export const getHousing = createAsyncThunk(
   "companyDetails/getHousing",
   async (_, { rejectWithValue }) => {
@@ -199,7 +196,35 @@ export const getHousing = createAsyncThunk(
   }
 );
 
+// staff/employer/company
 
+export const getAllEmployerCompany = createAsyncThunk(
+  "companyDetails/getEmployerCompany",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getEmployerCompany();
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const getStaffEmployerById = createAsyncThunk(
+  "companyDetails/getStaffEmployerById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getEmployerCompanyById(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
 
 const initialState = {
   isLoading: false,
@@ -209,15 +234,14 @@ const initialState = {
   detailBranch: {},
   company_id: null,
   dataProfile: {},
-  housing: []
+  housing: [],
+  staffEmployer: [],
 };
 
 const companyDetailsSlice = createSlice({
   name: "companyDetails",
   initialState,
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(sendCompanyData.pending, (state) => {
@@ -290,7 +314,6 @@ const companyDetailsSlice = createSlice({
         state.error = null;
       })
 
-
       .addCase(getDataProfile.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -336,8 +359,35 @@ const companyDetailsSlice = createSlice({
         state.isLoading = false;
       })
 
+      .addCase(getAllEmployerCompany.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+
+      .addCase(getAllEmployerCompany.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.staffEmployer = action.payload;
+      })
+
+      .addCase(getAllEmployerCompany.rejected, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+
+      .addCase(getStaffEmployerById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getStaffEmployerById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.staffEmployer = action.payload;
+      })
+      .addCase(getStaffEmployerById.rejected, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      });
   },
 });
 
-export const { } = companyDetailsSlice.actions;
+export const {} = companyDetailsSlice.actions;
 export default companyDetailsSlice.reducer;

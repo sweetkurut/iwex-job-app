@@ -40,16 +40,15 @@ const Main = () => {
       navigate("/login");
     } else {
       dispatch(sendToken(token));
-
     }
   }, [token]);
 
   useEffect(() => {
     if (role === "is_employer") {
-      dispatch(getDataProfile())
-      dispatch(getCompanyData())
+      dispatch(getDataProfile());
+      dispatch(getCompanyData());
     }
-  }, [role])
+  }, [role]);
   return (
     <>
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
@@ -71,7 +70,7 @@ const Main = () => {
               <Route path="/list-students" element={<ListStudentsPage />} />
               <Route path="/list-students-byID/:id" element={<StaffDetailProfiles />} />
               <Route path="/student-detail/:id" element={<Detail />} />
-              <Route path="/interview-staff" element={<Interviewstaff />} />
+              <Route path="/interview-staff/:id" element={<Interviewstaff />} />
               <Route path="*" element={<Page404 />} />
             </>
           ) : role === "is_employer" ? (

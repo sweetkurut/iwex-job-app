@@ -6,27 +6,24 @@ import TabPanel from "@mui/lab/TabPanel";
 import styles from "./staff.module.sass";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getInterviewList } from "../../store/slices/employeeDetailsSlice";
-import { Link } from "react-router-dom";
-import { GiNetworkBars } from "react-icons/gi";
-import { WiTime9 } from "react-icons/wi";
-import { LuCalendarClock } from "react-icons/lu";
-import { MdOutlinePhone, MdOutlineWorkOutline } from "react-icons/md";
+import { MdOutlinePhone } from "react-icons/md";
 import { CgCalendarToday } from "react-icons/cg";
 import { GrLanguage } from "react-icons/gr";
-import { FaGenderless, FaRegAddressCard } from "react-icons/fa";
-import { Avatar, Breadcrumbs, Typography } from "@mui/material";
-import { GoHome } from "react-icons/go";
+import { FaGenderless } from "react-icons/fa";
+import { Avatar } from "@mui/material";
 import Loaders from "../../UI/loaders";
+import { useParams } from "react-router";
+import { getStaffEmployerById } from "../../store/slices/companyDetailsSlice";
 
 const InterviewStaffComponent = () => {
+  const { id } = useParams();
   const { interview, isLoading } = useSelector((state) => state.employeeDetails);
   const dispatch = useDispatch();
   const { vacancy_review, users, employer_company } = { ...interview[0] };
   console.log(employer_company);
   useEffect(() => {
-    dispatch(getInterviewList(6));
-  }, [dispatch]);
+    dispatch(getStaffEmployerById(id));
+  }, [dispatch, id]);
 
   const [value, setValue] = useState("1");
 
@@ -49,14 +46,28 @@ const InterviewStaffComponent = () => {
             <TabPanel value="1">
               <div className={styles.wrapper_company}>
                 <div className={styles.contact}>
-                  <img src={employer_company?.icon} alt={employer_company?.name} className={styles.icon} />
+                  <img
+                    src={employer_company?.icon}
+                    alt={employer_company?.name}
+                    className={styles.icon}
+                  />
                   <div className={styles.box_name}>
                     <h4>{employer_company?.name}</h4>
-                    <p><span>ФИО:</span> {employer_company?.first_name} {employer_company?.last_name}</p>
-                    <p><span>Контактное лицо:</span> {employer_company?.contact_person}</p>
-                    <p><span>Позиция:</span> {employer_company?.position}</p>
-                    <p><span>Реквизиты компании:</span> {employer_company?.payment_info}</p>
-                    <p><span>ИИН:</span> {employer_company?.iin}</p>
+                    <p>
+                      <span>ФИО:</span> {employer_company?.first_name} {employer_company?.last_name}
+                    </p>
+                    <p>
+                      <span>Контактное лицо:</span> {employer_company?.contact_person}
+                    </p>
+                    <p>
+                      <span>Позиция:</span> {employer_company?.position}
+                    </p>
+                    <p>
+                      <span>Реквизиты компании:</span> {employer_company?.payment_info}
+                    </p>
+                    <p>
+                      <span>ИИН:</span> {employer_company?.iin}
+                    </p>
                   </div>
                 </div>
                 <h4 className={styles.title_ul}>Описание</h4>
@@ -113,8 +124,9 @@ const InterviewStaffComponent = () => {
                       </p>
                     </div>
                     <div className={styles.wrapper_btn}>
-                      <p className={styles.phone}>{vacancy_review?.salary} <span>Euro</span></p>
-
+                      <p className={styles.phone}>
+                        {vacancy_review?.salary} <span>Euro</span>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -152,16 +164,19 @@ const InterviewStaffComponent = () => {
                     <span>Описание:</span> <span>{vacancy_review?.description}</span>
                   </p>
                   <p>
-                    <span>Знание немецкого языка:</span> <span>{vacancy_review?.language_german}</span>
+                    <span>Знание немецкого языка:</span>{" "}
+                    <span>{vacancy_review?.language_german}</span>
                   </p>
                   <p>
-                    <span>Знание английского языка:</span> <span>{vacancy_review?.language_english}</span>
+                    <span>Знание английского языка:</span>{" "}
+                    <span>{vacancy_review?.language_english}</span>
                   </p>
                   <p>
                     <span>Рабочая форма:</span> <span>{vacancy_review?.clothingform}</span>
                   </p>
                   <p>
-                    <span>Количество рабочих мест:</span> <span>{vacancy_review?.employee_count}</span>
+                    <span>Количество рабочих мест:</span>{" "}
+                    <span>{vacancy_review?.employee_count}</span>
                   </p>
                   <p>
                     <span>Количество нанятых работников:</span>
@@ -178,14 +193,13 @@ const InterviewStaffComponent = () => {
                 <div className={styles.ul}>
                   <h4>Жильё(ru)</h4>
                   <p>
-                    <span>Жильё:</span> <span>{vacancy_review?.type_of_housing ? "Да" : "Нет"}</span>
+                    <span>Жильё:</span>{" "}
+                    <span>{vacancy_review?.type_of_housing ? "Да" : "Нет"}</span>
                   </p>
                   <p>
                     <span>Стоимость жилья:</span> <span>{vacancy_review?.housing_cost}</span>
                   </p>
                 </div>
-
-
               </div>
             </TabPanel>
             <TabPanel value="3">
@@ -244,7 +258,7 @@ const InterviewStaffComponent = () => {
           </TabContext>
         </Box>
       </div>
-    </div >
+    </div>
   );
 };
 
