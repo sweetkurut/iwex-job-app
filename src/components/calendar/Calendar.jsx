@@ -62,12 +62,18 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
       return;
     }
 
-    const date = `${value.toISOString().split('T')[0]} ${valueClock.time}`;
+    const date = new Date(value);
+    date.setDate(value.getDate() + 1);
+    const localISOString = date.toISOString();
+    const localDate = localISOString.slice(0, 10);
+
+    const time = valueClock?.time || '00:00';
+    const dateTime = `${localDate} ${time}`;
 
     const data = {
       user: id ? [id] : selected,
       vacancy: id_vacancy,
-      interviews_date: date,
+      interviews_date: dateTime,
     };
     console.log(data);
     try {
