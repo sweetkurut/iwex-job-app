@@ -89,7 +89,7 @@ const ChatPage = () => {
                 {
                     Array(10).fill().map((_, index) => (
                         <div className={s.room} key={index}>
-                            <button className={s.name}>Друг</button>
+                            <button className={s.name}>Нурлан Сабуров</button>
                             <button
                                 onClick={(event) => handleClick(event, index)}>
                                 <IoMdMore size={25} />

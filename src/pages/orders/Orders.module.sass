@@ -1,0 +1,64 @@
+.container
+    padding-top: 50px
+    width: 70%
+    margin: 0 auto
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+    .card:first-child
+        padding: 0px
+        background: transparent
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        >div
+            background: rgba(227, 227, 227, 0.5647058824)
+            flex: 0 1 45%
+            border-radius: 20px
+            padding: 20px
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            span
+                width: 50%
+                height: 1px
+                background: #666
+            >div:last-child
+                h2
+                    font-size: 15px
+                    color: #444
+                p
+                    font-size: 30px
+                    color: #444
+                    margin-bottom: 10px
+    .card
+        flex: 0 1 32%
+        padding: 20px
+        height: 500px
+        background: rgba(227, 227, 227, 0.5647058824)
+        border-radius: 20px
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        .title
+            font-size: 20px
+            color: #444
+            margin-bottom: 15px
+        .bottom_number
+            h2
+                font-size: 15px
+                color: #444
+            p
+                font-size: 30px
+                color: #444
+                margin-bottom: 10px
+        .error
+            display: flex
+            align-items: center
+            gap: 10px
+            color: #777
+            font-size: 15px
+        .number
+            font-size: 50px
+            color: #444

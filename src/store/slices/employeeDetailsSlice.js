@@ -297,7 +297,7 @@ const employeeDetailsSlice = createSlice({
       })
       .addCase(getAllProfilesStaffList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.staff = action.payload;
+        state.employee = action.payload;
       })
       .addCase(getAllProfilesStaffList.rejected, (state) => {
         state.isLoading = false;
@@ -308,7 +308,7 @@ const employeeDetailsSlice = createSlice({
       })
       .addCase(getProfileById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.staff = action.payload;
+        state.detailEmployee = action.payload;
       })
       .addCase(getProfileById.rejected, (state) => {
         state.isLoading = false;

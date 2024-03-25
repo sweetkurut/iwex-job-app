@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setRole } from "../../store/slices/userSlice";
 import { IoNotifications } from "react-icons/io5";
 import Notification from "../notification/Notification";
+import { MdMessage } from "react-icons/md";
 
 const Header_Employee = () => {
   const navigate = useNavigate();
@@ -58,11 +59,6 @@ const Header_Employee = () => {
               Заказы
             </NavLink>
             <NavLink
-              to={"/vacancies-list"}
-              className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-              Список вакансий
-            </NavLink>
-            <NavLink
               to={"/list-employer"}
               className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
               Список Работодателей
@@ -72,18 +68,11 @@ const Header_Employee = () => {
               className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
               Список студентов
             </NavLink>
-            <NavLink
-              to={"/message"}
-              className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-              Сообщение
-            </NavLink>
-            <NavLink
-              to={"/interview-staff"}
-              className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-              Вакансия
-            </NavLink>
           </nav>
           <div className={styles.box_profile}>
+            <Link to={"/message"} className={styles.notification} >
+              <MdMessage size={20} />
+            </Link>
             <button className={styles.notification} onClick={handleToggleNotifications}>
               <IoNotifications size={20} />
               {unread_count && <span>+{unread_count}</span>}

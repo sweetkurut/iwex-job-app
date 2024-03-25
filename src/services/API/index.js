@@ -153,7 +153,7 @@ const allAPIs = {
 
   // interview-list
   getInterView(id) {
-    return instance.get(`/core/interviews-list/`);
+    return instance.get(`/staff/interview-vacancies/interviews/?vacancy=${id}`);
   },
 
   sendHousinng(data) {
@@ -179,6 +179,12 @@ const allAPIs = {
   getVacancyByIdStaff(id) {
     return instance.get(`/staff/vacancies-detail/${id}/`);
   },
+
+  // interview-vacancie/interviews
+
+  // getInterviewsVacancies() {
+  //   return instance.get(``);
+  // },
 };
 
 export default allAPIs;

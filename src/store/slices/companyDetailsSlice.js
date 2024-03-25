@@ -41,8 +41,10 @@ export const getCompanyData = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error("Server Error, unable to sign in");
       }
+      console.log(response);
       return response.data[0];
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   }
@@ -323,6 +325,15 @@ const companyDetailsSlice = createSlice({
       .addCase(getHousing.rejected, (state) => {
         state.isLoading = false;
         state.error = null;
+      })
+      .addCase(sendHousinng.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendHousinng.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(sendHousinng.rejected, (state) => {
+        state.isLoading = false;
       })
 
   },

@@ -35,7 +35,6 @@ const Profile = ({ }) => {
             <TabList onChange={activeComponent} aria-label="lab API tabs example">
               <Tab label="Данные о компании" value="company" />
               <Tab label="Филиалы" value="branch" />
-              <Tab label="Жильё" value="housing" />
             </TabList>
           </Box>
         </TabContext>

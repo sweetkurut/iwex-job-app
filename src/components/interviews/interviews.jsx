@@ -23,7 +23,7 @@ const Interview = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(isModalOpen);
+  console.log(interview);
 
   const commitChanges = ({ added, changed, deleted }) => {
     setData((prevData) => {
@@ -96,7 +96,7 @@ const Interview = () => {
 
         <AppointmentTooltip
           showOpenButton
-          onVisibilityChange={() => {}}
+          onVisibilityChange={() => { }}
           onOpenButtonClick={openModal}
         />
       </Scheduler>

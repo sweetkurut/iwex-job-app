@@ -26,11 +26,10 @@ import {
 import { send_create_vacancy } from "../../../../store/slices/vacancySlice";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
-import { Box } from "@mui/system";
+import { Box, style } from "@mui/system";
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ModalAddBranch from "../modalAdd_branch/Add_branch";
-
 
 const AddVacancy = () => {
   const navigate = useNavigate();
@@ -55,16 +54,6 @@ const AddVacancy = () => {
     setData((prevData) => ({
       ...prevData,
       [name]: name === "housing_status" ? checked : value,
-    }));
-  };
-
-  const getTime = (e, name) => {
-    const hours = e?.hour().toString().padStart(2, "0");
-    const minutes = e?.minute().toString().padStart(2, "0");
-    const timeString = `${hours}:${minutes}`;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: timeString,
     }));
   };
 
@@ -129,8 +118,10 @@ const AddVacancy = () => {
   const handlerSendHousing = async (formData) => {
     try {
       const response = await dispatch(sendHousinng(formData)).unwrap();
-      console.log(response);
-      setAddHousing(false);
+      if (response) {
+        setAddHousing(false);
+        dispatch(getHousing());
+      }
     } catch (error) {
       console.log(error);
     }
@@ -204,7 +195,8 @@ const AddVacancy = () => {
           open={addHousing}
           onClose={changeStateHousing}
           aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description">
+          aria-describedby="alert-dialog-description" я>
+          {isLoading && <div className={s.Housingloading}></div>}
           <DialogTitle id="alert-dialog-title">Добавление жилья</DialogTitle>
           <form onSubmit={onSubmitHousing}>
             <DialogContent className={s.box_housing}>
@@ -218,6 +210,7 @@ const AddVacancy = () => {
                 variant="outlined"
                 onChange={handleInputChangeHousing}
               />
+
               <TextField
                 value={data.housing_cost}
                 className={s.input}
@@ -388,19 +381,27 @@ const AddVacancy = () => {
                 </Select>
               </FormControl>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <TimePicker
-                  ampm={false}
+                <TextField
+                  required
                   className={s.input}
-                  onChange={(time) => getTime(time, "time_start")}
+                  onChange={handleInputChange}
                   label="Время начала работы:"
-                  renderInput={(params) => <TextField {...params} required />}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  type="time"
+                  name="time_start"
                 />
-                <TimePicker
-                  ampm={false}
+                <TextField
+                  required
                   className={s.input}
                   label="Время окончания работы:"
-                  onChange={(time) => getTime(time, "time_end")}
-                  renderInput={(params) => <TextField {...params} required />}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  type="time"
+                  name="time_end"
+                  onChange={handleInputChange}
                 />
                 <DatePicker
                   className={s.input}

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/js_cookie";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../pages/profile/Profile";
-import { getDataProfile } from "../../store/slices/companyDetailsSlice";
+import { getCompanyData, getDataProfile } from "../../store/slices/companyDetailsSlice";
 import Page404 from "../../pages/404/404";
 import EditVacancyPage from "../../pages/editVacancies/edit";
 import StudentPage from "../../pages/students/students";
@@ -40,9 +40,16 @@ const Main = () => {
       navigate("/login");
     } else {
       dispatch(sendToken(token));
-      role === "is_employer" && dispatch(getDataProfile());
+
     }
   }, [token]);
+
+  useEffect(() => {
+    if (role === "is_employer") {
+      dispatch(getDataProfile())
+      dispatch(getCompanyData())
+    }
+  }, [role])
   return (
     <>
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
@@ -54,6 +61,7 @@ const Main = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/message" element={<ChatPage />} />
           {role === "is_employee" ? (
             <>
               <Route path="/*" element={<Orders />} />
@@ -62,8 +70,8 @@ const Main = () => {
               <Route path="/list-employer" element={<Employer />} />
               <Route path="/list-students" element={<ListStudentsPage />} />
               <Route path="/list-students-byID/:id" element={<StaffDetailProfiles />} />
+              <Route path="/student-detail/:id" element={<Detail />} />
               <Route path="/interview-staff" element={<Interviewstaff />} />
-              <Route path="/message" element={<ChatPage />} />
               <Route path="*" element={<Page404 />} />
             </>
           ) : role === "is_employer" ? (

@@ -53,40 +53,38 @@ export const SceletonCardVacancy = () => {
 export const SceletonCardStudents = () => {
   return (
     <>
-      {Array(8)
-        .fill()
-        .map((_, i) => (
-          <Stack key={i} spacing={1} className={s.card} style={{ height: 290 }}>
-            <div className={s.box}>
-              <Skeleton variant="circular" width={60} height={60} />
-              <Skeleton variant="text" width={"60%"} sx={{ fontSize: "1rem" }} />
+      {Array(8).fill().map((_, i) => (
+        <Stack key={i} spacing={1} className={s.card} style={{ height: 290 }}>
+          <div className={s.box}>
+            <Skeleton variant="circular" width={60} height={60} />
+            <Skeleton variant="text" width={"60%"} sx={{ fontSize: "1rem" }} />
+          </div>
+          <div className={s.box_rounded}>
+            <div>
+              <Skeleton
+                variant="rectangular"
+                width={50}
+                height={10}
+                style={{ marginBottom: 10 }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={120}
+                height={10}
+                style={{ marginBottom: 10 }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={"100%"}
+                height={50}
+                style={{ marginBottom: 30 }}
+              />
             </div>
-            <div className={s.box_rounded}>
-              <div>
-                <Skeleton
-                  variant="rectangular"
-                  width={50}
-                  height={10}
-                  style={{ marginBottom: 10 }}
-                />
-                <Skeleton
-                  variant="rectangular"
-                  width={120}
-                  height={10}
-                  style={{ marginBottom: 10 }}
-                />
-                <Skeleton
-                  variant="rectangular"
-                  width={"100%"}
-                  height={50}
-                  style={{ marginBottom: 30 }}
-                />
-              </div>
 
-              <Skeleton variant="rounded" width={120} height={30} />
-            </div>
-          </Stack>
-        ))}
+            <Skeleton variant="rounded" width={120} height={30} />
+          </div>
+        </Stack>
+      ))}
     </>
   );
 };

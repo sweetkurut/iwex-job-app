@@ -67,7 +67,7 @@ const StudentDetail = () => {
 
 
   const HandlerInvitation = async () => {
-    const data = { user: [id], vacancy: state.id_vacancy };
+    const data = { user: [id], vacancy: state?.id_vacancy };
     try {
       const response = await dispatch(sendInvitation(data)).unwrap();
       if (response) {
@@ -143,7 +143,7 @@ const StudentDetail = () => {
                 <TabPanel style={{ padding: "50px 0" }} value="1">
                   <div className={styles.user_img}>
                     <Avatar
-                      src={detailEmployee.profile_photo}
+                      src={detailEmployee?.profile_photo}
                       alt="user-photo"
                       loading="lazy"
                       sx={{
