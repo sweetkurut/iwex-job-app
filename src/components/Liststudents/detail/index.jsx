@@ -16,6 +16,8 @@ const ListStudentsDetailStaff = () => {
   const { detailEmployee } = useSelector((state) => state.employeeDetails);
   const [value, setValue] = useState("1");
 
+  console.log(detailEmployee);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -119,94 +121,99 @@ const ListStudentsDetailStaff = () => {
               </div>
             </TabPanel>
             <TabPanel value="2">
-              <div className={styles.ul}>
-                <h4>Образование(ru)</h4>
-                <p>
-                  <span>Университет:</span> <span>{detailEmployee?.universities[0].name_ru}</span>
-                </p>
-                <p>
-                  <span>Адресс:</span> <span>{detailEmployee?.universities[0].address_ru}</span>
-                </p>
-                <p>
-                  <span>Факультет:</span> <span>{detailEmployee?.universities[0].faculty_ru}</span>
-                </p>
-                <p>
-                  <span>Тип обучения:</span>
-                  <span>{detailEmployee?.universities[0].degree_type_ru}</span>
-                </p>
-              </div>
-              <div className={styles.ul}>
-                <h4>Education(en)</h4>
-                <p>
-                  <span>University:</span> <span>{detailEmployee?.universities[0].name_en}</span>
-                </p>
-                <p>
-                  <span>Address:</span> <span>{detailEmployee?.universities[0].address_en}</span>
-                </p>
-                <p>
-                  <span>Faculty:</span> <span>{detailEmployee?.universities[0].faculty_en}</span>
-                </p>
-                <p>
-                  <span>Degree type:</span>
-                  <span>{detailEmployee?.universities[0].degree_type_en}</span>
-                </p>
-              </div>
-              <div className={styles.ul}>
-                <h4>Ausbildung(de)</h4>
-                <p>
-                  <span>Universität:</span> <span>{detailEmployee?.universities[0].name_de}</span>
-                </p>
-                <p>
-                  <span>Adresse:</span> <span>{detailEmployee?.universities[0].address_de}</span>
-                </p>
-                <p>
-                  <span>Fakultät:</span> <span>{detailEmployee?.universities[0].faculty_de}</span>
-                </p>
-                <p>
-                  <span>Art der Ausbildung:</span>
-                  <span>{detailEmployee?.universities[0].degree_type_de}</span>
-                </p>
-              </div>
-              <div className={styles.ul}>
-                <h4>дополнительная информация</h4>
-                <p>
-                  <span>Email:</span>
-                  <span>{detailEmployee?.universities[0].email_university}</span>
-                </p>
-                <p>
-                  <span>Дата начало обучения:</span>
-                  <span>{detailEmployee?.universities[0].start_date}</span>
-                </p>
-                <p>
-                  <span>Дата конца обучения:</span>
-                  <span>{detailEmployee?.universities[0].end_date}</span>
-                </p>
-                <p>
-                  <span>Дата начала каникул </span>
-                  <span>{detailEmployee?.universities[0].start_holiday}</span>
-                </p>
-                <p>
-                  <span>Дата конца каникул </span>
-                  <span>{detailEmployee?.universities[0].start_holiday}</span>
-                </p>
+              {
+                detailEmployee?.universities?.map((e) => (
+                  <div key={e?.id}>
+                    <div className={styles.ul}>
+                      <h4>Образование(ru)</h4>
+                      <p>
+                        <span>Университет:</span> <span>{e?.name_ru}</span>
+                      </p>
+                      <p>
+                        <span>Адресс:</span> <span>{e?.address_ru}</span>
+                      </p>
+                      <p>
+                        <span>Факультет:</span> <span>{e?.faculty_ru}</span>
+                      </p>
+                      <p>
+                        <span>Тип обучения:</span>
+                        <span>{e?.degree_type_ru}</span>
+                      </p>
+                    </div>
+                    <div className={styles.ul}>
+                      <h4>Education(en)</h4>
+                      <p>
+                        <span>University:</span> <span>{e?.name_en}</span>
+                      </p>
+                      <p>
+                        <span>Address:</span> <span>{e?.address_en}</span>
+                      </p>
+                      <p>
+                        <span>Faculty:</span> <span>{e?.faculty_en}</span>
+                      </p>
+                      <p>
+                        <span>Degree type:</span>
+                        <span>{e?.degree_type_en}</span>
+                      </p>
+                    </div>
+                    <div className={styles.ul}>
+                      <h4>Ausbildung(de)</h4>
+                      <p>
+                        <span>Universität:</span> <span>{e?.name_de}</span>
+                      </p>
+                      <p>
+                        <span>Adresse:</span> <span>{e?.address_de}</span>
+                      </p>
+                      <p>
+                        <span>Fakultät:</span> <span>{e?.faculty_de}</span>
+                      </p>
+                      <p>
+                        <span>Art der Ausbildung:</span>
+                        <span>{e?.degree_type_de}</span>
+                      </p>
+                    </div>
+                    <div className={styles.ul}>
+                      <h4>дополнительная информация</h4>
+                      <p>
+                        <span>Email:</span>
+                        <span>{e?.email_university}</span>
+                      </p>
+                      <p>
+                        <span>Дата начало обучения:</span>
+                        <span>{e?.start_date}</span>
+                      </p>
+                      <p>
+                        <span>Дата конца обучения:</span>
+                        <span>{e?.end_date}</span>
+                      </p>
+                      <p>
+                        <span>Дата начала каникул </span>
+                        <span>{e?.start_holiday}</span>
+                      </p>
+                      <p>
+                        <span>Дата конца каникул </span>
+                        <span>{e?.start_holiday}</span>
+                      </p>
 
-                <p>
-                  <span>Art der Ausbildung:</span>
-                  <span>{detailEmployee?.universities[0].degree_type_de}</span>
-                </p>
-                <p>
-                  <span>Общее количество лет:</span>
-                  <span>{detailEmployee?.universities[0].total_years}</span>
-                </p>
-                <p>
-                  <span>Курс:</span>
-                  <span>{detailEmployee?.universities[0].kurs_year}</span>
-                </p>
-                <p>
-                  <span>Веб-сайт:</span>
-                  <span>{detailEmployee?.universities[0].website_university}</span>
-                </p>
-              </div>
+                      <p>
+                        <span>Art der Ausbildung:</span>
+                        <span>{e?.degree_type_de}</span>
+                      </p>
+                      <p>
+                        <span>Общее количество лет:</span>
+                        <span>{e?.total_years}</span>
+                      </p>
+                      <p>
+                        <span>Курс:</span>
+                        <span>{e?.kurs_year}</span>
+                      </p>
+                      <p>
+                        <span>Веб-сайт:</span>
+                        <span>{e?.website_university}</span>
+                      </p>
+                    </div></div>
+                ))
+              }
             </TabPanel>
           </TabContext>
         </Box>
