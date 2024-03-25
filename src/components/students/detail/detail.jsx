@@ -50,21 +50,17 @@ const StudentDetail = () => {
 
   const [favorites, setFavorites] = useState(detailEmployee?.favorite_employer);
 
-
-
   const handleFavorite = async () => {
     const data = {
-      user: id
-    }
+      user: id,
+    };
     try {
       const res = await dispatch(SendFavorite(data)).unwrap();
-      setFavorites(res?.is_favorite)
+      setFavorites(res?.is_favorite);
     } catch (error) {
       console.error(error);
     }
   };
-
-
 
   const HandlerInvitation = async () => {
     const data = { user: [id], vacancy: state?.id_vacancy };
@@ -179,8 +175,6 @@ const StudentDetail = () => {
                         <button onClick={handleFavorite} className={styles.btn}>
                           {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
                         </button>
-
-
                       </div>
                     </div>
                   </div>
@@ -213,8 +207,8 @@ const StudentDetail = () => {
                 </TabPanel>
                 <TabPanel style={{ padding: "50px 0" }} value="3">
                   {detailEmployee &&
-                    detailEmployee.universities &&
-                    detailEmployee.universities.length > 0 ? (
+                  detailEmployee.universities &&
+                  detailEmployee.universities.length > 0 ? (
                     detailEmployee.universities.map((elem) => (
                       <div key={elem?.id}>
                         <div className={styles.ul}>
