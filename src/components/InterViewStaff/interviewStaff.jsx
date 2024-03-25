@@ -13,15 +13,16 @@ import { GrLanguage } from "react-icons/gr";
 import { FaGenderless } from "react-icons/fa";
 import { Avatar } from "@mui/material";
 import Loaders from "../../UI/loaders";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 
 const InterviewStaffComponent = () => {
-  const { id } = useParams();
   const { interview, isLoading } = useSelector((state) => state.employeeDetails);
   const dispatch = useDispatch();
   const { vacancy_review, users, employer_company } = { ...interview[0] };
   let { state } = useLocation();
+  const { id } = useParams();
   console.log(state);
+
   useEffect(() => {
     dispatch(getInterview_staff(state?.id));
   }, [dispatch, state]);

@@ -236,6 +236,7 @@ const initialState = {
   dataProfile: {},
   housing: [],
   staffEmployer: [],
+  staffEmployerById: [],
 };
 
 const companyDetailsSlice = createSlice({
@@ -380,7 +381,7 @@ const companyDetailsSlice = createSlice({
       })
       .addCase(getStaffEmployerById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.staffEmployer = action.payload;
+        state.staffEmployerById = action.payload;
       })
       .addCase(getStaffEmployerById.rejected, (state) => {
         state.isLoading = false;

@@ -64,7 +64,7 @@ const EmployerComponent = () => {
                   </div>
                 </div>
                 <div className={styles.card_button}>
-                  <Link to={"/interview-staff/" + item.id} className={styles.btn_link}>
+                  <Link to={"/list-employerById/" + item.id} className={styles.btn_link}>
                     Подробнее
                   </Link>
                 </div>
