@@ -6,27 +6,24 @@ import TabPanel from "@mui/lab/TabPanel";
 import styles from "./staff.module.sass";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getInterviewList } from "../../store/slices/employeeDetailsSlice";
-import { Link } from "react-router-dom";
-import { GiNetworkBars } from "react-icons/gi";
-import { WiTime9 } from "react-icons/wi";
-import { LuCalendarClock } from "react-icons/lu";
-import { MdOutlinePhone, MdOutlineWorkOutline } from "react-icons/md";
+import { getInterview_staff } from "../../store/slices/employeeDetailsSlice";
+import { MdOutlinePhone } from "react-icons/md";
 import { CgCalendarToday } from "react-icons/cg";
 import { GrLanguage } from "react-icons/gr";
-import { FaGenderless, FaRegAddressCard } from "react-icons/fa";
-import { Avatar, Breadcrumbs, Typography } from "@mui/material";
-import { GoHome } from "react-icons/go";
+import { FaGenderless } from "react-icons/fa";
+import { Avatar } from "@mui/material";
 import Loaders from "../../UI/loaders";
+import { useLocation } from "react-router";
 
 const InterviewStaffComponent = () => {
   const { interview, isLoading } = useSelector((state) => state.employeeDetails);
   const dispatch = useDispatch();
   const { vacancy_review, users, employer_company } = { ...interview[0] };
-  console.log(employer_company);
+  let { state } = useLocation();
+  console.log(state);
   useEffect(() => {
-    dispatch(getInterviewList(6));
-  }, [dispatch]);
+    dispatch(getInterview_staff(state?.id));
+  }, [dispatch, state]);
 
   const [value, setValue] = useState("1");
 

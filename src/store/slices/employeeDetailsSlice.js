@@ -144,11 +144,11 @@ export const sendInterviews = createAsyncThunk(
   }
 );
 
-export const getInterviewList = createAsyncThunk(
-  "employeeDetails/getInterviewList",
+export const getInterview = createAsyncThunk(
+  "employeeDetails/getInterview",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await allAPIs.getInterView(id);
+      const response = await allAPIs.getInterview(id);
       console.log(response);
       return response.data;
     } catch (error) {
@@ -158,6 +158,20 @@ export const getInterviewList = createAsyncThunk(
   }
 );
 
+
+export const getInterview_staff = createAsyncThunk(
+  "employeeDetails/getInterview_staff",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await allAPIs.getInterview_staff(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
 // staff profile students(id) / vacancies(id)
 
 export const getAllProfilesStaffList = createAsyncThunk(
@@ -281,14 +295,25 @@ const employeeDetailsSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(getInterviewList.pending, (state) => {
+      .addCase(getInterview.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getInterviewList.fulfilled, (state, action) => {
+      .addCase(getInterview.fulfilled, (state, action) => {
         state.isLoading = false;
         state.interview = action.payload;
       })
-      .addCase(getInterviewList.rejected, (state) => {
+      .addCase(getInterview.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(getInterview_staff.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getInterview_staff.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.interview = action.payload;
+      })
+      .addCase(getInterview_staff.rejected, (state) => {
         state.isLoading = false;
       })
 

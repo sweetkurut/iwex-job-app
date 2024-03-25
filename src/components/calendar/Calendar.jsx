@@ -61,7 +61,7 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
     const data = {
       user: id ? [id] : selected,
       vacancy: id_vacancy,
-      interviews_date: dateTime,
+      interviews_date: date,
     };
     console.log(data);
     try {
