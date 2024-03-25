@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import s from './Notification.module.sass';
 import { getCookie } from '../../utils/js_cookie';
+import { useNavigate } from 'react-router';
 
 const Notification_interviews = ({ e, handlerRead }) => {
   return (
@@ -50,11 +51,9 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
   const notificationRef = useRef(null);
   const [data, setData] = useState([]);
   const [socket, setSocket] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     function connectWebSocket() {
-      // const newSocket = new WebSocket('ws://10.137.60.134:8001/ws/order_students/');
-      // const newSocket = new WebSocket('ws://https://crm.iwex.kg:8001/ws/interviews/');
       const newSocket = new WebSocket('ws://146.190.135.114:8001/ws/interviews/');
 
       newSocket.onopen = () => {
@@ -63,7 +62,6 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
 
       newSocket.onclose = () => {
         console.log("WebSocket соединение закрыто.");
-        // setTimeout(connectWebSocket, 3000);
         // setTimeout(connectWebSocket, 3000);
       };
 
@@ -98,6 +96,12 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
       id: id,
     };
     socket.send(JSON.stringify(data));
+    navigate('/interview-staff', {
+      state: {
+        id: id
+      }
+    }
+    )
   };
 
   const handleClickOutside = (event) => {

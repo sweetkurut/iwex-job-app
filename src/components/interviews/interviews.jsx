@@ -1,18 +1,22 @@
 import { useState } from "react";
 import styles from "./interview.module.sass";
-import {
-  Scheduler,
-  MonthView,
-  Appointments,
-  AppointmentTooltip,
-  DateNavigator,
-  Toolbar,
-} from "@devexpress/dx-react-scheduler-material-ui";
 import { useEffect } from "react";
 import { EditingState, IntegratedEditing, ViewState } from "@devexpress/dx-react-scheduler";
+import { MonthView, Appointments, Scheduler, Toolbar, DateNavigator, AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { useDispatch, useSelector } from "react-redux";
-import { getInterviewList } from "../../store/slices/employeeDetailsSlice";
+import { getInterview } from "../../store/slices/employeeDetailsSlice";
 import Modal from "./modal/modal";
+import { Button } from "@mui/material";
+
+
+
+
+const TooltipContent = ({ children, appointmentData, ...restProps }) => (
+  <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
+    {children}
+    <Button onClick={() => openModal(appointmentData)}>Подробнее</Button>
+  </AppointmentTooltip.Content>
+);
 
 const Interview = () => {
   const { interview } = useSelector((state) => state.employeeDetails);
@@ -45,7 +49,7 @@ const Interview = () => {
   };
 
   useEffect(() => {
-    dispatch(getInterviewList());
+    dispatch(getInterview());
   }, [dispatch]);
 
   useEffect(() => {
@@ -83,6 +87,9 @@ const Interview = () => {
     setIsModalOpen(false);
   };
 
+
+
+
   return (
     <div className={styles.container}>
       <Scheduler data={appointments}>
@@ -95,7 +102,7 @@ const Interview = () => {
         <DateNavigator currentDate={selectedDate} onCurrentDateChange={setSelectedDate} />
 
         <AppointmentTooltip
-          showOpenButton
+          contentComponent={TooltipContent}
           onVisibilityChange={() => { }}
           onOpenButtonClick={openModal}
         />
