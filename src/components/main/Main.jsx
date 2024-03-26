@@ -28,6 +28,7 @@ import Interviewstaff from "../../pages/interviewStaff/interviewstaff";
 import StaffDetailProfiles from "../../pages/staff-detail-profiles/staffDetailProfiles";
 import Vacancy_isemployee from "../../pages/vacancy_isemployee/vacancy_isemployee";
 import Vacancy_Detail_Staff from "../../pages/vacancy_isEmployee_detail/vacancy_detail_staff";
+import Briefing from "../Briefing/Briefing";
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -52,6 +53,9 @@ const Main = () => {
   }, [role])
   return (
     <>
+      {
+        role === "is_employer" && <Briefing />
+      }
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
         <Header />
       ) : (

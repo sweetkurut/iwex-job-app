@@ -35,7 +35,7 @@ const EnterPassword = ({ setComponent, email }) => {
         };
         try {
             const response = await dispatch(sendEnterPassword(data));
-            navigate('/vacancies');
+            navigate('/profile');
             saveCookie('accessToken', response.payload.access)
         } catch (error) {
             console.log(error);
