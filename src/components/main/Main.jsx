@@ -29,6 +29,7 @@ import StaffDetailProfiles from "../../pages/staff-detail-profiles/staffDetailPr
 import Vacancy_isemployee from "../../pages/vacancy_isemployee/vacancy_isemployee";
 import Vacancy_Detail_Staff from "../../pages/vacancy_isEmployee_detail/vacancy_detail_staff";
 import Briefing from "../Briefing/Briefing";
+import EmployerComponentById from "../Employer/detail";
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -52,9 +53,7 @@ const Main = () => {
   }, [role]);
   return (
     <>
-      {
-        role === "is_employer" && <Briefing />
-      }
+      {role === "is_employer" && <Briefing />}
       {navigate.pathname !== "/login" && navigate.pathname !== "*" && role === "is_employer" ? (
         <Header />
       ) : (
@@ -71,7 +70,7 @@ const Main = () => {
               <Route path="/vacancies-list" element={<Vacancy_isemployee />} />
               <Route path="/vacancy-detail/:id" element={<Vacancy_Detail_Staff />} />
               <Route path="/list-employer" element={<Employer />} />
-              <Route path="/list-employerById/:id" element={<EmployerComponent />} />
+              <Route path="/list-employerById/:id" element={<EmployerComponentById />} />
               <Route path="/list-students" element={<ListStudentsPage />} />
               <Route path="/list-students-byID/:id" element={<StaffDetailProfiles />} />
               <Route path="/student-detail/:id" element={<Detail />} />

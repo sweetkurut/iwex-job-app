@@ -54,26 +54,24 @@ const Vacancy_isEmployee_Detail = () => {
                 <h4>
                   {detailVacancy?.name_vacancies} {detailVacancy?.position}
                 </h4>
-                <p>
+                {/* <p>
                   <span>Зарплата: </span>
                   {detailVacancy?.salary}
-                </p>
-                <p>
-                  <span>Филиал: </span>
-                  {detailVacancy?.branch?.name}
-                </p>
-                <p>
-                  <span>Город:</span> {detailVacancy?.branch?.city}
-                </p>
-                <p>
-                  <span>Адресс:</span> {detailVacancy?.branch?.address}
-                </p>
-                {/* <p>
-                  <span>E-mail:</span> {detailVacancy?.email_info}
                 </p> */}
                 <p>
-                  <span>Кол-во просмотров:</span> {detailVacancy?.views_vacancy}
+                  <span>Филиал: </span>
+                  {detailVacancy?.branch}
                 </p>
+                <p>
+                  <span>Город:</span> {detailVacancy?.branch_city}
+                </p>
+                <p>
+                  <span>Адресс:</span> {detailVacancy?.branch_address}
+                </p>
+
+                {/* <p>
+                  <span>Кол-во просмотров:</span> {detailVacancy?.views_vacancy}
+                </p> */}
                 <p>
                   <span>Дата публикации:</span> {detailVacancy?.created_date}
                 </p>
@@ -114,19 +112,16 @@ const Vacancy_isEmployee_Detail = () => {
               <span>Описание:</span> <span>{detailVacancy?.description}</span>
             </p>
             <p>
-              <span>Знание немецкого языка:</span>{" "}
-              <span>{detailVacancy?.language_german}</span>
+              <span>Знание немецкого языка:</span> <span>{detailVacancy?.language_german}</span>
             </p>
             <p>
-              <span>Знание английского языка:</span>{" "}
-              <span>{detailVacancy?.language_english}</span>
+              <span>Знание английского языка:</span> <span>{detailVacancy?.language_english}</span>
             </p>
             <p>
               <span>Рабочая форма:</span> <span>{detailVacancy?.clothingform}</span>
             </p>
             <p>
-              <span>Количество рабочих мест:</span>{" "}
-              <span>{detailVacancy?.employee_count}</span>
+              <span>Количество рабочих мест:</span> <span>{detailVacancy?.employee_count}</span>
             </p>
             <p>
               <span>Количество нанятых работников:</span>
