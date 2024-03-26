@@ -2,12 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import s from './Notification.module.sass';
 import { getCookie } from '../../utils/js_cookie';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
-const Notification_interviews = ({ e, handlerRead }) => {
+const Notification_interviews = ({ e, handlerRead, id }) => {
+  const navigate = useNavigate();
+
   return (
     <button
       style={{ background: e?.read ? "#d1d7d836" : "#008eb136" }}
-      onClick={() => handlerRead(e?.id)}
+      onClick={() => {
+        navigate('/interview-staff', {
+          state: {
+            id: id
+          }
+        }
+        )
+        handlerRead(e?.id)
+      }}
       key={e?.id}
       className={s.card}>
       <p className={s.message}>{e?.message?.notification}</p>
@@ -19,9 +30,14 @@ const Notification_interviews = ({ e, handlerRead }) => {
   );
 };
 
-const Notification_vacancy = ({ e, handlerRead }) => {
+const Notification_vacancy = ({ e, handlerRead, id }) => {
+  const navigate = useNavigate();
+
   return (
-    <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => handlerRead(e?.id)} key={e?.id} className={s.card}>
+    <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => {
+      handlerRead(e?.id)
+      navigate(`/vacancy-detail/` + id)
+    }} key={e?.id} className={s.card}>
       <p className={s.message}>{e?.message?.notification}</p>
       <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
       <p className={s.email}>филиал: <span>{e?.message?.branch}</span></p>
@@ -51,10 +67,10 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
   const notificationRef = useRef(null);
   const [data, setData] = useState([]);
   const [socket, setSocket] = useState(null);
-  const navigate = useNavigate();
   useEffect(() => {
     function connectWebSocket() {
-      const newSocket = new WebSocket('ws://146.190.135.114:8001/ws/interviews/');
+      const newSocket = new WebSocket('ws://10.137.60.120:8001/ws/interviews/');
+      // const newSocket = new WebSocket('ws://146.190.135.114:8001/ws/interviews/');
 
       newSocket.onopen = () => {
         console.log("WebSocket соединение установлено.");
@@ -65,8 +81,10 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
         // setTimeout(connectWebSocket, 3000);
       };
 
+
       newSocket.onmessage = (event) => {
         const newData = JSON.parse(event.data);
+        console.log(newData);
         setData(prevData => {
           const index = prevData.findIndex(item => item.id === newData.id);
           if (index !== -1) {
@@ -92,24 +110,19 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
   }, []);
 
   const handlerRead = (id) => {
-    const data = {
+    const sendData = {
       id: id,
     };
-    socket.send(JSON.stringify(data));
-    navigate('/interview-staff', {
-      state: {
-        id: id
-      }
-    }
-    )
+    socket.send(JSON.stringify(sendData));
   };
+
 
   const handleClickOutside = (event) => {
     if (notificationRef.current && !notificationRef.current.contains(event.target)) {
       onClose();
     }
   };
-
+  console.log(data);
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -128,15 +141,11 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
       </div>
       <div className={s.wrapper}>
         {data?.map(e => (
-
           e?.type_notification === 'interviews_notification' ? (
-            <Notification_interviews key={e.id} e={e} handlerRead={handlerRead} />
+            <Notification_interviews key={e?.id} e={e} handlerRead={handlerRead} id={e?.message?.vacancy_id} />
           ) : e?.type_notification === 'vacancy_notification' ? (
-            <Notification_vacancy key={e.id} e={e} handlerRead={handlerRead} />
+            <Notification_vacancy key={e.id} e={e} handlerRead={handlerRead} id={e?.message?.vacancy_id} />
           )
-            // : e?.type_notification === 'message_notification' ? (
-            //     <NotificationButton e={e} handlerRead={handlerRead} />
-            // ) 
             : null
         ))}
       </div>

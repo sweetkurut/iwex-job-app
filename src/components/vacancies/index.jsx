@@ -13,7 +13,7 @@ const MyVacancies = () => {
   const [modalMessage, setModalMessage] = useState(false);
 
   const handlerComponent = () => {
-    if (Object.keys(detailCompany).length > 0) {
+    if (detailCompany && Object.keys(detailCompany).length > 0) {
       navigation('/vacancy')
     } else {
       const message = {
@@ -23,6 +23,7 @@ const MyVacancies = () => {
       setModalMessage(message)
     }
   };
+
 
 
   return (
