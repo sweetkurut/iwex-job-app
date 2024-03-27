@@ -57,11 +57,7 @@ const Header = () => {
               className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
               Мои вакансии
             </NavLink>
-            <NavLink
-              to={"/response"}
-              className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
-              Список приглашенных
-            </NavLink>
+
             <NavLink
               to={"/list-interviews"}
               className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>

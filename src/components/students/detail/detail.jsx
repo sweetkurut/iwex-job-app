@@ -169,9 +169,7 @@ const StudentDetail = () => {
                         <button className={styles.btn} onClick={() => setOpenCalendar(true)}>
                           Назначить собеседования
                         </button>
-                        <button onClick={HandlerInvitation} className={styles.btn}>
-                          Пригласить без собеседования
-                        </button>
+
                         <button onClick={handleFavorite} className={styles.btn}>
                           {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
                         </button>
@@ -207,8 +205,8 @@ const StudentDetail = () => {
                 </TabPanel>
                 <TabPanel style={{ padding: "50px 0" }} value="3">
                   {detailEmployee &&
-                  detailEmployee.universities &&
-                  detailEmployee.universities.length > 0 ? (
+                    detailEmployee.universities &&
+                    detailEmployee.universities.length > 0 ? (
                     detailEmployee.universities.map((elem) => (
                       <div key={elem?.id}>
                         <div className={styles.ul}>

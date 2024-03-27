@@ -80,6 +80,7 @@ const Interview = () => {
     setIsModalOpen(true);
   };
 
+
   const closeModal = () => {
     setIsModalOpen(false);
   };

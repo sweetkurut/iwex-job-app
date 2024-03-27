@@ -10,12 +10,13 @@ const MyVacancies = () => {
   const navigation = useNavigate();
 
   const { is_profile } = useSelector(state => state.user)
+  const { detailCompany } = useSelector(state => state.companyDetails)
   const [modalMessage, setModalMessage] = useState(false);
 
 
 
   const handlerComponent = () => {
-    if (is_profile) {
+    if (is_profile || Object.keys(detailCompany).length > 0) {
       navigation('/vacancy')
     } else {
       const message = {
