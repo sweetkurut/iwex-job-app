@@ -6,8 +6,7 @@ import { getStaffEmployerById } from "../../../store/slices/companyDetailsSlice"
 import Loaders from "../../../UI/loaders";
 
 const EmployerComponentById = () => {
-  const { staffEmployerById } = useSelector((state) => state.companyDetails);
-  const { isLoading } = useSelector((state) => state.employeeDetails);
+  const { staffEmployerById,isLoading } = useSelector((state) => state.companyDetails);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -38,7 +37,7 @@ const EmployerComponentById = () => {
                 <span>Контактное лицо:</span> {staffEmployerById?.contact_person}
               </p>
               <p>
-                <span>Позиция:</span> {staffEmployerById?.position}
+                <span>x Позиция:</span> {staffEmployerById?.position}
               </p>
               <p>
                 <span>Реквизиты компании:</span> {staffEmployerById?.payment_info}

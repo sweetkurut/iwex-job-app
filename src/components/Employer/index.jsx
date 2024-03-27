@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllEmployerCompany } from "../../store/slices/companyDetailsSlice";
+import Loaders from "../../UI/loaders";
+import { SceletonCardVacancy } from "../SceletonLoading/SceletonLoading";
 
 const EmployerComponent = () => {
   const openNewWindow = () => {
@@ -13,7 +15,7 @@ const EmployerComponent = () => {
   };
 
   const dispatch = useDispatch();
-  const { staffEmployer } = useSelector((state) => state.companyDetails);
+  const { staffEmployer, isLoading } = useSelector((state) => state.companyDetails);
 
   useEffect(() => {
     dispatch(getAllEmployerCompany());
@@ -24,6 +26,7 @@ const EmployerComponent = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
+        {isLoading && <SceletonCardVacancy />}
         <h2 className={styles.title}>Список Работодателей</h2>
         <button onClick={openNewWindow} className={styles.btn}>
           Добавить работадателя

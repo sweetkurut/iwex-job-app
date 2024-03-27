@@ -9,11 +9,12 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styles from "./detaiil.module.sass";
 import { Avatar } from "@mui/material";
+import Loaders from "../../../UI/loaders";
 
 const ListStudentsDetailStaff = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { detailEmployee } = useSelector((state) => state.employeeDetails);
+  const { detailEmployee, isLoading } = useSelector((state) => state.employeeDetails);
   const [value, setValue] = useState("1");
 
   console.log(detailEmployee);
@@ -29,6 +30,7 @@ const ListStudentsDetailStaff = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
+        {isLoading && <Loaders />}
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

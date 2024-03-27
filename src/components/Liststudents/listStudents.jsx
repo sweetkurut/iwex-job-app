@@ -2,22 +2,18 @@ import styles from "./students.module.sass";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllEmployee, getAllProfilesStaffList } from "../../store/slices/employeeDetailsSlice";
+import { getAllEmployee } from "../../store/slices/employeeDetailsSlice";
 import { SceletonCardVacancy } from "../SceletonLoading/SceletonLoading";
 
 import { GrLanguage } from "react-icons/gr";
 import { CgCalendarToday } from "react-icons/cg";
-import { Avatar, Box, Tab } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { MdOutlinePhone } from "react-icons/md";
-import { TabContext, TabList } from "@mui/lab";
 import { FaGenderless } from "react-icons/fa";
-import { SceletonCardStudents } from "../SceletonLoading/SceletonLoading";
-
 
 const ListStudents = () => {
   const dispatch = useDispatch();
   const { employee, isLoading } = useSelector((state) => state.employeeDetails);
-
 
   useEffect(() => {
     dispatch(getAllEmployee());
@@ -32,7 +28,7 @@ const ListStudents = () => {
               <h2 className={styles.title}>Студенты</h2>
               <div className={styles.cards}>
                 {isLoading ? (
-                  <SceletonCardStudents />
+                  <SceletonCardVacancy />
                 ) : employee && employee.length > 0 ? (
                   employee.map((elem) => (
                     <div className={styles.card} key={elem?.id}>
@@ -74,9 +70,7 @@ const ListStudents = () => {
                         </p>
                       </div>
                       <div className={styles.card_button}>
-                        <Link
-                          to={"/list-students-byID/" + elem?.id}
-                          className={styles.btn_link}>
+                        <Link to={"/list-students-byID/" + elem?.id} className={styles.btn_link}>
                           Подробнее
                         </Link>
                       </div>
@@ -93,9 +87,7 @@ const ListStudents = () => {
                         }}
                       />
                     </div>
-                    <p className={styles.student_search_title}>
-                      Не найдено ни одного студента.
-                    </p>
+                    <p className={styles.student_search_title}>Не найдено ни одного студента.</p>
                     <button
                       className={styles.btn_allStudents}
                       onClick={(e) => {
