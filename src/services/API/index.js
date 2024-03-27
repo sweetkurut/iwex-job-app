@@ -134,12 +134,11 @@ const allAPIs = {
       },
     });
   },
-  // /accounts/profile-detail/{id}/
 
+  // /accounts/profile-detail/{id}/
   getEmployeeFilter(id) {
     return instance.get(`/accounts/profiles-list-filter/${id}/`);
   },
-
   // favarite students
   getFavariteStudent() {
     return instance.get("/core/favorite/");

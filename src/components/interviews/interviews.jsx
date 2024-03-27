@@ -11,12 +11,7 @@ import { Button } from "@mui/material";
 
 
 
-const TooltipContent = ({ children, appointmentData, ...restProps }) => (
-  <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
-    {children}
-    <Button onClick={() => openModal(appointmentData)}>Подробнее</Button>
-  </AppointmentTooltip.Content>
-);
+
 
 const Interview = () => {
   const { interview } = useSelector((state) => state.employeeDetails);
@@ -27,7 +22,6 @@ const Interview = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(interview);
 
   const commitChanges = ({ added, changed, deleted }) => {
     setData((prevData) => {
@@ -51,6 +45,9 @@ const Interview = () => {
   useEffect(() => {
     dispatch(getInterview());
   }, [dispatch]);
+
+
+
 
   useEffect(() => {
     if (interview && interview.length > 0) {
@@ -86,9 +83,18 @@ const Interview = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const data_interview = { ...interview[0] }
+  console.log(data_interview);
 
-
-
+  const TooltipContent = ({ children, appointmentData, ...restProps }) => (
+    <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
+      {children}
+      <p>Test</p>
+      <p>Test</p>
+      <p>Test</p>
+      <Button onClick={() => openModal(appointmentData)}>Подробнее</Button>
+    </AppointmentTooltip.Content>
+  );
 
   return (
     <div className={styles.container}>

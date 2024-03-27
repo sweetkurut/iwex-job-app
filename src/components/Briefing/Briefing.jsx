@@ -3,6 +3,7 @@ import s from './Briefing.module.sass';
 import { useSelector } from 'react-redux';
 import Image_company from './../../assets/Image_company.png'
 import Image_branch from './../../assets/Image_branch.png'
+import Image_vacancy from './../../assets/Image_vacancy.png'
 
 
 const BriefingCompany = () => {
@@ -23,7 +24,7 @@ const BriefingBranch = () => {
             <img src={Image_branch} alt="Branch" className={s.image} />
             <div className={s.text}>
                 <h2>Добавление филиала</h2>
-                <p>Также для управления филиалами вашей компании, вам необходимо добавить новый филиал.</p>
+                <p>Также для управления филиалами вашей компании, вам необходимо добавить новый филиал во вкладке профиль/филиалы.</p>
             </div>
         </div>
     );
@@ -33,10 +34,10 @@ const BriefingBranch = () => {
 const BriefingVacancy = () => {
     return (
         <div className={s.briefingComponent}>
-            <img src={Image_branch} alt="Vacancy" className={s.image} />
+            <img src={Image_vacancy} alt="Vacancy" className={s.image} />
             <div className={s.text}>
                 <h2>Добавление вакансии</h2>
-                <p>Теперь вы можете добавить вакансии в вашу компанию, чтобы привлекать талантливых сотрудников.</p>
+                <p>После всех выполненых этапов вы можете добавить вакансии в вашу компанию, чтобы привлекать талантливых сотрудников.</p>
             </div>
         </div>
     );
