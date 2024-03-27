@@ -9,11 +9,13 @@ import ModalWarning from "../modalWarning/ModalWarning";
 const MyVacancies = () => {
   const navigation = useNavigate();
 
-  const { detailCompany } = useSelector(state => state.companyDetails)
+  const { is_profile } = useSelector(state => state.user)
   const [modalMessage, setModalMessage] = useState(false);
 
+
+
   const handlerComponent = () => {
-    if (detailCompany && Object.keys(detailCompany).length > 0) {
+    if (is_profile) {
       navigation('/vacancy')
     } else {
       const message = {

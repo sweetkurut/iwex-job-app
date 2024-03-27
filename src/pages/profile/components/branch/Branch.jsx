@@ -7,7 +7,9 @@ import AddBranch from "./AddBranch/AddBranch";
 import ModalWarning from "../../../../components/modalWarning/ModalWarning";
 
 const Branch = () => {
-  const { branch, detailCompany } = useSelector((state) => state.companyDetails);
+  const { branch } = useSelector((state) => state.companyDetails);
+  const { is_profile } = useSelector(state => state.user)
+
   const [id_branch, setId_branch] = useState(null);
   const [component, setComponent] = useState(false);
   const [modalMessage, setModalMessage] = useState(false);
@@ -15,7 +17,7 @@ const Branch = () => {
   const dispatch = useDispatch();
 
   const handlerComponent = (id) => {
-    if (detailCompany && Object.keys(detailCompany).length > 0) {
+    if (is_profile) {
       setId_branch(id);
       setComponent(!component);
     } else {

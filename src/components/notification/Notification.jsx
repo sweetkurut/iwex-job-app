@@ -3,24 +3,19 @@ import s from './Notification.module.sass';
 import { getCookie } from '../../utils/js_cookie';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Notification_interviews = ({ e, handlerRead, id }) => {
   const navigate = useNavigate();
 
   return (
     <button
-      style={{ background: e?.read ? "#d1d7d836" : "#008eb136" }}
       onClick={() => {
-        navigate('/interview-staff', {
-          state: {
-            id: id
-          }
-        }
-        )
+        navigate('/interview-staff/' + id)
         handlerRead(e?.id)
       }}
       key={e?.id}
-      className={s.card}>
+      className={`${s.card} ${e?.read && s.active}`}>
       <p className={s.message}>{e?.message?.notification}</p>
       <p className={s.email}>
         от: <span>{e?.message?.employer}</span>
@@ -34,10 +29,13 @@ const Notification_vacancy = ({ e, handlerRead, id }) => {
   const navigate = useNavigate();
 
   return (
-    <button style={{ background: e?.read ? '#d1d7d836' : '#008eb136' }} onClick={() => {
-      handlerRead(e?.id)
-      navigate(`/vacancy-detail/` + id)
-    }} key={e?.id} className={s.card}>
+    <button
+      onClick={() => {
+        handlerRead(e?.id)
+        navigate(`/vacancy-detail/` + id)
+      }} key={e?.id}
+      className={`${s.card} ${e?.read && s.active}`}>
+
       <p className={s.message}>{e?.message?.notification}</p>
       <p className={s.email}>от: <span>{e?.message?.employer}</span></p>
       <p className={s.email}>филиал: <span>{e?.message?.branch}</span></p>
@@ -64,13 +62,14 @@ const TypeNotification_vacancy = ({ e, handlerRead }) => {
 };
 
 const Notification = ({ isOpen, onClose, setUnread_count }) => {
+  const { role } = useSelector((state) => state.user);
+
   const notificationRef = useRef(null);
   const [data, setData] = useState([]);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     function connectWebSocket() {
       const newSocket = new WebSocket('ws://10.137.60.120:8001/ws/interviews/');
-      // const newSocket = new WebSocket('ws://146.190.135.114:8001/ws/interviews/');
 
       newSocket.onopen = () => {
         console.log("WebSocket соединение установлено.");
@@ -82,18 +81,20 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
       };
 
 
-      newSocket.onmessage = (event) => {
-        const newData = JSON.parse(event.data);
-        console.log(newData);
-        setData(prevData => {
-          const index = prevData.findIndex(item => item.id === newData.id);
-          if (index !== -1) {
-            return prevData.map(item => (item.id === newData.id ? newData : item));
-          } else {
-            return prevData.concat(newData);
-          }
-        });
-        setUnread_count(newData.unread_count);
+      if (role === 'is_employee') {
+        newSocket.onmessage = (event) => {
+          const newData = JSON.parse(event.data);
+          console.log(newData);
+          setData(prevData => {
+            const index = prevData.findIndex(item => item.id === newData.id);
+            if (index !== -1) {
+              return prevData.map(item => (item.id === newData.id ? newData : item));
+            } else {
+              return prevData.concat(newData);
+            }
+          });
+          setUnread_count(newData.unread_count);
+        }
       };
 
       setSocket(newSocket);

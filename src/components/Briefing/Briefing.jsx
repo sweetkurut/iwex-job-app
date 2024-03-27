@@ -33,57 +33,53 @@ const BriefingBranch = () => {
 const BriefingVacancy = () => {
     return (
         <div className={s.briefingComponent}>
-            <img src={Image_branch} alt="Branch" className={s.image} />
+            <img src={Image_branch} alt="Vacancy" className={s.image} />
             <div className={s.text}>
                 <h2>Добавление вакансии</h2>
+                <p>Теперь вы можете добавить вакансии в вашу компанию, чтобы привлекать талантливых сотрудников.</p>
             </div>
         </div>
     );
 };
 
-export { BriefingCompany, BriefingBranch };
+export { BriefingCompany, BriefingBranch, BriefingVacancy };
 const Briefing = () => {
     const { detailCompany, branch } = useSelector(state => state.companyDetails);
     const [step, setStep] = useState(0);
-    const [completed, setCompleted] = useState(false);
+    const [isVisible, setIsVisible] = useState(true); // Состояние для контроля видимости компонента
+    const { is_profile } = useSelector(state => state.user);
 
     let componentToRender = null;
     let buttonLabel = 'Дальше';
 
-    if (step === 0 && (!detailCompany || Object.keys(detailCompany).length === 0)) {
+    if (step === 0 && (!is_profile)) {
         componentToRender = <BriefingCompany />;
-    } else if (step === 1 && Array.isArray(branch) && branch.length === 0) {
+    } else if (step === 1 && (!branch || branch.length === 0)) {
         componentToRender = <BriefingBranch />;
+    } else if (step === 2) {
+        componentToRender = <BriefingVacancy />;
         buttonLabel = 'Ок';
     }
 
-    const containerClasses = `${s.container} ${componentToRender ? s.active : s.none}`;
-
     const handleNext = () => {
-        if (step === 1) {
-            setCompleted(true);
+        if (step >= 2) {
+            setIsVisible(false);
         } else {
             setStep(step + 1);
         }
     };
 
-    useEffect(() => {
-        if (!completed && (!detailCompany || Object.keys(detailCompany).length === 0 || (step === 1 && (!branch || branch.length === 0)))) {
-            // Показываем контейнер только если есть необходимость
-            setStep(step);
-        }
-    }, [detailCompany, branch, step, completed]);
-
-    if (completed) {
+    if (!isVisible) {
         return null;
     }
 
+
     return (
-        <div className={containerClasses}>
+        <div className={`${s.container} ${componentToRender ? s.active : ''}`}>
             {componentToRender && (
                 <>
                     {componentToRender}
-                    {(step < 1 || (step === 1 && buttonLabel === 'Ок')) && <button className={s.button} onClick={handleNext}>{buttonLabel}</button>}
+                    <button className={s.button} onClick={handleNext}>{buttonLabel}</button>
                 </>
             )}
         </div>

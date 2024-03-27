@@ -92,6 +92,7 @@ const initialState = {
   accessToken: null,
   id: null,
   role: null,
+  is_profile: null
 };
 
 const userSlice = createSlice({
@@ -190,6 +191,7 @@ const userSlice = createSlice({
       .addCase(sendToken.fulfilled, (state, action) => {
         state.isLoading = false;
         state.role = action.payload.role;
+        state.is_profile = action.payload.is_profile;
       })
       .addCase(sendToken.rejected, (state, action) => {
         state.isLoading = false;
