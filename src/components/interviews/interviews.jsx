@@ -91,20 +91,20 @@ const Interview = () => {
   const data_interview = { ...interview[0] };
 
   const TooltipContent = ({ children, appointmentData, ...restProps }) => (
-    <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
-      {children}
-      <li className={styles.vacancies_name}>{appointmentData.vacancy_name}</li>
-      <li className={styles.vacancies_create_date}>{appointmentData.data_create}</li>
-
-      <Button
-        onClick={() => {
-          closeModal();
-          openModal(appointmentData);
-        }}
-        className={styles.btn}>
-        Подробнее
-      </Button>
-    </AppointmentTooltip.Content>
+    <>
+      {console.log(appointmentData)}
+      <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
+        {children}
+        <Button
+          onClick={() => {
+            closeModal();
+            openModal(appointmentData);
+          }}
+          className={styles.btn}>
+          Подробнее
+        </Button>
+      </AppointmentTooltip.Content>
+    </>
   );
 
   return (
@@ -117,7 +117,6 @@ const Interview = () => {
         <Appointments onClick={handleAppointmentClick} />
         <Toolbar />
         <DateNavigator currentDate={selectedDate} onCurrentDateChange={setSelectedDate} />
-
         <AppointmentTooltip
           contentComponent={(props) => <TooltipContent {...props} closeModal={closeModal} />}
           // contentComponent={TooltipContent}
