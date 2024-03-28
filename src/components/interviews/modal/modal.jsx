@@ -46,7 +46,6 @@ const Modal = ({ isOpen, onClose, data_interview }) => {
           <div className={s.card_student_desc}>
             {data_interview?.users?.map((item) => (
               <div key={item.id} className={s.student_card}>
-
                 <div className={s.desc}>
                   <Avatar
                     src={item?.profile_photo}

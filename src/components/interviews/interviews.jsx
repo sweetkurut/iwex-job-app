@@ -91,20 +91,17 @@ const Interview = () => {
   const data_interview = { ...interview[0] };
 
   const TooltipContent = ({ children, appointmentData, ...restProps }) => (
-    <>
-      {console.log(appointmentData)}
-      <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
-        {children}
-        <Button
-          onClick={() => {
-            closeModal();
-            openModal(appointmentData);
-          }}
-          className={styles.btn}>
-          Подробнее
-        </Button>
-      </AppointmentTooltip.Content>
-    </>
+    <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
+      {children}
+      <Button
+        onClick={() => {
+          closeModal();
+          openModal(appointmentData);
+        }}
+        className={styles.btn}>
+        Подробнее
+      </Button>
+    </AppointmentTooltip.Content>
   );
 
   return (
