@@ -70,7 +70,7 @@ const Header_Employee = () => {
             </NavLink>
           </nav>
           <div className={styles.box_profile}>
-            <Link to={"/message"} className={styles.notification} >
+            <Link to={"/message"} className={styles.notification}>
               <MdMessage size={20} />
             </Link>
             <button className={styles.notification} onClick={handleToggleNotifications}>
@@ -96,12 +96,12 @@ const Header_Employee = () => {
                 open={open}
                 onClose={handleClose}
                 TransitionComponent={Fade}>
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => handlerNavigation("/profile")}
                   className={styles.profile_menu}>
                   <FaUserCircle />
                   Профиль
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={handleLogOutCookie} className={styles.logOut}>
                   <CgLogOut />
                   Выйти

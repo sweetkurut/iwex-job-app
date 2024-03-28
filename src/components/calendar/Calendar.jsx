@@ -122,7 +122,7 @@ const ModalCalendar = ({ open, setOpen, page, selected }) => {
               required
               className={s.input}
               onChange={handleInputChange}
-              label="Время начала работы:"
+              label="Время начала собеседования:"
               InputLabelProps={{
                 shrink: true,
               }}

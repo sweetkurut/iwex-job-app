@@ -1,34 +1,76 @@
-.wrapper
-  background: #00000089
-  width: 83.3%
-  position: absolute
+.bg
+  justify-content: flex-end
+  align-items: center
+  background: rgba(0, 0, 0, 0)
+  width: 100%
+  height: 100vh
+  position: fixed
+  left: 0
   top: 0
-  height: 100%
-  z-index: 20
+  z-index: 1301
+  opacity: 0
+  transition: all 0.3s
+  visibility: hidden
 
+  &.bgOpen
+    visibility: visible
+    opacity: 1
+    background: rgba(0, 0, 0, 0.5)
 
-  .modal
-    width: 400px
-    min-height: 100vh
-    background: #00013d9f
-    position: fixed
-    left: 0
-    top: 0
-    z-index: 10
-    backdrop-filter: blur(2px)
-    transition: .4s all
+.modal
+  transform: translateX(-100%)
+  left: -100%
+  height: 100vh
+  width: 500px
+  background-color: #fff
+  opacity: 1
+  z-index: 1400
+  transition: 0.5s
+  .header
+    padding: 20px
+    height: 90px
+    border-bottom: solid 1px #8f8f8f
+    p
+      font-size: 20px
 
-    h3
-      color: #fff
-      text-align: center
-      font-size: 28px
-      padding-top: 200px
-      z-index: 10
+.active
+  transform: translateX(0%)
 
-.close
+.card
+  background: #fff
+  width: 400px
+  border-radius: 7px
+  padding: 18px
+  .card_vacancy_desc
+    padding-top: 6px
+    display: flex
+    flex-direction: column
+    gap: 5px
+  li
+    padding: 5px
+
+.company
+  font-size: 20px
+  margin-bottom: 10px
+
+.vacancy, .student
+  font-size: 20px
+  margin-top: 12px
+  margin-bottom: 12px
+
+.student_card
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 10px
+  .desc
+    display: flex
+    align-items: center
+    gap: 10px
+
+.btn
+  padding: 6px 20px
+  border-radius: 5px
+  font-size: 12px
+  background: #00013d
   color: #fff
-  position: absolute
-  top: 40px
-  right: 40px
-  font-size: 60px
-  cursor: pointer

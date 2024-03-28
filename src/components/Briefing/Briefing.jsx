@@ -8,38 +8,47 @@ import Image_vacancy from './../../assets/Image_vacancy.png'
 
 const BriefingCompany = () => {
     return (
-        <div className={s.briefingComponent}>
-            <img src={Image_company} alt="Company" className={s.image} />
-            <div className={s.text}>
-                <h2>Добро пожаловать в систему управления компанией!</h2>
-                <p>Прежде чем начать работу, вам необходимо заполнить данные о вашей компании во вкладке профиль.</p>
+        <>
+            <p className={s.walk}>1 шаг</p>
+            <div className={s.briefingComponent}>
+                <img src={Image_company} alt="Company" className={s.image} />
+                <div className={s.text}>
+                    <h2>Добро пожаловать в систему управления компанией!</h2>
+                    <p>Прежде чем начать работу, вам необходимо заполнить данные о вашей компании во вкладке профиль.</p>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
 const BriefingBranch = () => {
     return (
-        <div className={s.briefingComponent}>
-            <img src={Image_branch} alt="Branch" className={s.image} />
-            <div className={s.text}>
-                <h2>Добавление филиала</h2>
-                <p>Также для управления филиалами вашей компании, вам необходимо добавить новый филиал во вкладке профиль/филиалы.</p>
+        <>
+            <p className={s.walk}>2 шаг</p>
+            <div className={s.briefingComponent}>
+                <img src={Image_branch} alt="Branch" className={s.image} />
+                <div className={s.text}>
+                    <h2>Добавление филиала</h2>
+                    <p>Также для управления филиалами вашей компании, вам необходимо добавить новый филиал во вкладке профиль/филиалы.</p>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
 
 const BriefingVacancy = () => {
     return (
-        <div className={s.briefingComponent}>
-            <img src={Image_vacancy} alt="Vacancy" className={s.image} />
-            <div className={s.text}>
-                <h2>Добавление вакансии</h2>
-                <p>После всех выполненых этапов вы можете добавить вакансии в вашу компанию, чтобы привлекать талантливых сотрудников.</p>
+        <>
+            <p className={s.walk}>3 шаг</p>
+            <div className={s.briefingComponent}>
+                <img src={Image_vacancy} alt="Vacancy" className={s.image} />
+                <div className={s.text}>
+                    <h2>Добавление вакансии</h2>
+                    <p>После всех выполненых этапов вы можете добавить вакансии в вашу компанию, чтобы привлекать талантливых сотрудников.</p>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -33,12 +33,11 @@ import ModalCalendar from "../../calendar/Calendar";
 const StudentDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  let { state } = useLocation();
+  let { state, search } = useLocation();
   const { detailEmployee, isLoading } = useSelector((state) => state.employeeDetails);
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
-
   const [modalMessage, setModalMessage] = useState({ title: "", text: "" });
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -165,15 +164,22 @@ const StudentDetail = () => {
                           <span>Пол:</span> {detailEmployee?.gender_en}
                         </p>
                       </div>
-                      <div className={styles.wrapper_btn}>
-                        <button className={styles.btn} onClick={() => setOpenCalendar(true)}>
-                          Назначить собеседования
-                        </button>
+                      {
+                        !state?.interview_active ?
+                          <div className={styles.wrapper_btn}>
+                            <button className={styles.btn} onClick={() => setOpenCalendar(true)}>
+                              Назначить собеседования
+                            </button>
 
-                        <button onClick={handleFavorite} className={styles.btn}>
-                          {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
-                        </button>
-                      </div>
+                            <button onClick={handleFavorite} className={styles.btn}>
+                              {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+                            </button>
+                          </div>
+                          :
+                          <p className={styles.interview_active}>
+                            Вы уже пригласили данного студента
+                          </p>
+                      }
                     </div>
                   </div>
 
