@@ -69,7 +69,7 @@ const Notification = ({ isOpen, onClose, setUnread_count }) => {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     function connectWebSocket() {
-      const newSocket = new WebSocket('ws://backcrm.iwex.kg/ws/interviews/');
+      const newSocket = new WebSocket('wss://backcrm.iwex.kg/ws/interviews/');
 
       newSocket.onopen = () => {
         console.log("WebSocket соединение установлено.");

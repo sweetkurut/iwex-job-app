@@ -16,18 +16,22 @@ const Students = () => {
   const dispatch = useDispatch();
   let { state } = useLocation();
   const { employee, isLoading } = useSelector((state) => state.employeeDetails);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(() => {
+    const savedValue = sessionStorage.getItem('myTabValue');
+    return savedValue !== null ? Number(savedValue) : 0;
+  });
+
+
+  useEffect(() => {
+    sessionStorage.setItem('myTabValue', value.toString());
+  }, [value]);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setValue(Number(newValue));
   };
 
   useEffect(() => {
-    if (value) {
-      dispatch(getEmployeeFilter(state?.id_vacancy));
-    } else {
-      dispatch(getAllEmployee());
-    }
+    value === 0 ? dispatch(getEmployeeFilter(state?.id_vacancy)) : dispatch(getAllEmployee());
   }, [value, state, dispatch]);
 
   return (

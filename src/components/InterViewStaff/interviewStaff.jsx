@@ -38,12 +38,15 @@ const InterviewStaffComponent = () => {
         <div className={styles.container}>
           <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 1, borderColor: "divider" }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                   <Tab label="Компания" value="1" />
                   <Tab label="Вакансия" value="2" />
                   <Tab label="Студенты" value="3" />
                 </TabList>
+                <button className={styles.btn}>
+                  Подтвердить собеседования
+                </button>
               </Box>
               <TabPanel value="1">
                 <div className={styles.wrapper_company}>

@@ -21,6 +21,7 @@ export const getAllEmployee = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await allAPIs.getAllEmployee();
+      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -341,5 +342,5 @@ const employeeDetailsSlice = createSlice({
   },
 });
 
-export const {} = employeeDetailsSlice.actions;
+export const { } = employeeDetailsSlice.actions;
 export default employeeDetailsSlice.reducer;

@@ -71,6 +71,7 @@ export const getVacancyDetail = createAsyncThunk(
 export const editVacancy = createAsyncThunk(
   "vacancy/editVacancy",
   async ([id, data], { rejectWithValue }) => {
+    console.log(id, data);
     try {
       const response = await allAPIs.editVacancy(id, data);
       if (response.status !== 200) {
@@ -217,5 +218,5 @@ const vacancySlice = createSlice({
   },
 });
 
-export const {} = vacancySlice.actions;
+export const { } = vacancySlice.actions;
 export default vacancySlice.reducer;

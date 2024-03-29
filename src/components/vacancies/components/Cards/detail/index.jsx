@@ -13,9 +13,7 @@ const CardDetail = () => {
   const { detailVacancy, isLoading } = useSelector((state) => state.vacancy);
 
   console.log(detailVacancy);
-  // const showEditForm = () => {
-  //   setIsShow(!isShow);
-  // };
+
 
   useEffect(() => {
     dispatch(getVacancyDetail(id));
@@ -79,9 +77,14 @@ const CardDetail = () => {
                 </p>
               </div>
               <div className={styles.wrapper_btn}>
-                <p className={styles.phone}>{detailVacancy?.salary} <span>Euro</span></p>
-                <Link to={"/students"} state={{ id_vacancy: id }} className={styles.btn}>
-                  Найти студента
+                <div style={{ display: 'flex', gap: 20 }}>
+                  <p className={styles.phone}>{detailVacancy?.salary} <span>Euro</span></p>
+                  <Link to={"/students"} state={{ id_vacancy: id }} className={styles.btn}>
+                    Найти студента
+                  </Link>
+                </div>
+                <Link to={'/edit-detail-vacancy/' + id} className={`${styles.phone} ${styles.btn_edit}`}>
+                  Редактировать
                 </Link>
               </div>
             </div>

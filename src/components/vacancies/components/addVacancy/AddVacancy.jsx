@@ -64,7 +64,6 @@ const AddVacancy = () => {
     e.preventDefault();
     try {
       const response = await dispatch(send_create_vacancy(data)).unwrap();
-      console.log("response", response);
       if (response) {
         setModalMessage({ title: "Успех", text: "Вакансия успешно добавлена", vacancy: true });
         setOpen(true);

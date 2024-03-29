@@ -24,7 +24,6 @@ const Company = ({ setComponent }) => {
     contact_person: "",
     payment_info: "",
   });
-  console.log(detailCompany);
   const [data, setData] = useState(initialData);
   const [edit, setEdit] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
@@ -153,7 +152,7 @@ const Company = ({ setComponent }) => {
           <TextField
             value={data?.first_name || ""}
             onChange={handleInputChange}
-            className={s.input}
+            className={`${s.input} ${edit && s.input_edit}`}
             name="first_name"
             label="Имя"
             disabled={!edit}
