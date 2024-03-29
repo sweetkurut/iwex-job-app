@@ -7,6 +7,7 @@ import {
   getEmployeeDetail,
   sendInvitation,
 } from "../../../store/slices/employeeDetailsSlice";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import Loaders from "../../../UI/loaders";
 import { GoHome } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -27,7 +28,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import ModalCalendar from "../../calendar/Calendar";
 
 const StudentDetail = () => {
@@ -164,22 +164,21 @@ const StudentDetail = () => {
                           <span>Пол:</span> {detailEmployee?.gender_en}
                         </p>
                       </div>
-                      {
-                        !state?.interview_active ?
-                          <div className={styles.wrapper_btn}>
-                            <button className={styles.btn} onClick={() => setOpenCalendar(true)}>
-                              Назначить собеседования
-                            </button>
+                      {!state?.interview_active ? (
+                        <div className={styles.wrapper_btn}>
+                          <button className={styles.btn} onClick={() => setOpenCalendar(true)}>
+                            Назначить собеседования
+                          </button>
 
-                            <button onClick={handleFavorite} className={styles.btn}>
-                              {favorites ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
-                            </button>
-                          </div>
-                          :
-                          <p className={styles.interview_active}>
-                            Вы уже пригласили данного студента
-                          </p>
-                      }
+                          <button onClick={handleFavorite} className={styles.btn}>
+                            {favorites ? <IoBookmarkOutline size={20} /> : <IoBookmark size={20} />}
+                          </button>
+                        </div>
+                      ) : (
+                        <p className={styles.interview_active}>
+                          Вы уже пригласили данного студента
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -211,8 +210,8 @@ const StudentDetail = () => {
                 </TabPanel>
                 <TabPanel style={{ padding: "50px 0" }} value="3">
                   {detailEmployee &&
-                    detailEmployee.universities &&
-                    detailEmployee.universities.length > 0 ? (
+                  detailEmployee.universities &&
+                  detailEmployee.universities.length > 0 ? (
                     detailEmployee.universities.map((elem) => (
                       <div key={elem?.id}>
                         <div className={styles.ul}>

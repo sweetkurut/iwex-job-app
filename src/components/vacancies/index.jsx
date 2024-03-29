@@ -9,25 +9,21 @@ import ModalWarning from "../modalWarning/ModalWarning";
 const MyVacancies = () => {
   const navigation = useNavigate();
 
-  const { is_profile } = useSelector(state => state.user)
-  const { detailCompany } = useSelector(state => state.companyDetails)
+  const { is_profile } = useSelector((state) => state.user);
+  const { detailCompany } = useSelector((state) => state.companyDetails);
   const [modalMessage, setModalMessage] = useState(false);
-
-
 
   const handlerComponent = () => {
     if (is_profile || Object.keys(detailCompany).length > 0) {
-      navigation('/vacancy')
+      navigation("/vacancy");
     } else {
       const message = {
-        title: 'Предупреждение',
-        text: 'Вам нужно заполнить данные о компании',
-      }
-      setModalMessage(message)
+        title: "Предупреждение",
+        text: "Вам нужно заполнить данные о компании",
+      };
+      setModalMessage(message);
     }
   };
-
-
 
   return (
     <>

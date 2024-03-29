@@ -30,6 +30,8 @@ import Vacancy_isemployee from "../../pages/vacancy_isemployee/vacancy_isemploye
 import Vacancy_Detail_Staff from "../../pages/vacancy_isEmployee_detail/vacancy_detail_staff";
 import Briefing from "../Briefing/Briefing";
 import EmployerComponentById from "../Employer/detail";
+import Cancidates from "../../pages/candidates/cancidates";
+import DetailCandidates from "../../pages/detailcandidates/detailcandidates";
 
 const Main = () => {
   const { role } = useSelector((state) => state.user);
@@ -89,6 +91,8 @@ const Main = () => {
               <Route path="/student-detail/:id" element={<Detail />} />
               <Route path="/favorites" element={<FavoritesPage />} />
               <Route path="/list-interviews" element={<PageInterviews />} />
+              <Route path="/all-candidates" element={<Cancidates />} />
+              <Route path="/all-candidates-detail/:id" element={<DetailCandidates />} />
               <Route path="*" element={<Page404 />} />
             </>
           ) : (
