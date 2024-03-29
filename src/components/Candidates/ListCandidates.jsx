@@ -1,55 +1,70 @@
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./students.module.sass";
+import styles from "./cancidates.module.sass";
 import { useEffect, useState } from "react";
-import { getAllEmployee, getEmployeeFilter } from "../../store/slices/employeeDetailsSlice";
-import { GrLanguage } from "react-icons/gr";
-import { CgCalendarToday } from "react-icons/cg";
-import { Link } from "react-router-dom";
-import { Avatar, Box, Tab } from "@mui/material";
+import { SendFavorite, getAllEmployee } from "../../store/slices/employeeDetailsSlice";
+import { SceletonCardVacancy } from "../SceletonLoading/SceletonLoading";
 import { MdOutlinePhone } from "react-icons/md";
-import { TabContext, TabList } from "@mui/lab";
-import { useLocation } from "react-router-dom";
+import { CgCalendarToday } from "react-icons/cg";
+import { GrLanguage } from "react-icons/gr";
 import { FaGenderless } from "react-icons/fa";
-import { SceletonCardStudents } from "../SceletonLoading/SceletonLoading";
+import { Link } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
-const Students = () => {
+const ListCandidates = () => {
   const dispatch = useDispatch();
-  let { state } = useLocation();
   const { employee, isLoading } = useSelector((state) => state.employeeDetails);
-  const [value, setValue] = useState(0);
+  const navigate = useNavigate();
+  const [favorite, setFavorite] = useState(() => {
+    // Извлекаем состояние из локального хранилища при загрузке компонента
+    const localFavorite = localStorage.getItem("favorite");
+    return localFavorite ? JSON.parse(localFavorite) : {};
+  });
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   useEffect(() => {
-    if (value) {
-      dispatch(getEmployeeFilter(state?.id_vacancy));
-    } else {
-      dispatch(getAllEmployee());
+    dispatch(getAllEmployee());
+  }, [dispatch]);
+
+  const handleClick = (id) => {
+    navigate(`/all-candidates-detail/${id}`);
+  };
+
+  const handleFavorite = async (e, employeeId) => {
+    e.stopPropagation();
+    const data = {
+      user: employeeId,
+    };
+
+    try {
+      const res = await dispatch(SendFavorite(data)).unwrap();
+      if (res && res.is_favorite !== undefined) {
+        // Обновляем состояние и сохраняем его в локальное хранилище
+        setFavorite((prevState) => {
+          const updatedFavorite = { ...prevState, [employeeId]: res.is_favorite };
+          localStorage.setItem("favorite", JSON.stringify(updatedFavorite));
+          return updatedFavorite;
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
-  }, [value, state, dispatch]);
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <h2 className={styles.title}>Студенты</h2>
-        <Box sx={{ width: "100%", typography: "body1" }} className={styles.box_container}>
-          <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Фильтрация" value={0} />
-                <Tab label="Все студенты" value={1} />
-              </TabList>
-            </Box>
-          </TabContext>
-        </Box>
+        <h2 className={styles.title}>Список кандидатов</h2>
         <div className={styles.cards}>
           {isLoading ? (
-            <SceletonCardStudents />
+            <SceletonCardVacancy />
           ) : employee && employee.length > 0 ? (
             employee.map((elem) => (
-              <div className={styles.card} key={elem?.id}>
+              <div className={styles.card} key={elem?.id} onClick={() => handleClick(elem.id)}>
                 <div className={styles.vacancies_name_image}>
                   <div className={styles.profile_image}>
                     <Avatar
@@ -88,12 +103,12 @@ const Students = () => {
                   </p>
                 </div>
                 <div className={styles.card_button}>
-                  <Link
-                    to={"/student-detail/" + elem.id}
-                    state={{ id_vacancy: state.id_vacancy }}
-                    className={styles.btn_link}>
+                  <Link to={"/all-candidates-detail/" + elem?.id} className={styles.btn_link}>
                     Подробнее
                   </Link>
+                  <button className={styles.btn_fav} onClick={(e) => handleFavorite(e, elem.id)}>
+                    {favorite[elem.id] ? <IoBookmark size={20} /> : <IoBookmarkOutline size={20} />}
+                  </button>
                 </div>
               </div>
             ))
@@ -108,15 +123,13 @@ const Students = () => {
                   }}
                 />
               </div>
-              <p className={styles.student_search_title}>
-                Кажется на вашу вакансию не нашлось студентов
-              </p>
+              <p className={styles.student_search_title}>Не найдено ни одного студента.</p>
               <button
                 className={styles.btn_allStudents}
                 onClick={(e) => {
                   handleChange(e, false);
                 }}>
-                Все студенты
+                Добавить студента
               </button>
             </div>
           )}
@@ -126,4 +139,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default ListCandidates;

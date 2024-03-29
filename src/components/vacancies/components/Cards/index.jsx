@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styles from "./cards.module.sass";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GiNetworkBars } from "react-icons/gi";
 import { LuCalendarClock } from "react-icons/lu";
 import { WiTime9 } from "react-icons/wi";
@@ -11,8 +11,13 @@ import { getVacancyEmployer } from "../../../../store/slices/vacancySlice";
 import { SceletonCardVacancy } from "../../../SceletonLoading/SceletonLoading";
 
 const Cards = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { vacancyEmployer, isLoading } = useSelector((state) => state.vacancy);
+
+  const handleClick = (id) => {
+    navigate(`/card-detail-vacancies/${id}`);
+  };
 
   useEffect(() => {
     dispatch(getVacancyEmployer());
@@ -24,7 +29,7 @@ const Cards = () => {
         <SceletonCardVacancy />
       ) : vacancyEmployer && vacancyEmployer.length > 0 ? (
         vacancyEmployer.map((elem) => (
-          <div className={styles.card} key={elem?.id}>
+          <div className={styles.card} key={elem?.id} onClick={() => handleClick(elem.id)}>
             <div className={styles.vacancies_name}>
               <MdOutlineWorkOutline className={styles.vacancies_icon} />
               <div>

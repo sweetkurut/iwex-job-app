@@ -14,7 +14,7 @@ import Notification from "../notification/Notification";
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -30,7 +30,7 @@ const Header = () => {
   };
   const handleLogOutCookie = () => {
     deleteCookies(["accessToken", "role"]);
-    dispatch(setRole((null)))
+    dispatch(setRole(null));
 
     navigate("/login");
   };
@@ -42,10 +42,7 @@ const Header = () => {
   };
   return (
     <>
-      <Notification
-        isOpen={isNotificationsOpen}
-        onClose={() => setIsNotificationsOpen(false)}
-      />
+      <Notification isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
       <header className={styles.header}>
         <div className={styles.header_container}>
           <nav className={styles.nav}>
@@ -64,13 +61,18 @@ const Header = () => {
               Список собеседований
             </NavLink>
             <NavLink
+              to={"/all-candidates"}
+              className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
+              Кандидаты
+            </NavLink>
+            <NavLink
               to={"/favorites"}
               className={({ isActive }) => cn(styles.nav_link, isActive && styles.active)}>
               Избранные
             </NavLink>
           </nav>
           <div className={styles.box_profile}>
-            <Link to={"/message"} className={styles.notification} >
+            <Link to={"/message"} className={styles.notification}>
               <MdMessage size={20} />
             </Link>
             <button className={styles.notification} onClick={handleToggleNotifications}>
