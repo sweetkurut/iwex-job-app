@@ -11,8 +11,6 @@ import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
 
 const ListCandidates = () => {
   const dispatch = useDispatch();
@@ -24,7 +22,7 @@ const ListCandidates = () => {
     return localFavorite ? JSON.parse(localFavorite) : {};
   });
 
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  // const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getAllEmployee());
